@@ -1,8 +1,13 @@
-# Hartebeest
+# Myrnhelm 
+### Reckoning of the Alderwynds (2D RPG Game🎮)
 
-A [libGDX](https://libgdx.com/) project generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
+A JAVA OOP2 project using [libGDX](https://libgdx.com/) generated with [gdx-liftoff](https://github.com/libgdx/gdx-liftoff).
 
 This project was generated with a template including simple application launchers and an empty `ApplicationListener` implementation.
+
+## Members
+- [Jon Vic Barcenas](https://github.com/jonvicbarcenas) - Project Manager
+- [Myron Deandre Alia](https://github.com/Tharzzzs) - Member 
 
 ## Platforms
 
