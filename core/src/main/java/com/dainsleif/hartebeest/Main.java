@@ -43,7 +43,7 @@ public class Main implements ApplicationListener {
         // Load and play background music
         backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/16bitRpgBGMUSIC.mp3"));
         backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(GameInfo.musicVolume);
+        backgroundMusic.setVolume(GameInfo.getMusicVolume());
         backgroundMusic.play();
 
         //camera
@@ -53,7 +53,7 @@ public class Main implements ApplicationListener {
         viewport = new FitViewport(150, 150, camera);
 
         // Create player
-        player = new Player("char.png", 200, 400);
+        player = new Player("sprite/walk/walk.atlas", 200, 400);
         keyHandler = new KeyHandler();
     }
 

@@ -1,59 +1,46 @@
 package com.dainsleif.hartebeest.helpers;
 
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-public class Player {
-    private Texture texture;
-    private Sprite sprite;
-    private float speed = 100f;
+public class Player extends PlayerSprite {
+    private boolean movingDown;
+    private boolean movingUp;
+    private boolean movingLeft;
+    private boolean movingRight;
 
-    public Player(String texturePath, float x, float y) {
-        texture = new Texture(texturePath);
-        sprite = new Sprite(texture);
-        sprite.setPosition(x, y);
-        sprite.setSize(32, 32);
+    public Player(String atlasPath, float x, float y) {
+        super(atlasPath, x, y);
     }
 
     public void update(float deltaTime, KeyHandler keyHandler) {
-        if (keyHandler.isUpPressed()) {
-            sprite.translateY(speed * deltaTime);
-        }
-        if (keyHandler.isDownPressed()) {
-            sprite.translateY(-speed * deltaTime);
-        }
-        if (keyHandler.isLeftPressed()) {
-            sprite.translateX(-speed * deltaTime);
-        }
-        if (keyHandler.isRightPressed()) {
-            sprite.translateX(speed * deltaTime);
-        }
+        movingDown = keyHandler.isDownPressed();
+        movingUp = keyHandler.isUpPressed();
+        movingLeft = keyHandler.isLeftPressed();
+        movingRight = keyHandler.isRightPressed();
+        super.update(deltaTime, keyHandler, GameInfo.getPlayerSpeed());
     }
 
-
     public void draw(SpriteBatch batch) {
-        sprite.draw(batch);
+        super.draw(batch, movingDown, movingUp, movingLeft, movingRight);
     }
 
     public void dispose() {
-        texture.dispose();
+        super.dispose();
     }
 
     public float getX() {
-        return sprite.getX();
+        return super.getX();
     }
 
     public float getY() {
-        return sprite.getY();
+        return super.getY();
     }
 
     public float getWidth() {
-        return sprite.getWidth();
+        return super.getWidth();
     }
 
     public float getHeight() {
-        return sprite.getHeight();
+        return super.getHeight();
     }
-
 }

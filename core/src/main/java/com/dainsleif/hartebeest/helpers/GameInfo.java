@@ -10,15 +10,22 @@ public class GameInfo {
     //frames per second
     public static final float fps = Gdx.graphics.getFramesPerSecond();
 
+    //player speed with setter and getter
+    private static float playerSpeed = 75f;
+    public static void setPlayerSpeed(float speed) {
+        playerSpeed = speed;
+    }
+    public static float getPlayerSpeed() {
+        return playerSpeed;
+    }
+
     //music volume with setter and getter
-    public static float musicVolume = 0.2f;
+    private static float musicVolume = 0.2f;
     public static void setMusicVolume(float volume) {
         musicVolume = volume;
     }
     public static float getMusicVolume() {
         return musicVolume;
     }
-
-
 
 }
