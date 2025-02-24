@@ -6,11 +6,8 @@ A JAVA OOP2 project using [libGDX](https://libgdx.com/) generated with [gdx-lift
 This project was generated with a template including simple application launchers and an empty `ApplicationListener` implementation.
 
 ## Members
-- **[Jon Vic Barcenas](https://github.com/jonvicbarcenas)** - *Project Manager*
-- **[Myron Deandre Alia](https://github.com/Tharzzzs)** - *Programmer*
-- **[Joseph James Banico]()** - *Database/Programmer*
-- **[Elijah Thomas Rellon]()** - *Programmer*
-- **[Ma. Melissa Cabasag]()**- *Storyline/UI/UX*
+- [Jon Vic Barcenas](https://github.com/jonvicbarcenas) - Project Manager
+- [Myron Deandre Alia](https://github.com/Tharzzzs) - Member 
 
 ## Platforms
 
