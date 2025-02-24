@@ -35,7 +35,7 @@ public class Main implements ApplicationListener {
             " Height: " + GameInfo.HEIGHT
         );
 
-        // Load map
+        // Load maps
         map = new TmxMapLoader().load("Map.tmx");
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
