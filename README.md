@@ -8,6 +8,9 @@ This project was generated with a template including simple application launcher
 ## Members
 - [Jon Vic Barcenas](https://github.com/jonvicbarcenas) - Project Manager
 - [Myron Deandre Alia](https://github.com/Tharzzzs) - Member 
+- [Ma. Melessa Cabasag]() - UI/UX Designer
+- [Joseph James Banico]() - Member
+- [Elijah Thomas Rellon]() - Member
 
 ## Platforms
 
