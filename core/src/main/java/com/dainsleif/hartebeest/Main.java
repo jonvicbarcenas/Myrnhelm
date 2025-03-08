@@ -1,107 +1,14 @@
 package com.dainsleif.hartebeest;
 
-import com.badlogic.gdx.ApplicationListener;
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Music;
-import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
-import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.dainsleif.hartebeest.helpers.GameInfo;
-import com.dainsleif.hartebeest.helpers.KeyHandler;
-import com.dainsleif.hartebeest.helpers.Player;
+import com.badlogic.gdx.Game;
+import com.dainsleif.hartebeest.world.Gameworld1;
 
-/** {@link com.badlogic.gdx.ApplicationListener} implementation shared by all platforms. */
-public class Main implements ApplicationListener {
-    TiledMap map;
-    OrthogonalTiledMapRenderer tiledMapRenderer;
-    SpriteBatch spriteBatch;
-    FitViewport viewport;
-    Music backgroundMusic;
-
-    //camera
-    OrthographicCamera camera;
-
-    Player player;
-    KeyHandler keyHandler;
+public class Main extends Game {
 
     @Override
     public void create() {
-        // Prepare your application here.
-        System.out.println("Width: " + GameInfo.WIDTH +
-            " Height: " + GameInfo.HEIGHT
-        );
-
-        // Load map
-        map = new TmxMapLoader().load("Map.tmx");
-        spriteBatch = new SpriteBatch();
-        tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-
-        // Load and play background music
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/16bitRpgBGMUSIC.mp3"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(GameInfo.getMusicVolume());
-        backgroundMusic.play();
-
-        //camera
-        camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400, 400);
-        camera.update();
-        viewport = new FitViewport(150, 150, camera);
-
-        // Create player
-        player = new Player("sprite/walk/walk.atlas", 200, 400);
-        keyHandler = new KeyHandler();
-    }
-
-    @Override
-    public void resize(int width, int height) {
-        // Resize your application here. The parameters represent the new window size.
-        viewport.update(width, height);
-    }
-
-    @Override
-    public void render() {
-        // Clear the screen
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
-
-        // Update the player based on input
-        player.update(Gdx.graphics.getDeltaTime(), keyHandler);
-
-        // Center the camera on the player's position
-        camera.position.set(player.getX() + player.getWidth() / 2, player.getY() + player.getHeight() / 2, 0);
-        camera.update();
-
-        // Render the tiled map
-        tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0,1,2});
-
-        // Render the player sprite
-        spriteBatch.setProjectionMatrix(camera.combined);
-        spriteBatch.begin();
-
-        player.draw(spriteBatch);
-        spriteBatch.end();
-
-        tiledMapRenderer.render(new int[]{3,4});
+        this.setScreen(new Gameworld1());
     }
 
 
-    @Override
-    public void pause() {
-        // Invoked when your application is paused.
-    }
-
-    @Override
-    public void resume() {
-        // Invoked when your application is resumed after pause.
-    }
-
-    @Override
-    public void dispose() {
-        // Destroy application's resources here.
-    }
 }
