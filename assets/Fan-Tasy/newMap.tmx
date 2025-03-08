@@ -1,45 +1,775 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="13" nextobjectid="135">
+<map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="100" height="100" tilewidth="16" tileheight="16" infinite="0" nextlayerid="14" nextobjectid="223">
  <tileset firstgid="1" name="grass" tilewidth="16" tileheight="16" tilecount="1" columns="1">
   <image source="../Mystic Woods/sprites/tilesets/grass.png" trans="ffffff" width="16" height="16"/>
  </tileset>
  <tileset firstgid="2" name="CityWall_Gate_1" tilewidth="16" tileheight="16" tilecount="30" columns="5">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/CityWall_Gate_1.png" trans="ffffff" width="80" height="96"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Buildings/CityWall_Gate_1.png" trans="ffffff" width="80" height="96"/>
  </tileset>
  <tileset firstgid="32" name="Buildings" tilewidth="16" tileheight="16" tilecount="442" columns="13">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png" trans="ffffff" width="208" height="544"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png" trans="ffffff" width="208" height="544"/>
  </tileset>
  <tileset firstgid="474" name="Trees_Bushes" tilewidth="16" tileheight="16" tilecount="144" columns="24">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Trees and Bushes/Atlas/Trees_Bushes.png" trans="ffffff" width="384" height="96"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Trees and Bushes/Atlas/Trees_Bushes.png" trans="ffffff" width="384" height="96"/>
  </tileset>
  <tileset firstgid="618" name="Tileset_Ground" tilewidth="16" tileheight="16" tilecount="132" columns="12">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Ground.png" trans="ffffff" width="192" height="176"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Ground.png" trans="ffffff" width="192" height="176"/>
  </tileset>
  <tileset firstgid="750" name="Tileset_Road" tilewidth="16" tileheight="16" tilecount="60" columns="6">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Road.png" trans="ffffff" width="96" height="160"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Road.png" trans="ffffff" width="96" height="160"/>
  </tileset>
  <tileset firstgid="810" name="Props" tilewidth="16" tileheight="16" tilecount="180" columns="18">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Props/Atlas/Props.png" trans="ffffff" width="288" height="160"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Props/Atlas/Props.png" trans="ffffff" width="288" height="160"/>
  </tileset>
  <tileset firstgid="990" name="Tileset_RockSlope" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Rock Slopes/Tileset_RockSlope.png" trans="ffffff" width="1024" height="1024"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Rock Slopes/Tileset_RockSlope.png" trans="ffffff" width="1024" height="1024"/>
+  <tile id="65">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="66">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="67">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="129">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="131">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="133">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="135">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="137">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="139">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="141">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="143">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="149">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="151">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="193">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="194">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="195">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="321">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="323">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="325">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="326">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="781">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="783">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="785">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="787">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="788">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="833">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="834">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="835">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="837">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="839">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="841">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="843">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="845">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="847">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="849">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="851">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="852">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="897">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="898">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="899">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="901">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="903">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="905">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="907">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="909">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="911">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="913">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="915">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="916">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1025">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1027">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1029">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1030">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1089">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1091">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1093">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1094">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1217">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1221">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1281">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1285">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1410">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1413">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1474">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1477">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1687">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1693">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1729">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1730">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1731">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1733">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1735">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1737">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1739">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1741">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1743">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1745">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1747">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1749">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1751">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1753">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1755">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1757">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1759">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1793">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1794">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1795">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1797">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1799">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1801">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1803">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1805">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1807">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1809">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1811">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1813">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1815">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1817">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1819">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1821">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1823">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1857">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1858">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1859">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1861">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1863">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1865">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1867">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1869">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1871">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1873">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1875">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1877">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1879">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1881">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1883">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1885">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1887">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1941">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1943">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1949">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1951">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1985">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1987">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1989">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="1990">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2049">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2051">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2053">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2054">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2113">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2115">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2117">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2118">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2241">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2245">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2305">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2309">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2369">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2373">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2497">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2500">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2561">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2564">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2625">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
+  <tile id="2628">
+   <properties>
+    <property name="blocked" value=""/>
+   </properties>
+  </tile>
  </tileset>
  <tileset firstgid="5086" name="Rocks" tilewidth="16" tileheight="16" tilecount="22" columns="11">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Rocks/Atlas/Rocks.png" trans="ffffff" width="182" height="32"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Rocks/Atlas/Rocks.png" trans="ffffff" width="182" height="32"/>
  </tileset>
- <tileset firstgid="5108" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx"/>
- <tileset firstgid="5168" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope.tsx"/>
- <tileset firstgid="9264" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope_Simple.tsx"/>
- <tileset firstgid="9318" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx"/>
- <tileset firstgid="9630" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Ground.tsx"/>
- <tileset firstgid="9762" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Buildings.tsx"/>
- <tileset firstgid="9768" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx"/>
- <tileset firstgid="9787" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Rocks.tsx"/>
- <tileset firstgid="9792" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Trees.tsx"/>
- <tileset firstgid="9803" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_Red.tsx"/>
- <tileset firstgid="9899" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_White.tsx"/>
- <tileset firstgid="9995" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Campfire.tsx"/>
- <layer id="3" name="ground" width="100" height="100">
+ <tileset firstgid="5108" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx"/>
+ <tileset firstgid="5168" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope.tsx"/>
+ <tileset firstgid="9264" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope_Simple.tsx"/>
+ <tileset firstgid="9318" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx"/>
+ <tileset firstgid="9630" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Ground.tsx"/>
+ <tileset firstgid="9762" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Buildings.tsx"/>
+ <tileset firstgid="9768" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx"/>
+ <tileset firstgid="9787" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Rocks.tsx"/>
+ <tileset firstgid="9792" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Trees.tsx"/>
+ <tileset firstgid="9803" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_Red.tsx"/>
+ <tileset firstgid="9899" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_White.tsx"/>
+ <tileset firstgid="9995" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Campfire.tsx"/>
+ <layer id="3" name="ground" width="100" height="100" locked="1">
   <data encoding="csv">
 717,726,726,726,730,715,718,730,728,730,717,726,714,719,715,717,719,716,714,716,719,730,729,715,715,728,729,731,726,719,715,717,726,717,729,726,717,730,715,716,728,716,714,727,729,731,727,728,714,717,714,728,727,730,726,718,731,729,731,714,730,718,727,728,714,715,730,731,727,727,717,719,715,730,728,717,728,719,718,726,715,726,726,727,727,726,726,726,730,714,727,728,716,728,717,718,718,730,727,716,
 731,717,731,715,729,731,729,714,718,719,715,728,715,717,726,728,727,716,727,729,730,714,714,717,730,717,719,715,730,715,718,728,731,717,719,718,731,731,718,715,727,729,715,730,716,728,728,728,716,715,726,729,728,716,714,717,727,717,716,727,730,716,726,728,716,731,726,727,717,715,714,726,714,716,719,728,716,727,727,730,714,730,714,716,726,716,728,714,719,726,714,726,727,717,717,727,714,730,716,731,
@@ -143,7 +873,7 @@
 717,717,726,718,729,731,714,728,728,730,727,730,718,726,716,719,716,719,730,731,726,728,729,716,726,729,729,718,716,729,715,719,726,719,727,731,729,729,716,727,717,729,715,729,716,715,719,717,714,716,719,717,731,731,715,716,717,717,730,717,717,718,726,719,715,726,728,727,731,717,719,730,730,727,728,719,726,716,717,730,730,728,731,714,729,726,714,717,716,717,727,717,731,714,730,719,715,719,714,731
 </data>
  </layer>
- <layer id="5" name="roads" width="100" height="100">
+ <layer id="5" name="roads" width="100" height="100" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -247,7 +977,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="6" name="slopes" width="100" height="100">
+ <layer id="6" name="slopes" width="100" height="100" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,6861,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7158,7157,7157,6917,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -351,7 +1081,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="7" name="water" width="100" height="100">
+ <layer id="7" name="water" width="100" height="100" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -455,7 +1185,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <layer id="12" name="flowers" width="100" height="100">
+ <layer id="12" name="flowers" width="100" height="100" locked="1">
   <data encoding="csv">
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
@@ -559,7 +1289,7 @@
 0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
 </data>
  </layer>
- <objectgroup id="9" name="Object Layer 1">
+ <objectgroup id="9" name="objLayer" locked="1">
   <object id="16" gid="9765" x="1127.33" y="418.667" width="128" height="128"/>
   <object id="17" gid="9764" x="1297.67" y="144" width="175" height="128"/>
   <object id="18" gid="9762" x="1068" y="102" width="89" height="91"/>

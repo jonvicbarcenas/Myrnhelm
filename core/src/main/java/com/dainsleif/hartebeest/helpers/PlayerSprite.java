@@ -1,7 +1,6 @@
 package com.dainsleif.hartebeest.helpers;
 
 import com.badlogic.gdx.graphics.g2d.*;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
 
@@ -37,18 +36,29 @@ public class PlayerSprite {
 
     public void update(float deltaTime, KeyHandler keyHandler, float speed) {
         stateTime += deltaTime;
+        float dx = 0, dy = 0;
+
         if (keyHandler.isUpPressed()) {
-            sprite.translateY(speed * deltaTime);
+            dy += speed * deltaTime;
         }
         if (keyHandler.isDownPressed()) {
-            sprite.translateY(-speed * deltaTime);
+            dy -= speed * deltaTime;
         }
         if (keyHandler.isLeftPressed()) {
-            sprite.translateX(-speed * deltaTime);
+            dx -= speed * deltaTime;
         }
         if (keyHandler.isRightPressed()) {
-            sprite.translateX(speed * deltaTime);
+            dx += speed * deltaTime;
         }
+
+        // Normalize the movement vector to prevent faster diagonal movement
+        float length = (float) Math.sqrt(dx * dx + dy * dy);
+        if (length != 0) {
+            dx /= length;
+            dy /= length;
+        }
+
+        sprite.translate(dx, dy);
     }
 
     public void draw(SpriteBatch batch, boolean movingDown, boolean movingUp, boolean movingLeft, boolean movingRight) {
