@@ -75,13 +75,15 @@ public class Gameworld1 implements Screen {
 
         // Render map
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4});
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,7,8});
 
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         player.draw(spriteBatch);
         spriteBatch.end();
+
+        tiledMapRenderer.render(new int[]{6});
     }
 
 
