@@ -1,0 +1,19 @@
+[
+  "Characters",
+  {
+    "PlayerName": "Myron",
+    "Description": {
+      "Title": "Adventurer of Eldengarde"
+    },
+    "PlayerStats" : {
+      "Level": 1,
+      "Experience": 0,
+      "Health": 100,
+      "Mana": 100,
+      "Strength": 10,
+      "Dexterity": 10,
+      "Intelligence": 10,
+      "Luck": 10
+    }
+  }
+]

@@ -121,6 +121,8 @@ Mystic Woods/sprites/tilesets/water5.png
 Mystic Woods/sprites/tilesets/water6.png
 Mystic Woods/sprites/tilesets/water_decorations.png
 Mystic Woods/sprites/tilesets/water_lillies.png
+PlayerInfo/Player.json
+Screen/MenuScreen/StartMenu.gif
 char.png
 gameinfo.db
 sprite/bunny/Idle.png
