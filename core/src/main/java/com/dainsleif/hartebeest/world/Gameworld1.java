@@ -28,7 +28,6 @@ public class Gameworld1 implements Screen {
     KeyHandler keyHandler;
 
     public Gameworld1() {
-        GameInfo.getPlayerName();
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
 
         // Load map
