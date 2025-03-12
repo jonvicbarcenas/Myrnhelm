@@ -3,8 +3,9 @@ package com.dainsleif.hartebeest.helpers;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.utils.Array;
+import com.dainsleif.hartebeest.movements.PlayerBasicMovements;
 
-public class PlayerSprite {
+public class PlayerSpriteAtlas extends PlayerBasicMovements {
     private static final float FRAME_TIME = 1 / 5f;
     private TextureAtlas atlas;
     private Animation<TextureRegion> walkDownAnimation;
@@ -14,7 +15,7 @@ public class PlayerSprite {
     private float stateTime;
     private Sprite sprite;
 
-    public PlayerSprite(String atlasPath, float x, float y) {
+    public PlayerSpriteAtlas(String atlasPath, float x, float y) {
         try {
             atlas = new TextureAtlas(atlasPath);
             Array<TextureAtlas.AtlasRegion> framesDown = atlas.findRegions("dwn");
@@ -30,35 +31,13 @@ public class PlayerSprite {
             sprite.setPosition(x, y);
             sprite.setSize(16, 16);
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public void update(float deltaTime, KeyHandler keyHandler, float speed) {
+        super.update(deltaTime, keyHandler, sprite);
         stateTime += deltaTime;
-        float dx = 0, dy = 0;
-
-        if (keyHandler.isUpPressed()) {
-            dy += speed * deltaTime;
-        }
-        if (keyHandler.isDownPressed()) {
-            dy -= speed * deltaTime;
-        }
-        if (keyHandler.isLeftPressed()) {
-            dx -= speed * deltaTime;
-        }
-        if (keyHandler.isRightPressed()) {
-            dx += speed * deltaTime;
-        }
-
-        // Normalize the movement vector to prevent faster diagonal movement
-        float length = (float) Math.sqrt(dx * dx + dy * dy);
-        if (length != 0) {
-            dx /= length;
-            dy /= length;
-        }
-
-        sprite.translate(dx, dy);
     }
 
     public void draw(SpriteBatch batch, boolean movingDown, boolean movingUp, boolean movingLeft, boolean movingRight) {
@@ -79,16 +58,12 @@ public class PlayerSprite {
                 sprite.draw(batch);
             }
         } catch (Exception e) {
-            e.printStackTrace();
+            System.out.println(e.getMessage());
         }
     }
 
     public void dispose() {
-        try {
-            atlas.dispose();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+        atlas.dispose();
     }
 
     public float getX() {

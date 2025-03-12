@@ -2,18 +2,21 @@ package com.dainsleif.hartebeest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Align;
+import com.dainsleif.hartebeest.helpers.AnimationLoader;
 import com.dainsleif.hartebeest.helpers.GameInfo;
+import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 
 public class ScreenExample implements Screen {
     private SpriteBatch batch;
+    private Animation<TextureRegion> animation;
+    private float stateTime;
+
     private BitmapFont font;
     private GlyphLayout layout;
     private Rectangle startButtonBounds;
@@ -22,17 +25,29 @@ public class ScreenExample implements Screen {
     private String startButtonText = "Start Game";
     private String optionsButtonText = "Options";
     private String exitButtonText = "Exit";
-    Texture background;
 
     private boolean isTouched = false;
 
-    public ScreenExample() {
-        batch = new SpriteBatch();
+    Music backgroundMusic;
+
+    @Override
+    public void show() {
         font = new BitmapFont();
         layout = new GlyphLayout();
 
-        //background image
-        background = new Texture("Screen/MenuScreen/StartMenu.gif");
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/dawn_winery_MenuBGM.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(GameInfo.getMusicVolume());
+        backgroundMusic.play();
+
+        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frieren.png", "Screen/MenuScreen/frieren.json");
+        TextureRegion[] frames = spriteSheetLoader.getFrames();
+        System.out.println("Frames loaded: " + frames.length);
+
+        AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
+        animation = animationLoader.getAnimation();
+        batch = new SpriteBatch();
+        stateTime = 0.2f;
 
         // Start Button
         layout.setText(font, startButtonText, font.getColor(), 0, Align.center, false);
@@ -63,18 +78,23 @@ public class ScreenExample implements Screen {
     }
 
     @Override
-    public void show() {}
-
-    @Override
     public void render(float delta) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        stateTime += delta;
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+
+
         batch.begin();
-        batch.draw(background, 0, 0, GameInfo.WIDTH, GameInfo.HEIGHT);
+        batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+
         font.draw(batch, startButtonText, startButtonBounds.x, startButtonBounds.y + startButtonBounds.height);
         font.draw(batch, optionsButtonText, optionsButtonBounds.x, optionsButtonBounds.y + optionsButtonBounds.height);
         font.draw(batch, exitButtonText, exitButtonBounds.x, exitButtonBounds.y + exitButtonBounds.height);
+
+
         batch.end();
+
 
         if (Gdx.input.isTouched()) {
             if (!isTouched) {

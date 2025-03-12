@@ -4,12 +4,26 @@ import com.badlogic.gdx.Gdx;
 import com.dainsleif.hartebeest.database.PlayerPosition;
 
 public class GameInfo {
+    //------------OPTIONS MENU VARIABLE---------------//
+    static float musicVolume = 0.1f;
+
+
+
+
+    //---------[(END) OPTIONS MENU VARIABLE]---------//
+
+
+
+
     //width and height of the screen
     public static double playerX = PlayerPosition.getPlayerXFromDB();
     public static double playerY = PlayerPosition.getPlayerYFromDB();
 
     public static final int WIDTH = Gdx.graphics.getWidth();
     public static final int HEIGHT = Gdx.graphics.getHeight();
+    public static final int SCREEN_WIDTH = WIDTH/5;
+    public static final int SCREEN_HEIGHT = HEIGHT/5;
+
 
     //frames per second
     public static final float fps = Gdx.graphics.getFramesPerSecond();
@@ -42,7 +56,6 @@ public class GameInfo {
 
 
     //music volume with setter and getter
-    private static float musicVolume = 0.2f;
     public static void setMusicVolume(float volume) {
         musicVolume = volume;
     }
