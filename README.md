@@ -10,7 +10,7 @@ This project was generated with a template including simple application launcher
 - [Myron Deandre Alia](https://github.com/Tharzzzs) - Member 
 - [Ma. Melessa Cabasag]() - UI/UX Designer
 - [Joseph James Banico]() - Member
-- [Elijah Thomas Rellon]() - Member
+- [Elijah Thomas Rellon](https://github.com/jawee52004) - Member
 
 ## Platforms
 
