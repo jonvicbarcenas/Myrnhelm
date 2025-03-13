@@ -12,7 +12,7 @@ import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
-import com.dainsleif.hartebeest.helpers.Player;
+import com.dainsleif.hartebeest.utils.Player;
 
 public class Gameworld1 implements Screen {
     TiledMap map;
@@ -45,7 +45,7 @@ public class Gameworld1 implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 400);
         camera.update();
-        viewport = new FitViewport(150, 150, camera);
+        viewport = new FitViewport(GameInfo.SCREEN_WIDTH, GameInfo.SCREEN_HEIGHT, camera);
 
         // Create player
         player = new Player("sprite/walk/walk.atlas", GameInfo.getPlayerX(), GameInfo.getPlayerY());
