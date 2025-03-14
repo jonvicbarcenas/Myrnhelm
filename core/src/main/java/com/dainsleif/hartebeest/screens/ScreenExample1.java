@@ -2,148 +2,198 @@ package com.dainsleif.hartebeest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.GlyphLayout;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.utils.Align;
+import com.dainsleif.hartebeest.helpers.AnimationLoader;
 import com.dainsleif.hartebeest.helpers.GameInfo;
-import com.dainsleif.hartebeest.world.Gameworld1;
-
+import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 
 public class ScreenExample1 implements Screen {
     private SpriteBatch batch;
+    private Animation<TextureRegion> animation;
+    private float stateTime;
+
     private BitmapFont font;
-    private GlyphLayout layout;
+
     private Rectangle startButtonBounds;
     private Rectangle optionsButtonBounds;
     private Rectangle exitButtonBounds;
-    private Rectangle gameNameBounds;
-    private String startButtonText = "Start Game";
-    private String optionsButtonText = "Options";
-    private String exitButtonText = "Exit";
-    private String gameNameText = "Myrnhelm";
-    Texture background;
+
+    private Texture startButtonTexture;
+    private Texture optionsButtonTexture;
+    private Texture exitButtonTexture;
+    private Texture startButtonClickedTexture;
+    private Texture optionsButtonClickedTexture;
+
+    private TextureRegion startButton;
+    private TextureRegion optionsButton;
+    private TextureRegion exitButton;
+    private TextureRegion startButtonClicked;
+    private TextureRegion optionsButtonClicked;
+
+    private boolean isStartButtonClicked = false;
+    private boolean isOptionsButtonClicked = false;
+
+
     private boolean isTouched = false;
+
+    Music backgroundMusic;
 
     @Override
     public void show() {
+        // Initialize the SpriteBatch
         batch = new SpriteBatch();
-        font = new BitmapFont();
-        layout = new GlyphLayout();
 
-        // Background image
-        background = new Texture("Screen/MenuScreen/bg.gif");
+        // Load and play background music
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/dawn_winery_MenuBGM.mp3"));
+        backgroundMusic.setLooping(true);
+        backgroundMusic.setVolume(GameInfo.getMusicVolume()); // Adjusted volume for testing
+        backgroundMusic.play();
+
+
+        // Load sprite sheet and animation frames
+        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frieren.png", "Screen/MenuScreen/frieren.json");
+        TextureRegion[] frames = spriteSheetLoader.getFrames();
+        System.out.println("Frames loaded: " + frames.length);
+
+        AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
+        animation = animationLoader.getAnimation();
+        batch = new SpriteBatch();
+        stateTime = 0.2f;
 
 
 
-        // Set font scale for buttons
-        font.getData().setScale(1);
+        // Load button textures
+        startButtonTexture = new Texture(Gdx.files.internal("Start_btn.png"));
+        optionsButtonTexture = new Texture(Gdx.files.internal("Settings_btn.png"));
+        exitButtonTexture = new Texture(Gdx.files.internal("Exit_btn.png"));
+        startButtonClickedTexture = new Texture(Gdx.files.internal("Start_btn_clicked.png"));
+        optionsButtonClickedTexture = new Texture(Gdx.files.internal("Settings_btn_clicked.png"));
 
-        layout.setText(font, gameNameText);
-        gameNameBounds = new Rectangle(
-            (Gdx.graphics.getWidth() - layout.width) / 2,
-            (Gdx.graphics.getHeight() / 2) + 200,
-            layout.width,
-            layout.height
-        );
+        // Create TextureRegions for buttons
+        startButton = new TextureRegion(startButtonTexture);
+        optionsButton = new TextureRegion(optionsButtonTexture);
+        exitButton = new TextureRegion(exitButtonTexture);
+        startButtonClicked = new TextureRegion(startButtonClickedTexture);
+        optionsButtonClicked = new TextureRegion(optionsButtonClickedTexture);
 
-        // Start Button
-        layout.setText(font, startButtonText);
+        float scaleFactor = 1.5f; // Adjust as needed
+
+        // Start Button Bounds
+        float startButtonScaledWidth = startButton.getRegionWidth() * scaleFactor;
+        float startButtonScaledHeight = startButton.getRegionHeight() * scaleFactor;
+
+        // Define button bounds
         startButtonBounds = new Rectangle(
-            (Gdx.graphics.getWidth() - layout.width) / 2,
-            (Gdx.graphics.getHeight() / 2) + 50,
-            layout.width,
-            layout.height
+            (Gdx.graphics.getWidth() - startButtonScaledWidth) / 2,
+            (Gdx.graphics.getHeight() / 2) - 100,
+            startButtonScaledWidth,
+            startButtonScaledHeight
         );
+        float optionsButtonScaledWidth = optionsButton.getRegionWidth() * scaleFactor;
+        float optionsButtonScaledHeight = optionsButton.getRegionHeight() * scaleFactor;
 
-        // Options Button
-        layout.setText(font, optionsButtonText);
         optionsButtonBounds = new Rectangle(
-            (Gdx.graphics.getWidth() - layout.width) / 2,
-            (Gdx.graphics.getHeight() / 2),
-            layout.width,
-            layout.height
+            (Gdx.graphics.getWidth() - optionsButtonScaledWidth) / 2,
+            (Gdx.graphics.getHeight() / 2) - 200,
+            optionsButtonScaledWidth,
+            optionsButtonScaledHeight
         );
+        float exitButtonScaledWidth = exitButton.getRegionWidth() * scaleFactor;
+        float exitButtonScaledHeight = exitButton.getRegionHeight() * scaleFactor;
 
-        // Exit Button
-        layout.setText(font, exitButtonText);
         exitButtonBounds = new Rectangle(
-            (Gdx.graphics.getWidth() - layout.width) / 2,
-            (Gdx.graphics.getHeight() / 2) - 50,
-            layout.width,
-            layout.height
+            (Gdx.graphics.getWidth() - exitButtonScaledWidth) / 2,
+            (Gdx.graphics.getHeight() / 2) - 300,
+            exitButtonScaledWidth,
+            exitButtonScaledHeight
         );
-
-
-
     }
-
 
     @Override
     public void render(float delta) {
+        // Clear the screen
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
+        // Update animation state time
+        stateTime += delta;
+        TextureRegion currentFrame = animation.getKeyFrame(stateTime, true);
+
+        // Draw everything
         batch.begin();
-        batch.draw(background, 0, 0, GameInfo.WIDTH, GameInfo.HEIGHT);
 
-        // Draw the game title at the top center
-        font.getData().setScale(4); // Ensure correct font size for title
-        layout.setText(font, gameNameText);
-        font.draw(batch, gameNameText, (Gdx.graphics.getWidth() - layout.width) / 2, gameNameBounds.y + layout.height);
+        batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
-        // Reset font size for buttons
-        font.getData().setScale(1);
+        TextureRegion startTexture = isStartButtonClicked ? startButtonClicked : startButton;
+        TextureRegion optionsTexture = isOptionsButtonClicked ? optionsButtonClicked : optionsButton;
 
-
-        layout.setText(font, startButtonText);
-        font.draw(batch, startButtonText, (Gdx.graphics.getWidth() - layout.width) / 2, startButtonBounds.y + layout.height);
-
-        layout.setText(font, optionsButtonText);
-        font.draw(batch, optionsButtonText, (Gdx.graphics.getWidth() - layout.width) / 2, optionsButtonBounds.y + layout.height);
-
-        layout.setText(font, exitButtonText);
-        font.draw(batch, exitButtonText, (Gdx.graphics.getWidth() - layout.width) / 2, exitButtonBounds.y + layout.height);
+        batch.draw(startTexture, startButtonBounds.x, startButtonBounds.y, startButtonBounds.width, startButtonBounds.height);
+        batch.draw(optionsTexture, optionsButtonBounds.x, optionsButtonBounds.y, optionsButtonBounds.width, optionsButtonBounds.height);
+        batch.draw(exitButton, exitButtonBounds.x, exitButtonBounds.y, exitButtonBounds.width, exitButtonBounds.height);
 
         batch.end();
 
-        // Handle button clicks
+        // Handle input
         if (Gdx.input.isTouched()) {
             if (!isTouched) {
-                isTouched = true;
+                isTouched = true; // Prevent multitouch issues
                 Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
                 if (startButtonBounds.contains(touchPos)) {
-                    System.out.println("Start Button clicked!");
+                    // Handle Start button click
+                    isStartButtonClicked = true;
                 } else if (optionsButtonBounds.contains(touchPos)) {
-                    System.out.println("Options Button clicked!");
+                    // Handle Options button click
+                    isOptionsButtonClicked = true;
                 } else if (exitButtonBounds.contains(touchPos)) {
+                    // Handle Exit button click
                     System.out.println("Exit Button clicked!");
                 }
             }
         } else {
+            if (isStartButtonClicked) {
+                isStartButtonClicked = false;
+                System.out.println("Start Button clicked!");
+            }
+            if (isOptionsButtonClicked) {
+                isOptionsButtonClicked = false;
+                // Switch to options screen
+                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
+            }
             isTouched = false;
         }
     }
 
+    @Override
+    public void resize(int width, int height) {
+        // No resizing logic needed here
+    }
 
     @Override
-    public void resize(int width, int height) {}
+    public void pause() {
+        // Handle pause state
+    }
 
     @Override
-    public void pause() {}
+    public void resume() {
+        // Handle resume state
+    }
 
     @Override
-    public void resume() {}
-
-    @Override
-    public void hide() {}
+    public void hide() {
+        // Handle screen hiding
+    }
 
     @Override
     public void dispose() {
+        // Dispose of resources
         batch.dispose();
-        font.dispose();
+        if (backgroundMusic != null) backgroundMusic.dispose();
+        startButtonTexture.dispose();
+        optionsButtonTexture.dispose();
+        exitButtonTexture.dispose();
     }
 }

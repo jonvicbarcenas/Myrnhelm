@@ -1,5 +1,7 @@
 .gitkeep
 16tile.png
+Exit_btn.json
+Exit_btn.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.gif
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png
@@ -80,7 +82,9 @@ Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx
 Fan-Tasy/newMap.tmx
 Map.tmx
+Music.png
 Music/16bitRpgBGMUSIC.mp3
+Music/dawn_winery_MenuBGM.mp3
 Mystic Woods/Get the Premium Version!.url
 Mystic Woods/Rate This Pack!.url
 Mystic Woods/read_me.txt
@@ -123,18 +127,23 @@ Mystic Woods/sprites/tilesets/water_decorations.png
 Mystic Woods/sprites/tilesets/water_lillies.png
 PlayerInfo/Player.json
 Screen/MenuScreen/StartMenu.gif
+Screen/MenuScreen/bg.gif
+Screen/MenuScreen/frieren.json
+Screen/MenuScreen/frieren.png
+Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
+Screen/MenuScreen/frierenBG.gif
+Settings_btn.json
+Settings_btn.png
+Settings_btn_clicked.png
+Start_btn.json
+Start_btn.png
+Start_btn_clicked.png
 char.png
 gameinfo.db
+minus.png
+plus.png
 sprite/bunny/Idle.png
 sprite/bunny/Running.json
 sprite/bunny/Running.png
-sprite/bunny/Running1.png
-sprite/bunny/Running2.png
-sprite/bunny/Running3.png
-sprite/bunny/Running4.png
-sprite/bunny/Running5.png
-sprite/bunny/Running6.png
-sprite/bunny/Running7.png
-sprite/bunny/Running8.png
 sprite/walk/walk.atlas
 sprite/walk/walk.png
