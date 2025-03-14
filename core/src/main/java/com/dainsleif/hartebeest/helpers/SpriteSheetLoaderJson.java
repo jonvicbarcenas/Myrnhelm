@@ -20,15 +20,62 @@ public class SpriteSheetLoaderJson {
 
     public TextureRegion[] getFrames() {
         JsonValue frames = json.get("frames");
-        TextureRegion[] regions = new TextureRegion[frames.size];
-        int index = 0;
+        int frameCount = frames.size;
+        TextureRegion[] regions = new TextureRegion[frameCount];
 
-        for (JsonValue frame : frames) {
-            int x = frame.get("frame").getInt("x");
-            int y = frame.get("frame").getInt("y");
-            int w = frame.get("frame").getInt("w");
-            int h = frame.get("frame").getInt("h");
-            regions[index++] = new TextureRegion(texture, x, y, w, h);
+        for (int i = 0; i < frameCount; i++) {
+            JsonValue frame = frames.get(i);
+            JsonValue frameData = frame.get("frame");
+            int x = frameData.getInt("x");
+            int y = frameData.getInt("y");
+            int width = frameData.getInt("w");
+            int height = frameData.getInt("h");
+
+            regions[i] = new TextureRegion(texture, x, y, width, height);
+        }
+
+        return regions;
+    }
+
+
+    public TextureRegion[] getFrames(String direction) {
+        JsonValue meta = json.get("meta");
+        JsonValue frameTags = meta.get("frameTags");
+
+        int fromIndex = -1;
+        int toIndex = -1;
+
+        // Find the matching direction tag
+        for (JsonValue tag : frameTags) {
+            if (tag.getString("name").equals(direction)) {
+                fromIndex = tag.getInt("from");
+                toIndex = tag.getInt("to");
+                break;
+            }
+        }
+
+        // If direction not found, return empty array
+        if (fromIndex == -1 || toIndex == -1) {
+            return new TextureRegion[0];
+        }
+
+        // Create array for the frames in this direction
+        int frameCount = toIndex - fromIndex + 1;
+        TextureRegion[] regions = new TextureRegion[frameCount];
+
+        // Get all frames
+        JsonValue frames = json.get("frames");
+
+        // Extract only the frames for the specified direction
+        for (int i = 0; i < frameCount; i++) {
+            JsonValue frame = frames.get(fromIndex + i);
+            JsonValue frameData = frame.get("frame");
+            int x = frameData.getInt("x");
+            int y = frameData.getInt("y");
+            int width = frameData.getInt("w");
+            int height = frameData.getInt("h");
+
+            regions[i] = new TextureRegion(texture, x, y, width, height);
         }
 
         return regions;

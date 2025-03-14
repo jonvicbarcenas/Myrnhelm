@@ -9,10 +9,17 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
+import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
+import com.dainsleif.hartebeest.helpers.TileScan;
+import com.dainsleif.hartebeest.utils.CollisionDetector;
 import com.dainsleif.hartebeest.utils.Player;
+
+import java.util.List;
 
 public class Gameworld1 implements Screen {
     TiledMap map;
@@ -26,6 +33,11 @@ public class Gameworld1 implements Screen {
 
     Player player;
     KeyHandler keyHandler;
+
+    private World world;
+    private Box2DDebugRenderer debugRenderer;
+    private TileScan tileScan;
+    private CollisionDetector collisionDetector;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -47,10 +59,20 @@ public class Gameworld1 implements Screen {
         camera.update();
         viewport = new FitViewport(GameInfo.SCREEN_WIDTH, GameInfo.SCREEN_HEIGHT, camera);
 
-        // Create player
-        player = new Player("sprite/walk/walk.atlas", GameInfo.getPlayerX(), GameInfo.getPlayerY());
-        keyHandler = new KeyHandler();
 
+        // Create Box2D world
+        world = new World(new Vector2(0, 0), true);
+        debugRenderer = new Box2DDebugRenderer();
+
+        collisionDetector = new CollisionDetector(world, map, List.of(2,7,8));
+
+        // Create player
+        keyHandler = new KeyHandler();
+        Gdx.input.setInputProcessor(keyHandler);
+        player = new Player(world, "sprite/player/walk.png", "sprite/player/walk.json", collisionDetector);
+
+
+        tileScan = new TileScan(world, map);
 
     }
 
@@ -61,31 +83,39 @@ public class Gameworld1 implements Screen {
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        // Update player position
         player.update(Gdx.graphics.getDeltaTime(), keyHandler);
-
-        // Get map dimensions
-        float mapWidth = map.getProperties().get("width", Integer.class) * map.getProperties().get("tilewidth", Integer.class);
-        float mapHeight = map.getProperties().get("height", Integer.class) * map.getProperties().get("tileheight", Integer.class);
-
-        // Calculate camera position
-        float cameraX = Math.max(camera.viewportWidth / 2, Math.min(player.getX() + player.getWidth() / 2, mapWidth - camera.viewportWidth / 2));
-        float cameraY = Math.max(camera.viewportHeight / 2, Math.min(player.getY() + player.getHeight() / 2, mapHeight - camera.viewportHeight / 2));
+        GameInfo.setPlayerX(player.getX());
+        GameInfo.setPlayerY(player.getY());
 
         // Update camera
-        camera.position.set(cameraX, cameraY, 0);
+        camera.position.set(player.getX(), player.getY(), 0);
         camera.update();
 
         // Render map
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,7,8});
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4, 5, 7, 8});
 
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        player.draw(spriteBatch);
+        player.draw(spriteBatch, 1);
         spriteBatch.end();
+        if(GameInfo.getShowBlockedTiles()){
+            debugRenderer.render(world, camera.combined);
+        }
+        world.step(1 / 60f, 6, 2);
 
         tiledMapRenderer.render(new int[]{6});
+
+//        int currentTileId = tileScan.getTileIdAtPlayer(player.getX(), player.getY(), 8);
+//        if (currentTileId != -1) {
+//            System.out.println("Player is standing on tile ID: " + currentTileId);
+//
+//            if(!tileScan.isTileBlocked(GameInfo.getPlayerX(), GameInfo.getPlayerY(), 8)) {
+//                System.out.println("Tile is blocked");
+//            }
+//        }
     }
 
 
@@ -109,5 +139,7 @@ public class Gameworld1 implements Screen {
         tiledMapRenderer.dispose();
         spriteBatch.dispose();
         backgroundMusic.dispose();
+        world.dispose();
+        debugRenderer.dispose();
     }
 }
