@@ -9,7 +9,7 @@ public class Main extends Game {
 
     @Override
     public void create() {
-        this.setScreen(new ScreenExample1());
+        this.setScreen(new Gameworld1());
     }
 
 
