@@ -24,7 +24,7 @@ public class PlayerPosition {
 
     // SQLite connection
     public static Connection connect() {
-        String url = "jdbc:sqlite:gameinfo.db";
+        String url = "jdbc:sqlite:playerXY.db";
         Connection conn = null;
         try {
             conn = DriverManager.getConnection(url);

@@ -129,9 +129,9 @@ Screen/MenuScreen/frieren.png
 Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
 Screen/MenuScreen/frierenBG.gif
 char.png
-gameinfo.db
+playerXY.db
 sprite/bunny/Idle.png
 sprite/bunny/Running.json
 sprite/bunny/Running.png
-sprite/walk/walk.atlas
-sprite/walk/walk.png
+sprite/player/walk.json
+sprite/player/walk.png

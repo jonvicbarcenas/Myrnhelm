@@ -5,6 +5,9 @@ dependencies {
   api "com.badlogicgames.gdx:gdx:$gdxVersion"
 
   implementation 'org.xerial:sqlite-jdbc:3.36.0.3'
+  //box 2d
+  implementation "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+  implementation "com.badlogicgames.gdx:gdx-box2d-platform:$gdxVersion:natives-desktop"
 
   if(enableGraalNative == 'true') {
     implementation "io.github.berstanio:gdx-svmhelper-annotations:$graalHelperVersion"
