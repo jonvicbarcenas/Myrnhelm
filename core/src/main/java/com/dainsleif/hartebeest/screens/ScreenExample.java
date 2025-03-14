@@ -19,9 +19,11 @@ public class ScreenExample implements Screen {
 
     private BitmapFont font;
     private GlyphLayout layout;
+
     private Rectangle startButtonBounds;
     private Rectangle optionsButtonBounds;
     private Rectangle exitButtonBounds;
+
     private String startButtonText = "Start Game";
     private String optionsButtonText = "Options";
     private String exitButtonText = "Exit";
