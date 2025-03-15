@@ -43,7 +43,7 @@ public class Gameworld1 implements Screen {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
 
         // Load map
-        map = new TmxMapLoader().load("Fan-Tasy/newMap.tmx");
+        map = new TmxMapLoader().load("MAPS/Village.tmx");
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
@@ -64,7 +64,7 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, List.of(2,7,8));
+        collisionDetector = new CollisionDetector(world, map, List.of());
 
         // Create player
         keyHandler = new KeyHandler();
@@ -94,7 +94,7 @@ public class Gameworld1 implements Screen {
 
         // Render map
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4, 5, 7, 8});
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,10,11});
 
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
@@ -106,7 +106,7 @@ public class Gameworld1 implements Screen {
         }
         world.step(1 / 60f, 6, 2);
 
-        tiledMapRenderer.render(new int[]{6});
+        tiledMapRenderer.render(new int[]{8});
 
 //        int currentTileId = tileScan.getTileIdAtPlayer(player.getX(), player.getY(), 8);
 //        if (currentTileId != -1) {
