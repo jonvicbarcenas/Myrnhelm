@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.10" tiledversion="1.11.2" orientation="orthogonal" renderorder="right-down" width="70" height="40" tilewidth="16" tileheight="16" infinite="0" nextlayerid="12" nextobjectid="1">
  <tileset firstgid="1" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Ground.tsx"/>
- <tileset firstgid="133" source="objects64.tsx"/>
+ <tileset firstgid="133" source="Tiled/objects64.tsx"/>
  <tileset firstgid="148" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx"/>
  <tileset firstgid="208" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope.tsx"/>
- <tileset firstgid="4304" source="forest trees.tsx"/>
+ <tileset firstgid="4304" source="Tiled/forest trees.tsx"/>
  <tileset firstgid="4512" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/village.tsx"/>
- <tileset firstgid="5241" source="objects1.tsx"/>
+ <tileset firstgid="5241" source="Tiled/objects1.tsx"/>
  <tileset firstgid="5449" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx"/>
  <tileset firstgid="5468" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx"/>
- <tileset firstgid="5780" source="UnderBridge.tsx"/>
- <tileset firstgid="5844" source="forest_demo_objects.tsx"/>
- <tileset firstgid="6100" source="Forest.tsx"/>
+ <tileset firstgid="5780" source="Tiled/UnderBridge.tsx"/>
+ <tileset firstgid="5844" source="Tiled/forest_demo_objects.tsx"/>
+ <tileset firstgid="6100" source="Tiled/Forest.tsx"/>
  <layer id="1" name="Background" width="70" height="40">
   <data encoding="csv">
 97,110,112,112,109,113,109,100,98,97,98,100,110,111,113,114,100,113,110,101,113,114,99,97,99,98,100,102,114,110,100,111,101,102,110,101,100,110,97,113,109,112,100,101,112,99,109,113,111,111,97,112,97,102,112,111,100,101,101,109,100,99,97,109,102,111,97,102,111,99,
