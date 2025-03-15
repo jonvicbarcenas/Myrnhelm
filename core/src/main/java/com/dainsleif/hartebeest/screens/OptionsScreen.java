@@ -14,8 +14,6 @@ import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 
 public class OptionsScreen implements Screen {
     private SpriteBatch batch;
-    private BitmapFont font;
-    private GlyphLayout layout;
     private Animation<TextureRegion> animation;
     private float stateTime;
 
@@ -26,12 +24,17 @@ public class OptionsScreen implements Screen {
     private Texture volTextTexture;
     private Texture plusVolTexture;
     private Texture minVolTexture;
+    private Texture plusVolClickedTexture;
+    private Texture minVolClickedTexture;
 
     private TextureRegion volText;
     private TextureRegion plusVol;
     private TextureRegion minVol;
+    private TextureRegion plusVolClicked;
+    private TextureRegion minVolClicked;
 
-    private float scale = 3.0f;
+    private boolean isPlusVolClicked = false;
+    private boolean isMinVolClicked = false;
 
     private boolean isTouched = false;
     Music backgroundMusic;
@@ -46,6 +49,7 @@ public class OptionsScreen implements Screen {
         backgroundMusic.setVolume(GameInfo.getMusicVolume());
         backgroundMusic.play();
 
+        // Load sprite sheet and animation frames
         SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frieren.png", "Screen/MenuScreen/frieren.json");
         TextureRegion[] frames = spriteSheetLoader.getFrames();
         System.out.println("Frames loaded: " + frames.length);
@@ -55,33 +59,48 @@ public class OptionsScreen implements Screen {
         batch = new SpriteBatch();
         stateTime = 0.2f;
 
-        volTextTexture = new Texture(Gdx.files.internal("Music.png"));
-        minVolTexture = new Texture(Gdx.files.internal("minus.png"));
-        plusVolTexture = new Texture(Gdx.files.internal("plus.png"));
+        volTextTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Music.png"));
+        minVolTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/minus.png"));
+        plusVolTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/plus.png"));
+        minVolClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/minusClicked.png"));
+        plusVolClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/plusClicked.png"));
 
-//        volText = new TextureRegion(volTextTexture);
-//        minVol = new TextureRegion(minVolTexture);
-//        plusVol = new TextureRegion(plusVolTexture);
+        volText = new TextureRegion(volTextTexture);
+        minVol = new TextureRegion(minVolTexture);
+        plusVol = new TextureRegion(plusVolTexture);
+        plusVolClicked = new TextureRegion(plusVolClickedTexture);
+        minVolClicked = new TextureRegion(minVolClickedTexture);
+
+        float scaleFactor = 3.0f;
+
+        float volTextScaledWidth = volText.getRegionWidth() * scaleFactor;
+        float volTextScaledHeight = volText.getRegionHeight() * scaleFactor;
 
         volTextBounds = new Rectangle(
-            250, // Left margin
-            Gdx.graphics.getHeight() - (volTextTexture.getHeight() * scale) - 200, // Position from top
-            volTextTexture.getWidth() * scale, // Scaled width
-            volTextTexture.getHeight() * scale // Scaled height
+            ((Gdx.graphics.getWidth() - volTextScaledWidth) / 2) - 275,
+            (Gdx.graphics.getHeight() / 2) + 125,
+            volTextScaledWidth,
+            volTextScaledHeight
         );
+
+        float minVolScaledWidth = minVol.getRegionWidth() * scaleFactor;
+        float minVolScaledHeight = minVol.getRegionHeight() * scaleFactor;
 
         minVolBounds = new Rectangle(
-            volTextBounds.x + volTextBounds.width + 230,
-            volTextBounds.y + (volTextBounds.height / 2) - (minVolTexture.getHeight() * scale / 2),
-            minVolTexture.getWidth() * scale,
-            minVolTexture.getHeight() * scale
+            ((Gdx.graphics.getWidth() - minVolScaledWidth) / 2) + 150,
+            (Gdx.graphics.getHeight() / 2) + 100,
+            minVolScaledWidth,
+            minVolScaledHeight
         );
 
+        float plusVolScaledWidth = plusVol.getRegionWidth() * scaleFactor;
+        float plusVolScaledHeight = plusVol.getRegionHeight() * scaleFactor;
+
         plusVolBounds = new Rectangle(
-            minVolBounds.x + minVolBounds.width + 100,
-            volTextBounds.y + (volTextBounds.height / 2) - (plusVolTexture.getHeight() * scale / 2),
-            plusVolTexture.getWidth() * scale,
-            plusVolTexture.getHeight() * scale
+            ((Gdx.graphics.getWidth() - plusVolScaledWidth) / 2) + 350,
+            (Gdx.graphics.getHeight() / 2) + 100,
+            plusVolScaledWidth,
+            plusVolScaledHeight
         );
 
     }
@@ -99,9 +118,12 @@ public class OptionsScreen implements Screen {
 
         batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        TextureRegion minusTexture = isMinVolClicked ? minVolClicked : minVol;
+        TextureRegion plusTexture = isPlusVolClicked ? plusVolClicked : plusVol;
+
         batch.draw(volTextTexture, volTextBounds.x, volTextBounds.y, volTextBounds.width, volTextBounds.height);
-        batch.draw(minVolTexture, minVolBounds.x, minVolBounds.y, minVolBounds.width, minVolBounds.height);
-        batch.draw(plusVolTexture, plusVolBounds.x, plusVolBounds.y, plusVolBounds.width, plusVolBounds.height);
+        batch.draw(minusTexture, minVolBounds.x, minVolBounds.y, minVolBounds.width, minVolBounds.height);
+        batch.draw(plusTexture, plusVolBounds.x, plusVolBounds.y, plusVolBounds.width, plusVolBounds.height);
 
         batch.end();
 
@@ -110,12 +132,14 @@ public class OptionsScreen implements Screen {
                 isTouched = true;
                 Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
                 if (minVolBounds.contains(touchPos)) {
+                    isMinVolClicked = true;
                     float newVolume = Math.max(0.0f, GameInfo.getMusicVolume() - 0.1f); // Clamp to minimum 0.0
                     GameInfo.setMusicVolume(newVolume);
                     backgroundMusic.setVolume(newVolume);
                     System.out.println("Volume decreased: " + newVolume);
 
                 } else if (plusVolBounds.contains(touchPos)) {
+                    isPlusVolClicked = true;
                     float newVolume = Math.min(1.0f, GameInfo.getMusicVolume() + 0.1f); // Clamp to maximum 1.0
                     GameInfo.setMusicVolume(newVolume);
                     backgroundMusic.setVolume(newVolume);
@@ -124,6 +148,12 @@ public class OptionsScreen implements Screen {
                 }
             }
         } else {
+            if (isMinVolClicked) {
+                isMinVolClicked = false;
+            }
+            if (isPlusVolClicked) {
+                isPlusVolClicked = false;
+            }
             isTouched = false;
         }
 
@@ -152,4 +182,4 @@ public class OptionsScreen implements Screen {
             backgroundMusic.dispose();
         }
     }
-}
+}//

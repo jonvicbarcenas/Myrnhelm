@@ -11,6 +11,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dainsleif.hartebeest.helpers.AnimationLoader;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
+import com.dainsleif.hartebeest.world.Gameworld1;
 
 public class ScreenExample1 implements Screen {
     private SpriteBatch batch;
@@ -28,15 +29,18 @@ public class ScreenExample1 implements Screen {
     private Texture exitButtonTexture;
     private Texture startButtonClickedTexture;
     private Texture optionsButtonClickedTexture;
+    private Texture exitButtonClickedTexture;
 
     private TextureRegion startButton;
     private TextureRegion optionsButton;
     private TextureRegion exitButton;
     private TextureRegion startButtonClicked;
     private TextureRegion optionsButtonClicked;
+    private TextureRegion exitButtonClicked;
 
     private boolean isStartButtonClicked = false;
     private boolean isOptionsButtonClicked = false;
+    private boolean isExitButtonClicked = false;
 
 
     private boolean isTouched = false;
@@ -68,11 +72,12 @@ public class ScreenExample1 implements Screen {
 
 
         // Load button textures
-        startButtonTexture = new Texture(Gdx.files.internal("Start_btn.png"));
-        optionsButtonTexture = new Texture(Gdx.files.internal("Settings_btn.png"));
-        exitButtonTexture = new Texture(Gdx.files.internal("Exit_btn.png"));
-        startButtonClickedTexture = new Texture(Gdx.files.internal("Start_btn_clicked.png"));
-        optionsButtonClickedTexture = new Texture(Gdx.files.internal("Settings_btn_clicked.png"));
+        startButtonTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Start_btn.png"));
+        optionsButtonTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Settings_btn.png"));
+        exitButtonTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Exit_btn.png"));
+        startButtonClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Start_btn_clicked.png"));
+        optionsButtonClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Settings_btn_clicked.png"));
+        exitButtonClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Exit_btn_clicked.png"));
 
         // Create TextureRegions for buttons
         startButton = new TextureRegion(startButtonTexture);
@@ -80,6 +85,7 @@ public class ScreenExample1 implements Screen {
         exitButton = new TextureRegion(exitButtonTexture);
         startButtonClicked = new TextureRegion(startButtonClickedTexture);
         optionsButtonClicked = new TextureRegion(optionsButtonClickedTexture);
+        exitButtonClicked = new TextureRegion(exitButtonClickedTexture);
 
         float scaleFactor = 1.5f; // Adjust as needed
 
@@ -130,10 +136,11 @@ public class ScreenExample1 implements Screen {
 
         TextureRegion startTexture = isStartButtonClicked ? startButtonClicked : startButton;
         TextureRegion optionsTexture = isOptionsButtonClicked ? optionsButtonClicked : optionsButton;
+        TextureRegion exitTexture = isExitButtonClicked ? exitButtonClicked : exitButton;
 
         batch.draw(startTexture, startButtonBounds.x, startButtonBounds.y, startButtonBounds.width, startButtonBounds.height);
         batch.draw(optionsTexture, optionsButtonBounds.x, optionsButtonBounds.y, optionsButtonBounds.width, optionsButtonBounds.height);
-        batch.draw(exitButton, exitButtonBounds.x, exitButtonBounds.y, exitButtonBounds.width, exitButtonBounds.height);
+        batch.draw(exitTexture, exitButtonBounds.x, exitButtonBounds.y, exitButtonBounds.width, exitButtonBounds.height);
 
         batch.end();
 
@@ -150,6 +157,7 @@ public class ScreenExample1 implements Screen {
                     isOptionsButtonClicked = true;
                 } else if (exitButtonBounds.contains(touchPos)) {
                     // Handle Exit button click
+                    isExitButtonClicked = true;
                     System.out.println("Exit Button clicked!");
                 }
             }
@@ -162,6 +170,10 @@ public class ScreenExample1 implements Screen {
                 isOptionsButtonClicked = false;
                 // Switch to options screen
                 ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
+            }
+            if (isExitButtonClicked) {
+                isExitButtonClicked = false;
+                System.out.println("Exit Button clicked!");
             }
             isTouched = false;
         }
