@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<tileset version="1.10" tiledversion="1.10.1" name="Atlas_Props" tilewidth="16" tileheight="16" tilecount="180" columns="18">
+<tileset version="1.10" tiledversion="1.11.2" name="Atlas_Props" tilewidth="16" tileheight="16" tilecount="180" columns="18">
  <image source="../../Art/Props/Atlas/Props.png" width="288" height="160"/>
  <tile id="7">
   <objectgroup draworder="index" id="2">
@@ -23,6 +23,9 @@
   </objectgroup>
  </tile>
  <tile id="18">
+  <properties>
+   <property name="blocked" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="8.88178e-16" y="14.9091">
     <polygon points="0,0 16,0 16,-8.09091 0.0909091,-8.09091"/>
@@ -122,6 +125,9 @@
   </objectgroup>
  </tile>
  <tile id="113">
+  <properties>
+   <property name="blocked" type="bool" value="false"/>
+  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="3" y="3" width="10" height="12"/>
   </objectgroup>

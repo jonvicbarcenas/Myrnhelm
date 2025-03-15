@@ -4,43 +4,40 @@
   <image source="../Mystic Woods/sprites/tilesets/grass.png" trans="ffffff" width="16" height="16"/>
  </tileset>
  <tileset firstgid="2" name="CityWall_Gate_1" tilewidth="16" tileheight="16" tilecount="30" columns="5">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/CityWall_Gate_1.png" trans="ffffff" width="80" height="96"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Buildings/CityWall_Gate_1.png" trans="ffffff" width="80" height="96"/>
  </tileset>
  <tileset firstgid="32" name="Buildings" tilewidth="16" tileheight="16" tilecount="442" columns="13">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png" trans="ffffff" width="208" height="544"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png" trans="ffffff" width="208" height="544"/>
  </tileset>
  <tileset firstgid="474" name="Trees_Bushes" tilewidth="16" tileheight="16" tilecount="144" columns="24">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Trees and Bushes/Atlas/Trees_Bushes.png" trans="ffffff" width="384" height="96"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Trees and Bushes/Atlas/Trees_Bushes.png" trans="ffffff" width="384" height="96"/>
  </tileset>
  <tileset firstgid="618" name="Tileset_Ground" tilewidth="16" tileheight="16" tilecount="132" columns="12">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Ground.png" trans="ffffff" width="192" height="176"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Ground.png" trans="ffffff" width="192" height="176"/>
  </tileset>
  <tileset firstgid="750" name="Tileset_Road" tilewidth="16" tileheight="16" tilecount="60" columns="6">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Road.png" trans="ffffff" width="96" height="160"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Ground Tileset/Tileset_Road.png" trans="ffffff" width="96" height="160"/>
  </tileset>
  <tileset firstgid="810" name="Props" tilewidth="16" tileheight="16" tilecount="180" columns="18">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Props/Atlas/Props.png" trans="ffffff" width="288" height="160"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Props/Atlas/Props.png" trans="ffffff" width="288" height="160"/>
  </tileset>
  <tileset firstgid="990" name="Tileset_RockSlope" tilewidth="16" tileheight="16" tilecount="4096" columns="64">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Rock Slopes/Tileset_RockSlope.png" trans="ffffff" width="1024" height="1024"/>
+  <image source="The Fan-tasy Tileset (Free)/Art/Rock Slopes/Tileset_RockSlope.png" trans="ffffff" width="1024" height="1024"/>
  </tileset>
- <tileset firstgid="5086" name="Rocks" tilewidth="16" tileheight="16" tilecount="22" columns="11">
-  <image source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Rocks/Atlas/Rocks.png" trans="ffffff" width="182" height="32"/>
- </tileset>
- <tileset firstgid="5108" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx"/>
- <tileset firstgid="5168" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope.tsx"/>
- <tileset firstgid="9264" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope_Simple.tsx"/>
- <tileset firstgid="9318" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx"/>
- <tileset firstgid="9630" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Ground.tsx"/>
- <tileset firstgid="9762" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Buildings.tsx"/>
- <tileset firstgid="9768" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx"/>
- <tileset firstgid="9787" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Rocks.tsx"/>
- <tileset firstgid="9792" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Trees.tsx"/>
- <tileset firstgid="9803" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_Red.tsx"/>
- <tileset firstgid="9899" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_White.tsx"/>
- <tileset firstgid="9995" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Campfire.tsx"/>
- <tileset firstgid="10027" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Props.tsx"/>
- <tileset firstgid="10207" source="../Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Rocks.tsx"/>
+ <tileset firstgid="5108" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx"/>
+ <tileset firstgid="5168" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope.tsx"/>
+ <tileset firstgid="9264" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_RockSlope_Simple.tsx"/>
+ <tileset firstgid="9318" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx"/>
+ <tileset firstgid="9630" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Ground.tsx"/>
+ <tileset firstgid="9762" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Buildings.tsx"/>
+ <tileset firstgid="9768" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx"/>
+ <tileset firstgid="9787" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Rocks.tsx"/>
+ <tileset firstgid="9792" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Trees.tsx"/>
+ <tileset firstgid="9803" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_Red.tsx"/>
+ <tileset firstgid="9899" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_White.tsx"/>
+ <tileset firstgid="9995" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Campfire.tsx"/>
+ <tileset firstgid="10027" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Props.tsx"/>
+ <tileset firstgid="10207" source="The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Rocks.tsx"/>
  <layer id="3" name="ground" width="100" height="100">
   <data encoding="csv">
 717,726,726,726,730,715,718,730,728,730,717,726,714,719,715,717,719,716,714,716,719,730,729,715,715,728,729,731,726,719,715,717,726,717,729,726,717,730,715,716,728,716,714,727,729,731,727,728,714,717,714,728,727,730,726,718,731,729,731,714,730,718,727,728,714,715,730,731,727,727,717,719,715,730,728,717,728,719,718,726,715,726,726,727,727,726,726,726,730,714,727,728,716,728,717,718,718,730,727,716,

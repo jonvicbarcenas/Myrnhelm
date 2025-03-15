@@ -6,15 +6,14 @@ import com.dainsleif.hartebeest.database.PlayerPosition;
 public class GameInfo {
     //------------OPTIONS MENU VARIABLE---------------//
     static float musicVolume = 0.1f;
-
+    public static boolean showBlockedTiles = true;
 
 
 
     //---------[(END) OPTIONS MENU VARIABLE]---------//
 
 
-
-
+    private static float playerSpeed = 70f;
     //width and height of the screen
     public static double playerX = PlayerPosition.getPlayerXFromDB();
     public static double playerY = PlayerPosition.getPlayerYFromDB();
@@ -29,7 +28,6 @@ public class GameInfo {
     public static final float fps = Gdx.graphics.getFramesPerSecond();
 
     //player speed with setter and getter
-    private static float playerSpeed = 75f;
     public static void setPlayerSpeed(float speed) {
         playerSpeed = speed;
     }
@@ -42,9 +40,6 @@ public class GameInfo {
         playerX = x;
         PlayerPosition.savePlayerPosition();
     }
-    public static float getPlayerX() {
-        return (float) playerX;
-    }
 
     public static void setPlayerY(float y) {
         playerY = y;
@@ -53,7 +48,9 @@ public class GameInfo {
     public static float getPlayerY() {
         return (float) playerY;
     }
-
+    public static float getPlayerX() {
+        return (float) playerX;
+    }
 
     //music volume with setter and getter
     public static void setMusicVolume(float volume) {
@@ -61,6 +58,14 @@ public class GameInfo {
     }
     public static float getMusicVolume() {
         return musicVolume;
+    }
+
+    //show blocked tiles with setter and getter
+    public static void setShowBlockedTiles(boolean show) {
+        showBlockedTiles = show;
+    }
+    public static boolean getShowBlockedTiles() {
+        return showBlockedTiles;
     }
 
 }
