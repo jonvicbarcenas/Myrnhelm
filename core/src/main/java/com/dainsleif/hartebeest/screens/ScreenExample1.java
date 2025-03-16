@@ -53,7 +53,7 @@ public class ScreenExample1 implements Screen {
         batch = new SpriteBatch();
 
         // Load and play background music
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/16bitRpgBGMUSIC.mp3"));
+        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/dawn_winery_MenuBGM.mp3"));
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(GameInfo.getMusicVolume()); // Adjusted volume for testing
         backgroundMusic.play();
