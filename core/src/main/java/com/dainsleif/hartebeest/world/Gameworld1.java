@@ -3,9 +3,11 @@ package com.dainsleif.hartebeest.world;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -35,6 +37,8 @@ public class Gameworld1 implements Screen {
     Player player;
     KeyHandler keyHandler;
 
+    private AssetManager assetManager;
+
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private TileScan tileScan;
@@ -43,13 +47,24 @@ public class Gameworld1 implements Screen {
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
 
+
+        // Initialize AssetManager
+        assetManager = new AssetManager();
+
+        // Queue assets for loading
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+        assetManager.load("MAPS/Village.tmx", TiledMap.class);
+        assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
+
+        assetManager.finishLoading();
+
         // Load map
-        map = new TmxMapLoader().load("MAPS/Village.tmx");
+        map = assetManager.get("MAPS/Village.tmx", TiledMap.class);
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         // Load and play background music
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/16bitRpgBGMUSIC.mp3"));
+        backgroundMusic = assetManager.get("Music/16bitRpgBGMUSIC.mp3", Music.class);
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(GameInfo.getMusicVolume());
         backgroundMusic.play();
@@ -102,6 +117,7 @@ public class Gameworld1 implements Screen {
         camera.update();
 
         // Render map
+
 //        tiledMapRenderer.setView(camera);
         tiledMapRenderer.setView(camera.combined, camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth * 2, camera.viewportHeight * 2);
         tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,10,11});
@@ -136,12 +152,10 @@ public class Gameworld1 implements Screen {
 
     @Override
     public void dispose() {
-        map.dispose();
-        tiledMapRenderer.dispose();
         spriteBatch.dispose();
-        backgroundMusic.dispose();
         world.dispose();
         debugRenderer.dispose();
+        assetManager.dispose();
     }
 
     public void zoomIn() {
