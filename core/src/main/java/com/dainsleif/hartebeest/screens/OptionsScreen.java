@@ -39,15 +39,14 @@ public class OptionsScreen implements Screen {
     private boolean isTouched = false;
     Music backgroundMusic;
 
+    public OptionsScreen(Music backgroundMusic) {
+        this.backgroundMusic = backgroundMusic;
+    }
+
     @Override
     public void show() {
-        // Initialize any necessary components
         batch = new SpriteBatch();
 
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/dawn_winery_MenuBGM.mp3"));
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(GameInfo.getMusicVolume());
-        backgroundMusic.play();
 
         // Load sprite sheet and animation frames
         SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frieren.png", "Screen/MenuScreen/frieren.json");

@@ -169,7 +169,7 @@ public class ScreenExample1 implements Screen {
             if (isOptionsButtonClicked) {
                 isOptionsButtonClicked = false;
                 // Switch to options screen
-                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new OptionsScreen());
+                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new OptionsScreen(backgroundMusic));
             }
             if (isExitButtonClicked) {
                 isExitButtonClicked = false;
@@ -181,29 +181,24 @@ public class ScreenExample1 implements Screen {
 
     @Override
     public void resize(int width, int height) {
-        // No resizing logic needed here
     }
 
     @Override
     public void pause() {
-        // Handle pause state
     }
 
     @Override
     public void resume() {
-        // Handle resume state
     }
 
     @Override
     public void hide() {
-        // Handle screen hiding
     }
 
     @Override
     public void dispose() {
-        // Dispose of resources
         batch.dispose();
-        if (backgroundMusic != null) backgroundMusic.dispose();
+        backgroundMusic.dispose();
         startButtonTexture.dispose();
         optionsButtonTexture.dispose();
         exitButtonTexture.dispose();

@@ -12,6 +12,4 @@ public class Main extends Game {
     public void create() {
         this.setScreen(new Gameworld1());
     }
-
-
 }

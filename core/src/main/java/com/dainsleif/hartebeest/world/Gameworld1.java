@@ -1,10 +1,13 @@
 package com.dainsleif.hartebeest.world;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -34,6 +37,8 @@ public class Gameworld1 implements Screen {
     Player player;
     KeyHandler keyHandler;
 
+    private AssetManager assetManager;
+
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private TileScan tileScan;
@@ -42,13 +47,24 @@ public class Gameworld1 implements Screen {
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
 
+
+        // Initialize AssetManager
+        assetManager = new AssetManager();
+
+        // Queue assets for loading
+        assetManager.setLoader(TiledMap.class, new TmxMapLoader());
+        assetManager.load("MAPS/Village.tmx", TiledMap.class);
+        assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
+
+        assetManager.finishLoading();
+
         // Load map
-        map = new TmxMapLoader().load("MAPS/Village.tmx");
+        map = assetManager.get("MAPS/Village.tmx", TiledMap.class);
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
         // Load and play background music
-        backgroundMusic = Gdx.audio.newMusic(Gdx.files.internal("Music/16bitRpgBGMUSIC.mp3"));
+        backgroundMusic = assetManager.get("Music/16bitRpgBGMUSIC.mp3", Music.class);
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(GameInfo.getMusicVolume());
         backgroundMusic.play();
@@ -56,6 +72,7 @@ public class Gameworld1 implements Screen {
         // Camera setup
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 400, 400);
+        camera.zoom = 1.0f;
         camera.update();
         viewport = new FitViewport(GameInfo.SCREEN_WIDTH, GameInfo.SCREEN_HEIGHT, camera);
 
@@ -64,7 +81,7 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, List.of());
+        collisionDetector = new CollisionDetector(world, map, List.of(6));
 
         // Create player
         keyHandler = new KeyHandler();
@@ -83,6 +100,13 @@ public class Gameworld1 implements Screen {
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        if (Gdx.input.isKeyPressed(Input.Keys.valueOf(","))) {
+            zoomIn();
+        }
+        if (Gdx.input.isKeyPressed(Input.Keys.valueOf("."))) {
+            zoomOut();
+        }
+
         // Update player position
         player.update(Gdx.graphics.getDeltaTime(), keyHandler);
         GameInfo.setPlayerX(player.getX());
@@ -93,7 +117,9 @@ public class Gameworld1 implements Screen {
         camera.update();
 
         // Render map
-        tiledMapRenderer.setView(camera);
+
+//        tiledMapRenderer.setView(camera);
+        tiledMapRenderer.setView(camera.combined, camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth * 2, camera.viewportHeight * 2);
         tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,10,11});
 
         // Render player with camera
@@ -107,15 +133,6 @@ public class Gameworld1 implements Screen {
         world.step(1 / 60f, 6, 2);
 
         tiledMapRenderer.render(new int[]{8});
-
-//        int currentTileId = tileScan.getTileIdAtPlayer(player.getX(), player.getY(), 8);
-//        if (currentTileId != -1) {
-//            System.out.println("Player is standing on tile ID: " + currentTileId);
-//
-//            if(!tileScan.isTileBlocked(GameInfo.getPlayerX(), GameInfo.getPlayerY(), 8)) {
-//                System.out.println("Tile is blocked");
-//            }
-//        }
     }
 
 
@@ -135,11 +152,25 @@ public class Gameworld1 implements Screen {
 
     @Override
     public void dispose() {
-        map.dispose();
-        tiledMapRenderer.dispose();
         spriteBatch.dispose();
-        backgroundMusic.dispose();
         world.dispose();
         debugRenderer.dispose();
+        assetManager.dispose();
+    }
+
+    public void zoomIn() {
+        camera.zoom -= 0.01f; // Decrease zoom level
+        if (camera.zoom < 0.5f) {
+            camera.zoom = 0.5f; // Minimum zoom level
+        }
+        camera.update();
+    }
+
+    public void zoomOut() {
+        camera.zoom += 0.01f; // Increase zoom level
+        if (camera.zoom > 2.0f) {
+            camera.zoom = 2.0f; // Maximum zoom level
+        }
+        camera.update();
     }
 }
