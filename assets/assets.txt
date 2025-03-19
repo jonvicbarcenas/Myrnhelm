@@ -62,7 +62,6 @@ Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/Beginning Fields.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/Beginning Fields.tmx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/Rules/RockSlopes_Rules.tmx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/rules.txt
-Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilemaps/village.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Campfire.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_Red.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Animation_Flowers_White.tsx
@@ -81,11 +80,32 @@ Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tileset_Water.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx
 Fan-Tasy/newMap.tmx
 MAPS/Forrest1.tmx
+MAPS/StartArea.tmx
 MAPS/Tiled/64.tsx
 MAPS/Tiled/Atlas_Buildings.tsx
+MAPS/Tiled/CityWall_Gate_1.png
+MAPS/Tiled/CityWall_Gate_1.tsx
 MAPS/Tiled/Dungeon.tmx
 MAPS/Tiled/Forest.aseprite
 MAPS/Tiled/Forest.tsx
+MAPS/Tiled/Props.tsx
+MAPS/Tiled/TX Plant.tsx
+MAPS/Tiled/TX Props.tsx
+MAPS/Tiled/TX Shadow Plant.tsx
+MAPS/Tiled/TX Shadow.tsx
+MAPS/Tiled/TX Struct.tsx
+MAPS/Tiled/TX Tileset Grass.tsx
+MAPS/Tiled/TX Tileset Stone Ground.tsx
+MAPS/Tiled/TX Tileset Wall.tsx
+MAPS/Tiled/Texture/TX Plant.png
+MAPS/Tiled/Texture/TX Player.png
+MAPS/Tiled/Texture/TX Props.png
+MAPS/Tiled/Texture/TX Shadow Plant.png
+MAPS/Tiled/Texture/TX Shadow.png
+MAPS/Tiled/Texture/TX Struct.png
+MAPS/Tiled/Texture/TX Tileset Grass.png
+MAPS/Tiled/Texture/TX Tileset Stone Ground.png
+MAPS/Tiled/Texture/TX Tileset Wall.png
 MAPS/Tiled/UnderBridge.aseprite
 MAPS/Tiled/UnderBridge.png
 MAPS/Tiled/UnderBridge.tsx
@@ -104,6 +124,7 @@ MAPS/Tiled/tiles.tsx
 MAPS/Tiled/trees forest 64.tsx
 MAPS/Tiled/valerio-colonna-tilesets-topdown-removebg-preview.png
 MAPS/Tiled/valerio-colonna-tilesets-topdown-removebg-preview.tsx
+MAPS/Tiled/village.tsx
 MAPS/Village.tmx
 Map.tmx
 Music/16bitRpgBGMUSIC.mp3
