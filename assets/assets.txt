@@ -70,7 +70,6 @@ Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Buildings.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Props.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Rocks.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Atlas_Trees_Bushes.tsx
-Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Forest.aseprite
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Buildings.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Props.tsx
 Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Objects_Rocks.tsx
@@ -83,7 +82,9 @@ Fan-Tasy/The Fan-tasy Tileset (Free)/Tiled/Tilesets/Tilesets_Road.tsx
 Fan-Tasy/newMap.tmx
 MAPS/Forrest1.tmx
 MAPS/Tiled/64.tsx
+MAPS/Tiled/Atlas_Buildings.tsx
 MAPS/Tiled/Dungeon.tmx
+MAPS/Tiled/Forest.aseprite
 MAPS/Tiled/Forest.tsx
 MAPS/Tiled/UnderBridge.aseprite
 MAPS/Tiled/UnderBridge.png
