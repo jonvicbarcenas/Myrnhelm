@@ -19,6 +19,7 @@ import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.helpers.TileScan;
+import com.dainsleif.hartebeest.screens.FpsStage;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 import com.dainsleif.hartebeest.utils.Player;
 
@@ -43,6 +44,8 @@ public class Gameworld1 implements Screen {
     private Box2DDebugRenderer debugRenderer;
     private TileScan tileScan;
     private CollisionDetector collisionDetector;
+
+    FpsStage fpsStage;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -91,6 +94,8 @@ public class Gameworld1 implements Screen {
 
         tileScan = new TileScan(world, map);
 
+        fpsStage = new FpsStage();
+
     }
 
     @Override
@@ -99,6 +104,7 @@ public class Gameworld1 implements Screen {
     @Override
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
 
         if (Gdx.input.isKeyPressed(Input.Keys.valueOf(","))) {
             zoomIn();
@@ -133,12 +139,17 @@ public class Gameworld1 implements Screen {
         world.step(1 / 60f, 6, 2);
 
         tiledMapRenderer.render(new int[]{8});
+
+        fpsStage.update(v);
+        fpsStage.draw();
+
     }
 
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height);
+        fpsStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -156,6 +167,7 @@ public class Gameworld1 implements Screen {
         world.dispose();
         debugRenderer.dispose();
         assetManager.dispose();
+        fpsStage.dispose();
     }
 
     public void zoomIn() {
