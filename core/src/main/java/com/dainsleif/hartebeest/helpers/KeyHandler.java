@@ -6,6 +6,8 @@ import com.badlogic.gdx.InputAdapter;
 public class KeyHandler extends InputAdapter {
     private boolean upPressed, downPressed, leftPressed, rightPressed;
 
+    private boolean enterPressed, escapePressed;
+
     @Override
     public boolean keyDown(int keycode) {
         switch (keycode) {
@@ -20,6 +22,9 @@ public class KeyHandler extends InputAdapter {
                 break;
             case Input.Keys.D:
                 rightPressed = true;
+                break;
+            case Input.Keys.ENTER:
+                enterPressed = true;
                 break;
         }
         return true;
@@ -40,8 +45,15 @@ public class KeyHandler extends InputAdapter {
             case Input.Keys.D:
                 rightPressed = false;
                 break;
+            case Input.Keys.ENTER:
+                enterPressed = false;
+                break;
         }
         return true;
+    }
+
+    public boolean isEnterPressed() {
+        return enterPressed;
     }
 
     public boolean isUpPressed() {

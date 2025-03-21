@@ -7,7 +7,6 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
@@ -31,6 +30,7 @@ public class Gameworld1 implements Screen {
     SpriteBatch spriteBatch;
     FitViewport viewport;
     Music backgroundMusic;
+    FpsStage fpsStage;
 
     // Camera
     OrthographicCamera camera;
@@ -39,13 +39,14 @@ public class Gameworld1 implements Screen {
     KeyHandler keyHandler;
 
     private AssetManager assetManager;
-
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private TileScan tileScan;
     private CollisionDetector collisionDetector;
 
-    FpsStage fpsStage;
+    ///-------------- sum variables for Class Usage ---------------///
+    private boolean isFlag = false;
+    private float mapWidth, mapHeight;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -73,8 +74,12 @@ public class Gameworld1 implements Screen {
         backgroundMusic.play();
 
         // Camera setup
+        mapWidth = map.getProperties().get("width", Integer.class) *
+            map.getProperties().get("tilewidth", Integer.class);
+        mapHeight = map.getProperties().get("height", Integer.class) *
+            map.getProperties().get("tileheight", Integer.class);
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 400, 400);
+        camera.setToOrtho(false, GameInfo.SCREEN_WIDTH, GameInfo.SCREEN_HEIGHT);
         camera.zoom = 1.0f;
         camera.update();
         viewport = new FitViewport(GameInfo.SCREEN_WIDTH, GameInfo.SCREEN_HEIGHT, camera);
@@ -120,6 +125,17 @@ public class Gameworld1 implements Screen {
 
         // Update camera
         camera.position.set(player.getX(), player.getY(), 0);
+
+        // Constrain camera to map boundaries
+        float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
+        float effectiveViewportHeight = camera.viewportHeight * camera.zoom;
+
+        // Clamp camera position
+        camera.position.x = Math.min(Math.max(camera.position.x, effectiveViewportWidth/2),
+            mapWidth - effectiveViewportWidth/2);
+        camera.position.y = Math.min(Math.max(camera.position.y, effectiveViewportHeight/2),
+            mapHeight - effectiveViewportHeight/2);
+
         camera.update();
 
         // Render map
@@ -145,13 +161,23 @@ public class Gameworld1 implements Screen {
         fpsStage.update(v);
         fpsStage.draw();
 
+
+        // SAMPLE ENTER KEY PRESS
+        if(keyHandler.isEnterPressed()){
+            if(!isFlag){
+                isFlag = true;
+                System.out.println("Enter Pressed");
+            }
+        }else {
+            isFlag = false;
+        }
     }
 
 
     @Override
     public void resize(int width, int height) {
-        viewport.update(width, height);
-        fpsStage.getViewport().update(width, height, true);
+        viewport.update(width, height, true);
+//        fpsStage.getViewport().update(width, height, true);
     }
 
     @Override
