@@ -113,6 +113,9 @@ MAPS/Tiled/UnderBridge2.tsx
 MAPS/Tiled/forest trees.tsx
 MAPS/Tiled/forest_demo_objects.tsx
 MAPS/Tiled/forest_demo_terrain.tsx
+MAPS/Tiled/grass layered.aseprite
+MAPS/Tiled/grass layered.png
+MAPS/Tiled/grass layered.tsx
 MAPS/Tiled/newMap.tmx
 MAPS/Tiled/objects.tsx
 MAPS/Tiled/objects1.tsx
@@ -180,6 +183,7 @@ Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
 Screen/MenuScreen/frierenBG.gif
 char.png
 gameinfo.db
+playerXY.db
 sprite/MenuSprite/Exit_btn.png
 sprite/MenuSprite/Exit_btn_clicked.png
 sprite/MenuSprite/Music.png
@@ -187,6 +191,8 @@ sprite/MenuSprite/Settings_btn.png
 sprite/MenuSprite/Settings_btn_clicked.png
 sprite/MenuSprite/Start_btn.png
 sprite/MenuSprite/Start_btn_clicked.png
+sprite/MenuSprite/back.png
+sprite/MenuSprite/backClicked.png
 sprite/MenuSprite/minus.png
 sprite/MenuSprite/minusClicked.png
 sprite/MenuSprite/plus.png
