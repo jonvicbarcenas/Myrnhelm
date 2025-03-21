@@ -47,6 +47,8 @@ public class ScreenExample1 implements Screen {
 
     Music backgroundMusic;
 
+
+
     @Override
     public void show() {
         // Initialize the SpriteBatch

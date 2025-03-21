@@ -13,7 +13,7 @@ public class GameInfo {
     //---------[(END) OPTIONS MENU VARIABLE]---------//
 
 
-    private static float playerSpeed = 70f;
+    private static float playerSpeed = 40f;
     //width and height of the screen
     public static double playerX = PlayerPosition.getPlayerXFromDB();
     public static double playerY = PlayerPosition.getPlayerYFromDB();
