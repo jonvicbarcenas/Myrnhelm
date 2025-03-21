@@ -10,7 +10,7 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 public class FpsStage extends Stage {
     private final Label fpsLabel;
     private final BitmapFont font;
-    private float updateInterval = 0.5f; // Update every half second to avoid flickering
+    private float updateInterval = 0.5f;
     private float timeSinceUpdate = 0;
 
     public FpsStage() {

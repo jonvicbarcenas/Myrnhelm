@@ -125,7 +125,7 @@ public class Gameworld1 implements Screen {
         // Render map
 
         tiledMapRenderer.setView(camera);
-//        tiledMapRenderer.setView(camera.combined, camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth * 2, camera.viewportHeight * 2);
+///        tiledMapRenderer.setView(camera.combined, camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth * 2, camera.viewportHeight * 2);
         tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,10,11,12,13,14,15,16,17});
 
         // Render player with camera
@@ -140,6 +140,8 @@ public class Gameworld1 implements Screen {
 
         tiledMapRenderer.render(new int[]{8});
 
+
+        // Draw Stages
         fpsStage.update(v);
         fpsStage.draw();
 
