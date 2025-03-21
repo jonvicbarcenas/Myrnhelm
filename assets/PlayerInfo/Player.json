@@ -5,15 +5,87 @@
     "Description": {
       "Title": "Adventurer of Eldengarde"
     },
-    "PlayerStats" : {
+    "PlayerStats": {
       "Level": 1,
       "Experience": 0,
-      "Health": 100,
+      "Health": 1500,
       "Mana": 100,
+      "Strength": 50,
+      "Dexterity": 10,
+      "Intelligence": 30,
+      "Luck": 10
+    },
+    "Skills": [
+      { "Skill": 1, "Description": "Slash – Fast armor-piercing strike." },
+      { "Skill": 2, "Description": "Grauzel – Heavy sword cleave." },
+      { "Skill": 3, "Description": "Strahl – Energy shockwave." },
+      { "Skill": 4, "Description": "Himmel Schwert (Ultimate) – Devastating sword smash." }
+    ]
+  },
+  {
+    "PlayerName": "Lady Meley of Ravenshade",
+    "Description": {
+      "Title": "The Arcane Seeker"
+    },
+    "PlayerStats": {
+      "Level": 1,
+      "Experience": 0,
+      "Health": 1000,
+      "Mana": 300,
+      "Strength": 10,
+      "Dexterity": 10,
+      "Intelligence": 30,
+      "Luck": 10
+    },
+    "Skills": [
+      { "Skill": 1, "Description": "Flamme – Small fireball." },
+      { "Skill": 2, "Description": "Gigaflame – Large fire explosion." },
+      { "Skill": 3, "Description": "Eisenritter – Meteor strike." },
+      { "Skill": 4, "Description": "Zoltraak (Ultimate) – Unstoppable spell." }
+    ]
+  },
+  {
+    "PlayerName": "Father Jon Vicario",
+    "Description": {
+      "Title": "The Devout Healer"
+    },
+    "PlayerStats": {
+      "Level": 1,
+      "Experience": 0,
+      "Health": 1200,
+      "Mana": 150,
+      "Strength": 10,
+      "Dexterity": 10,
+      "Intelligence": 30,
+      "Luck": 10
+    },
+    "Skills": [
+      { "Skill": 1, "Description": "Heiliges Licht – Basic heal." },
+      { "Skill": 2, "Description": "Segen – Temporary shield." },
+      { "Skill": 3, "Description": "Göttliche Klinge – Holy sword strike." },
+      { "Skill": 4, "Description": "Hymne der Wiedergeburt (Ultimate) – Revive and harm undead." }
+    ]
+  },
+  {
+    "PlayerName": "Joseph of Drakenfell",
+    "Description": {
+      "Title": "The Half-Dragon Outcast"
+    },
+    "PlayerStats": {
+      "Level": 1,
+      "Experience": 0,
+      "Health": 1800,
+      "Energy": 120,
       "Strength": 10,
       "Dexterity": 10,
       "Intelligence": 10,
       "Luck": 10
-    }
+    },
+    "Skills": [
+      { "Skill": 1, "Description": "Flamme Drache – Fiery claw attack." },
+      { "Skill": 2, "Description": "Feueratem – Dragon breath." },
+      { "Skill": 3, "Description": "Sturmflügel – Aerial smash." },
+      { "Skill": 4, "Description": "Drachenherrschaft (Ultimate) – Full dragon form." }
+    ]
   }
 ]
