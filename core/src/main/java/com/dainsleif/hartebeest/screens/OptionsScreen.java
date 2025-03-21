@@ -20,21 +20,29 @@ public class OptionsScreen implements Screen {
     private Rectangle volTextBounds;
     private Rectangle plusVolBounds;
     private Rectangle minVolBounds;
+    private Rectangle backBounds;
 
     private Texture volTextTexture;
     private Texture plusVolTexture;
     private Texture minVolTexture;
+    private Texture backTexture;
     private Texture plusVolClickedTexture;
     private Texture minVolClickedTexture;
+    private Texture backClickedTexture;
+
 
     private TextureRegion volText;
     private TextureRegion plusVol;
     private TextureRegion minVol;
+    private TextureRegion back;
     private TextureRegion plusVolClicked;
     private TextureRegion minVolClicked;
+    private TextureRegion backClicked;
+
 
     private boolean isPlusVolClicked = false;
     private boolean isMinVolClicked = false;
+    private boolean isBackClicked = false;
 
     private boolean isTouched = false;
     Music backgroundMusic;
@@ -61,16 +69,30 @@ public class OptionsScreen implements Screen {
         volTextTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/Music.png"));
         minVolTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/minus.png"));
         plusVolTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/plus.png"));
+        backTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/back.png"));
         minVolClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/minusClicked.png"));
         plusVolClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/plusClicked.png"));
+        backClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/backClicked.png"));
 
         volText = new TextureRegion(volTextTexture);
         minVol = new TextureRegion(minVolTexture);
         plusVol = new TextureRegion(plusVolTexture);
+        back = new TextureRegion(backTexture);
         plusVolClicked = new TextureRegion(plusVolClickedTexture);
         minVolClicked = new TextureRegion(minVolClickedTexture);
+        backClicked = new TextureRegion(backClickedTexture);
 
         float scaleFactor = 3.0f;
+
+        float backScaledWidth = back.getRegionWidth() * scaleFactor;
+        float backScaledHeight = back.getRegionHeight() * scaleFactor;
+
+        backBounds = new Rectangle(
+            ((Gdx.graphics.getWidth() - backScaledWidth) / 2) - 500,
+            (Gdx.graphics.getHeight() / 2) + 250,
+            backScaledWidth,
+            backScaledHeight
+        );
 
         float volTextScaledWidth = volText.getRegionWidth() * scaleFactor;
         float volTextScaledHeight = volText.getRegionHeight() * scaleFactor;
@@ -117,9 +139,11 @@ public class OptionsScreen implements Screen {
 
         batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
 
+        TextureRegion backBtnTexture = isBackClicked ? backClicked : back;
         TextureRegion minusTexture = isMinVolClicked ? minVolClicked : minVol;
         TextureRegion plusTexture = isPlusVolClicked ? plusVolClicked : plusVol;
 
+        batch.draw(backBtnTexture, backBounds.x, backBounds.y, backBounds.width, backBounds.height);
         batch.draw(volTextTexture, volTextBounds.x, volTextBounds.y, volTextBounds.width, volTextBounds.height);
         batch.draw(minusTexture, minVolBounds.x, minVolBounds.y, minVolBounds.width, minVolBounds.height);
         batch.draw(plusTexture, plusVolBounds.x, plusVolBounds.y, plusVolBounds.width, plusVolBounds.height);
@@ -144,6 +168,8 @@ public class OptionsScreen implements Screen {
                     backgroundMusic.setVolume(newVolume);
                     System.out.println("Volume increased: " + newVolume);
 
+                } else if (backBounds.contains(touchPos)) {
+                    isBackClicked = true;
                 }
             }
         } else {
@@ -152,6 +178,10 @@ public class OptionsScreen implements Screen {
             }
             if (isPlusVolClicked) {
                 isPlusVolClicked = false;
+            }
+            if (isBackClicked){
+                isBackClicked = false;
+                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new ScreenExample1());
             }
             isTouched = false;
         }
@@ -177,6 +207,7 @@ public class OptionsScreen implements Screen {
         volTextTexture.dispose();
         plusVolTexture.dispose();
         minVolTexture.dispose();
+        backTexture.dispose();
         if (backgroundMusic != null) {
             backgroundMusic.dispose();
         }

@@ -191,6 +191,8 @@ sprite/MenuSprite/Settings_btn.png
 sprite/MenuSprite/Settings_btn_clicked.png
 sprite/MenuSprite/Start_btn.png
 sprite/MenuSprite/Start_btn_clicked.png
+sprite/MenuSprite/back.png
+sprite/MenuSprite/backClicked.png
 sprite/MenuSprite/minus.png
 sprite/MenuSprite/minusClicked.png
 sprite/MenuSprite/plus.png

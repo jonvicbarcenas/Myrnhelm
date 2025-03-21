@@ -44,6 +44,7 @@ public class FpsStage extends Stage {
         act(delta);
     }
 
+
     @Override
     public void dispose() {
         super.dispose();
