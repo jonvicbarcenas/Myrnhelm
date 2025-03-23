@@ -1435,7 +1435,7 @@
    { "name": "Base", "from": 0, "to": 3, "direction": "forward", "repeat": "1", "color": "#fe5b59ff" },
    { "name": "idleD", "from": 4, "to": 6, "direction": "forward", "color": "#000000ff" },
    { "name": "idleL", "from": 7, "to": 9, "direction": "forward", "color": "#000000ff" },
-   { "name": "IdleU", "from": 10, "to": 12, "direction": "forward", "color": "#000000ff" },
+   { "name": "idleU", "from": 10, "to": 12, "direction": "forward", "color": "#000000ff" },
    { "name": "idleR", "from": 13, "to": 15, "direction": "forward", "color": "#000000ff" },
    { "name": "walkD", "from": 17, "to": 22, "direction": "forward", "color": "#000000ff" },
    { "name": "walkL", "from": 23, "to": 28, "direction": "forward", "color": "#000000ff" },

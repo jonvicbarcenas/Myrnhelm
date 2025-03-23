@@ -1,4 +1,4 @@
-package com.dainsleif.hartebeest.utils;
+package com.dainsleif.hartebeest.players;
 
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -13,6 +13,7 @@ import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 import com.dainsleif.hartebeest.movements.BasicMovements;
+import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -23,28 +24,28 @@ public class Player extends Actor {
     private float stateTime;
     private Body body;
     private BasicMovements movements;
-    private final float WIDTH = 48;
+    private final float WIDTH = 64;
     private final float HEIGHT = 64;
     private String currentDirection = "down";
     private final CollisionDetector collisionDetector;
+
+    private boolean isAttacking = false;
+    private float attackTimer = 0;
+    private static final float ATTACK_DURATION = 0.8f; // Duration of attack animation in seconds
 
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
 
         // Load animations for all directions
         animations = new HashMap<>();
-        animations.put("up", new Animation<>(0.1f, loader.getFrames("up")));
-        animations.put("down", new Animation<>(0.1f, loader.getFrames("down")));
-        animations.put("left", new Animation<>(0.1f, loader.getFrames("left")));
-        animations.put("right", new Animation<>(0.1f, loader.getFrames("right")));
-
-        // Optional: Add diagonal animations if they exist
-        if (loader.getFrames("left_up").length > 0) {
-            animations.put("left_up", new Animation<>(0.1f, loader.getFrames("left_up")));
-        }
-        if (loader.getFrames("right_up").length > 0) {
-            animations.put("right_up", new Animation<>(0.1f, loader.getFrames("right_up")));
-        }
+        animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
+        animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
+        animations.put("left", new Animation<>(0.1f, loader.getFrames("walkLeft")));
+        animations.put("right", new Animation<>(0.1f, loader.getFrames("walkRight")));
+        animations.put("atk_up", new Animation<>(0.1f, loader.getFrames("atkTop")));
+        animations.put("atk_down", new Animation<>(0.1f, loader.getFrames("atkDown")));
+        animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
+        animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
 
         // Set initial frame
         currentFrame = animations.get("down").getKeyFrame(0);
@@ -70,6 +71,17 @@ public class Player extends Actor {
         this.collisionDetector = collisionDetector;
     }
 
+    public void attack() {
+        if (!isAttacking) {
+            isAttacking = true;
+            attackTimer = 0;
+            stateTime = 0; // Reset animation time for smooth attack animation
+
+            // Stop all movement when attacking begins
+            body.setLinearVelocity(0, 0);
+        }
+    }
+
     public void setPosition(float x, float y) {
         body.setTransform(x, y, body.getAngle());
     }
@@ -91,7 +103,10 @@ public class Player extends Actor {
         float oldX = getX();
         float oldY = getY();
 
-        movements.update(deltaTime, keyHandler, body);
+        // Only allow movement when not attacking
+        if (!isAttacking) {
+            movements.update(deltaTime, keyHandler, body);
+        }
 
         float newX = getX();
         float newY = getY();
@@ -100,23 +115,39 @@ public class Player extends Actor {
             body.setTransform(oldX, oldY, body.getAngle());
         }
 
+        // Update attack state
+        if (isAttacking) {
+            attackTimer += deltaTime;
+            if (attackTimer >= ATTACK_DURATION) {
+                isAttacking = false;
+                attackTimer = 0;
+            }
+        }
+
         // Always update stateTime to keep animation flowing
         stateTime += deltaTime;
 
         String direction = movements.getCurrentDirection();
-        if (direction != null && !direction.isEmpty()) {
+        if (direction != null && !direction.isEmpty() && !isAttacking) {
             currentDirection = direction;
         }
 
-        Animation<TextureRegion> currentAnimation = animations.get(currentDirection);
+        // Select the appropriate animation
+        String animationKey;
+        if (isAttacking) {
+            animationKey = "atk_" + currentDirection;
+        } else {
+            animationKey = currentDirection;
+        }
+
+        Animation<TextureRegion> currentAnimation = animations.get(animationKey);
 
         if (currentAnimation != null) {
-            if (movements.isMoving()) {
-                // Loop the animation by setting the second parameter to true
-                currentFrame = currentAnimation.getKeyFrame(stateTime, true);
+            if (isAttacking || movements.isMoving()) {
+                // For attack animations, don't loop (false)
+                currentFrame = currentAnimation.getKeyFrame(stateTime, !isAttacking);
             } else {
-                // When not moving, display a static frame (first frame)
-                // but don't reset stateTime to prevent jerky animation restart
+                // When not moving, display a static frame
                 currentFrame = currentAnimation.getKeyFrame(0);
             }
         }
@@ -127,5 +158,9 @@ public class Player extends Actor {
         if (currentFrame != null) {
             batch.draw(currentFrame, getX() - WIDTH/2, getY() - HEIGHT/2, WIDTH, HEIGHT);
         }
+    }
+
+    public Vector2 getPosition() {
+       return body.getPosition();
     }
 }

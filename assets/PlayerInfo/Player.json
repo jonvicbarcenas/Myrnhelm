@@ -9,11 +9,7 @@
       "Level": 1,
       "Experience": 0,
       "Health": 1500,
-      "Mana": 100,
-      "Strength": 50,
-      "Dexterity": 10,
-      "Intelligence": 30,
-      "Luck": 10
+      "Mana": 100
     },
     "Skills": [
       { "Skill": 1, "Description": "Slash – Fast armor-piercing strike." },
