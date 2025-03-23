@@ -1,12 +1,21 @@
 package com.dainsleif.hartebeest.helpers;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 
 public class KeyHandler extends InputAdapter {
-    private boolean upPressed, downPressed, leftPressed, rightPressed;
+    private boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
+    private OrthographicCamera camera;
 
-    private boolean enterPressed, escapePressed;
+    public KeyHandler(){
+        // Empty constructor
+    }
+
+    public KeyHandler(OrthographicCamera camera){
+        this.camera = camera;
+    }
 
     @Override
     public boolean keyDown(int keycode) {
@@ -53,8 +62,10 @@ public class KeyHandler extends InputAdapter {
     }
 
     public boolean isEnterPressed() {
-        return enterPressed;
+        return Gdx.input.isKeyPressed(Input.Keys.ENTER);
     }
+
+
 
     public boolean isUpPressed() {
         return upPressed;
@@ -70,5 +81,22 @@ public class KeyHandler extends InputAdapter {
 
     public boolean isRightPressed() {
         return rightPressed;
+    }
+
+
+    public void zoomIn() {
+        camera.zoom -= 0.01f;
+        if (camera.zoom < 0.5f) {
+            camera.zoom = 0.5f;
+        }
+        camera.update();
+    }
+
+    public void zoomOut() {
+        camera.zoom += 0.01f;
+        if (camera.zoom > 2.0f) {
+            camera.zoom = 2.0f;
+        }
+        camera.update();
     }
 }

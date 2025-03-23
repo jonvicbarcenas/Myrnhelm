@@ -305,29 +305,24 @@
   <properties>
    <property name="blocked" type="bool" value="true"/>
   </properties>
-  <objectgroup draworder="index" id="2">
-   <object id="1" x="15.9091" y="15.9091">
-    <polygon points="0,0 -0.0625,-10.0625 -3.0625,-11.3125 -5,-13.25 -5.0625,-15.875 -13.1875,-16 -14.0625,-12.1875 -14,-6.25 -13.0625,-3.1875 -12.0625,-2.0625 -10,-0.9375 -7.0625,0"/>
-   </object>
-  </objectgroup>
  </tile>
  <tile id="194">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="-0.0909091" y="16.2727">
-    <polygon points="0,0 16,0 16,-11.25 13.9375,-12.125 10.8125,-12.1875 8.1875,-10.6875 5.25,-11.0625 4.125,-12.25 0.5,-12.25 0.0625,-11.25"/>
+   <object id="1" x="0.125" y="5">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0,0 1.0625,-1.0625 6.5,0.75 12.5,-1.1875 15.875,0.0625 15.9375,9.5 0.125,9.625"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="195">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="-0.272727" y="5.63636">
-    <polygon points="0,0 2.4375,-0.125 4.9375,-3 5.0625,-5.9375 14.125,-5.875 14.125,4.1875 13,7.0625 12.25,8.25 10.3125,9.0625 7.0625,10 0.125,10.125"/>
+   <object id="1" x="0.125" y="6.0625">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0,0 4.5,-1.4375 4.9375,-6 12.9375,-5.875 13.875,3.75 7.0625,9.875 0.1875,10.1875"/>
    </object>
   </objectgroup>
  </tile>
@@ -456,11 +451,11 @@
  <tile id="319"/>
  <tile id="320"/>
  <tile id="321">
-  <properties>
-   <property name="blocked" type="bool" value="false"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="15.8182" y="16.0909">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 -12.1875,0 -12.3125,-0.875 -9.9375,-4.125 -9.125,-10 -7,-11.3125 -3,-11.3125 -0.0625,-10.0625"/>
    </object>
   </objectgroup>
@@ -633,11 +628,11 @@
  <tile id="447"/>
  <tile id="448"/>
  <tile id="449">
-  <properties>
-   <property name="blocked" type="bool" value="false"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="-0.0909091" y="16">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 13.9375,0 14.0625,-13 6,-13.0625 0.125,-10.1875"/>
    </object>
   </objectgroup>
@@ -646,11 +641,11 @@
  <tile id="451"/>
  <tile id="452"/>
  <tile id="453">
-  <properties>
-   <property name="blocked" type="bool" value="false"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="1.90909" y="15.8182">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 -0.0625,-13.0625 7.8125,-13.0625 13.875,-10.125 13.9375,0"/>
    </object>
   </objectgroup>
@@ -1073,22 +1068,22 @@
  <tile id="779"/>
  <tile id="780"/>
  <tile id="781">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="-0.0909091" y="6">
-    <polygon points="0,0 3.0625,-0.9375 6.9375,-0.9375 9.125,-0.25 10.125,6 12.125,8.875 12.1875,10 0.0625,10.0625"/>
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0,0 3.0625,-0.9375 6.9375,-0.9375 9.125,-0.25 9.4375,6.0625 12.1875,10 0.0625,10.0625"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="782"/>
  <tile id="783">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="16" y="16">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 -12.1875,0 -12.3125,-0.875 -9.9375,-4.125 -9.125,-10 -7,-11.3125 -3,-11.3125 -0.0625,-10.0625"/>
    </object>
   </objectgroup>
@@ -1143,9 +1138,6 @@
  <tile id="831"/>
  <tile id="832"/>
  <tile id="833">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="2" y="0.181818">
     <polygon points="0,0 0.0625,15.9375 14.0625,15.9375 14.0625,5.8125 11.0625,4.9375 9.0625,2.9375 9.0625,0"/>
@@ -1153,19 +1145,16 @@
   </objectgroup>
  </tile>
  <tile id="834">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
-   <object id="1" x="0" y="4.81818">
-    <polygon points="0,0 0.9375,-0.875 3.8125,-0.875 5.9375,0.9375 7.6875,1 8.8125,0.0625 10.0625,0 10.9375,-0.875 13.9375,-0.9375 15.875,0 15.9375,11.125 -0.0625,11.125"/>
+   <object id="1" x="0.1875" y="4.8125">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0,0 2.1875,-1 6.875,1.0625 12.4375,-0.9375 15.6875,0.1875 16,11.0625 0,11.25"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="835">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="14.3636" y="1.77636e-15">
     <polygon points="0,0 -0.1875,15.9375 -14.1875,16 -14.1875,5.9375 -12.25,5.875 -9.125,2.875 -9.1875,0"/>
@@ -1218,22 +1207,22 @@
  </tile>
  <tile id="844"/>
  <tile id="845">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="11" y="-0.0909091">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 0,2.875 2.0625,4.9375 5.125,6 5.125,16 -10.875,16 -10.875,0"/>
    </object>
   </objectgroup>
  </tile>
  <tile id="846"/>
  <tile id="847">
-  <properties>
-   <property name="blocked" type="bool" value="true"/>
-  </properties>
   <objectgroup draworder="index" id="2">
    <object id="1" x="4.90909" y="0.181818">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 0,2.625 -2.125,4.875 -5.0625,5.8125 -5,15.875 11,15.875 11,-0.125"/>
    </object>
   </objectgroup>
@@ -1789,7 +1778,10 @@
  <tile id="1217">
   <objectgroup draworder="index" id="2">
    <object id="2" x="-0.0909091" y="5.09091">
-    <polygon points="0,0 0.0909091,10.9091 14.0909,10.8182 14.0909,9 14,2.81818 14.0909,-1 11.2727,-1.09091 9,-0.0909091 5.09091,-0.0909091 4.09091,-1.18182 1.18182,-1.27273"/>
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0,0 0.0909091,10.9091 14.0909,10.8182 14.0909,-1 11.2102,-1.02841 9.05681,1.34659 5.65341,1.15909 2.49432,-1.46023"/>
    </object>
   </objectgroup>
  </tile>
@@ -1799,7 +1791,10 @@
  <tile id="1221">
   <objectgroup draworder="index" id="2">
    <object id="1" x="3" y="2.90909">
-    <polygon points="0,0 -1.09091,2.09091 -1.09091,13 13,13.0909 12.9091,2 10.9091,1.09091 8,1 6,2 4.09091,2 1.90909,1.09091 0.909091,0"/>
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
+    <polygon points="0.444444,0 -1.09091,2.09091 -1.09091,13 13,13.0909 12.9091,2 9.2841,1.09091 4.73927,2.85795"/>
    </object>
   </objectgroup>
  </tile>
@@ -1889,6 +1884,9 @@
  <tile id="1281">
   <objectgroup draworder="index" id="2">
    <object id="1" x="0" y="0">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 0,16 13.8182,15.8182 13.8182,0"/>
    </object>
   </objectgroup>
@@ -1899,6 +1897,9 @@
  <tile id="1285">
   <objectgroup draworder="index" id="2">
    <object id="1" x="2.09091" y="0.181818">
+    <properties>
+     <property name="blocked" value=""/>
+    </properties>
     <polygon points="0,0 -0.0909091,14.4545 1.90909,15.8182 13.9091,15.8182 13.9091,-0.181818"/>
    </object>
   </objectgroup>
