@@ -85,6 +85,7 @@ MAPS/Tiled/64.tsx
 MAPS/Tiled/Atlas_Buildings.tsx
 MAPS/Tiled/CityWall_Gate_1.png
 MAPS/Tiled/CityWall_Gate_1.tsx
+MAPS/Tiled/DUNGEON.tsx
 MAPS/Tiled/Dungeon.tmx
 MAPS/Tiled/Forest.aseprite
 MAPS/Tiled/Forest.tsx
@@ -110,6 +111,7 @@ MAPS/Tiled/UnderBridge.aseprite
 MAPS/Tiled/UnderBridge.png
 MAPS/Tiled/UnderBridge.tsx
 MAPS/Tiled/UnderBridge2.tsx
+MAPS/Tiled/ahahhaahah.tsx
 MAPS/Tiled/forest trees.tsx
 MAPS/Tiled/forest_demo_objects.tsx
 MAPS/Tiled/forest_demo_terrain.tsx
