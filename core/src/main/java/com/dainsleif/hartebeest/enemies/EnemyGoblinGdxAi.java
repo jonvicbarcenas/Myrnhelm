@@ -79,18 +79,27 @@ public class EnemyGoblinGdxAi {
     public void attackPlayer(float attackRange) {
         long currentTime = TimeUtils.millis();
 
-        // If we're waiting for an attack animation to finish
+       // If we're waiting for an attack animation to finish
         if (isAttackAnimationPlaying) {
-            if ((goblin.getCurrentState() == EnemyState.ATTACKING && goblin.isAttackFinishedBasedOnAnimation()) ||
+            // Check if the attack state was interrupted (goblin is no longer in an attack state)
+            if (goblin.getCurrentState() != EnemyState.ATTACKING &&
+                goblin.getCurrentState() != EnemyState.ATTACKING_SPIN) {
+                // Attack was interrupted, reset flags
+                isAttackAnimationPlaying = false;
+                // No need to start cooldown since attack was interrupted
+            }
+            else if ((goblin.getCurrentState() == EnemyState.ATTACKING && goblin.isAttackFinishedBasedOnAnimation()) ||
                 (goblin.getCurrentState() == EnemyState.ATTACKING_SPIN && goblin.isAttackFinishedBasedOnAnimation())) {
-                // Animation finished, now start cooldown
+                // Animation finished normally, now start cooldown
                 isAttackAnimationPlaying = false;
                 isInAttackCooldown = true;
                 attackCooldownEndTime = TimeUtils.millis() + 2000; // 2 seconds cooldown
                 return;
             }
-            // Animation still playing, don't do anything else
-            return;
+            else {
+                // Animation still playing, don't do anything else
+                return;
+            }
         }
 
         // Check if we're in cooldown period
