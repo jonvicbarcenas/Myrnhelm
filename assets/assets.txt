@@ -87,8 +87,16 @@ MAPS/Tiled/CityWall_Gate_1.png
 MAPS/Tiled/CityWall_Gate_1.tsx
 MAPS/Tiled/DUNGEON.tsx
 MAPS/Tiled/Dungeon.tmx
+MAPS/Tiled/Fire.aseprite
+MAPS/Tiled/Fire.png
+MAPS/Tiled/Fire.tsx
 MAPS/Tiled/Forest.aseprite
 MAPS/Tiled/Forest.tsx
+MAPS/Tiled/House1.png
+MAPS/Tiled/House1.tsx
+MAPS/Tiled/House2.png
+MAPS/Tiled/House2.tsx
+MAPS/Tiled/Props.png
 MAPS/Tiled/Props.tsx
 MAPS/Tiled/TX Plant.tsx
 MAPS/Tiled/TX Props.tsx
