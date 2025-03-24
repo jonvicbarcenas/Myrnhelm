@@ -1,0 +1,258 @@
+{ "frames": {
+   "frerem 0.gif": {
+    "frame": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 1.gif": {
+    "frame": { "x": 384, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 2.gif": {
+    "frame": { "x": 768, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 3.gif": {
+    "frame": { "x": 1152, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 4.gif": {
+    "frame": { "x": 1536, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 5.gif": {
+    "frame": { "x": 1920, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 6.gif": {
+    "frame": { "x": 2304, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 7.gif": {
+    "frame": { "x": 2688, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 8.gif": {
+    "frame": { "x": 3072, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 9.gif": {
+    "frame": { "x": 3456, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 10.gif": {
+    "frame": { "x": 3840, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 11.gif": {
+    "frame": { "x": 4224, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 12.gif": {
+    "frame": { "x": 4608, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 13.gif": {
+    "frame": { "x": 4992, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 14.gif": {
+    "frame": { "x": 5376, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 15.gif": {
+    "frame": { "x": 5760, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 16.gif": {
+    "frame": { "x": 6144, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 17.gif": {
+    "frame": { "x": 6528, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 18.gif": {
+    "frame": { "x": 6912, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 19.gif": {
+    "frame": { "x": 7296, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 20.gif": {
+    "frame": { "x": 7680, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 21.gif": {
+    "frame": { "x": 8064, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 22.gif": {
+    "frame": { "x": 8448, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 23.gif": {
+    "frame": { "x": 8832, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 24.gif": {
+    "frame": { "x": 9216, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 25.gif": {
+    "frame": { "x": 9600, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 26.gif": {
+    "frame": { "x": 9984, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 27.gif": {
+    "frame": { "x": 10368, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 28.gif": {
+    "frame": { "x": 10752, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   },
+   "frerem 29.gif": {
+    "frame": { "x": 11136, "y": 0, "w": 384, "h": 216 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 384, "h": 216 },
+    "sourceSize": { "w": 384, "h": 216 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.13-dev",
+  "image": "frerem.png",
+  "format": "RGBA8888",
+  "size": { "w": 11520, "h": 216 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Background", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

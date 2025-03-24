@@ -35,8 +35,8 @@ public class BasicMovements {
         // Normalize the velocity if moving diagonally
         if (dx != 0 && dy != 0) {
             float magnitude = (float) Math.sqrt(dx * dx + dy * dy);
-            dx = (dx / magnitude) * speed * (float) Math.sqrt(2) + 5;
-            dy = (dy / magnitude) * speed * (float) Math.sqrt(2) + 5;
+            dx = (dx / magnitude) * speed * (float) Math.sqrt(2) - 0.3f;
+            dy = (dy / magnitude) * speed * (float) Math.sqrt(2) - 0.3f;
         }
 
         // Check if player is moving
