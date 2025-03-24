@@ -14,7 +14,7 @@ public enum EnemyState implements State<EnemyGoblinGdxAi> {
     ATTACKING,
     ATTACKING_SPIN,
 
-    DEAD;
+    DEAD, OUCH;
 
     @Override
     public void enter(EnemyGoblinGdxAi enemyGoblinGdxAi) {

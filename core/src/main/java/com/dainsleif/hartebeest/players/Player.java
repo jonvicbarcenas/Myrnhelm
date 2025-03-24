@@ -1,5 +1,7 @@
 package com.dainsleif.hartebeest.players;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
@@ -9,6 +11,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.dainsleif.hartebeest.enemies.Goblin;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
@@ -31,7 +34,13 @@ public class Player extends Actor {
 
     private boolean isAttacking = false;
     private float attackTimer = 0;
-    private static final float ATTACK_DURATION = 0.8f; // Duration of attack animation in seconds
+    private static final float ATTACK_DURATION = 0.8f;
+
+    // Track player attack state
+    private boolean playerDamageApplied = false;
+    private float playerAttackRange = 40f;
+    private int playerAttackDamage = 10;
+    private float knockbackForce = 5f;
 
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
@@ -71,7 +80,23 @@ public class Player extends Actor {
         this.collisionDetector = collisionDetector;
     }
 
-    public void attack() {
+//    public void attack() {
+//        if (!isAttacking) {
+//            isAttacking = true;
+//            attackTimer = 0;
+//            stateTime = 0; // Reset animation time for smooth attack animation
+//
+//            // Stop all movement when attacking begins
+//            body.setLinearVelocity(0, 0);
+//        }
+//    }
+
+    public void playerAttack(Goblin goblin, Player player) {
+        // Check if player is currently in attack animation
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            playerDamageApplied = false; // Reset damage flag on new attack
+        }
+
         if (!isAttacking) {
             isAttacking = true;
             attackTimer = 0;
@@ -79,6 +104,32 @@ public class Player extends Actor {
 
             // Stop all movement when attacking begins
             body.setLinearVelocity(0, 0);
+        }
+
+        // Get positions
+        Vector2 playerPos = player.getPosition();
+        Vector2 goblinPos = goblin.getPosition();
+        float distance = playerPos.dst(goblinPos);
+
+        // Only process during attack and when damage hasn't been applied yet
+        if (distance <= playerAttackRange && !playerDamageApplied) {
+            // Calculate attack direction vector (from player to enemy)
+            Vector2 knockbackDirection = new Vector2(goblinPos).sub(playerPos).nor();
+
+            // Apply damage to goblin
+            goblin.takeDamage(playerAttackDamage);
+            System.out.println("Player hit goblin! -" + playerAttackDamage + " damage");
+
+            // Apply knockback force
+            Body goblinBody = goblin.getBody();
+            goblinBody.applyLinearImpulse(
+                knockbackDirection.scl(knockbackForce),
+                goblinBody.getWorldCenter(),
+                true
+            );
+
+            // Mark damage as applied for this attack
+            playerDamageApplied = true;
         }
     }
 

@@ -1457,6 +1457,7 @@
    { "name": "ouchL", "from": 119, "to": 120, "direction": "forward", "color": "#000000ff" },
    { "name": "ouchU", "from": 121, "to": 122, "direction": "forward", "color": "#000000ff" },
    { "name": "ouchR", "from": 123, "to": 124, "direction": "forward", "color": "#000000ff" },
+   { "name": "die", "from": 117, "to": 124, "direction": "forward", "color": "#000000ff" },
    { "name": "spinny", "from": 126, "to": 129, "direction": "forward", "repeat": "4", "color": "#000000ff" },
    { "name": "openMouthD", "from": 130, "to": 135, "direction": "forward", "color": "#000000ff" },
    { "name": "mouthOpenLoopD", "from": 136, "to": 138, "direction": "forward", "color": "#000000ff" },

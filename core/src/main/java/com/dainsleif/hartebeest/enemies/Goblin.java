@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
-import com.dainsleif.hartebeest.helpers.TileScan;
+import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.HashMap;
@@ -30,17 +30,15 @@ public class Goblin extends Enemy {
     private EnemyState currentState;
     private String currentDirection = "D"; // D, L, U, R
 
-
     private Body body;
-    private TileScan tileScan;
-    private int collisionLayerIndex = 3;
 
-    public Goblin(Vector2 position, CollisionDetector collisionDetector, World world, TileScan tileScan) {
-        super("Goblin", 100, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
+    private boolean shouldRemove = false;
+
+    public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
+        super("Goblin", 20, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;
-        this.tileScan = tileScan;
 
         // Create Box2D body
         BodyDef bodyDef = new BodyDef();
@@ -101,6 +99,7 @@ public class Goblin extends Enemy {
         animations.put("ouchR", new Animation<>(0.15f, loader.getFrames("ouchR")));
 
         animations.put("spinny", new Animation<>(0.15f, loader.getFrames("spinny")));
+        animations.put("die", new Animation<>(0.15f, loader.getFrames("die")));
 
         // Set initial frame
         currentFrame = animations.get("idleD").getKeyFrame(0);
@@ -159,6 +158,12 @@ public class Goblin extends Enemy {
 
         // Draw the sprite centered at the goblin's position
         batch.draw(currentFrame, position.x - width/2, position.y - height/2);
+
+        // Check if death animation is finished
+        if (currentState == EnemyState.DEAD &&
+            animations.get("die").isAnimationFinished(stateTime)) {
+            shouldRemove = true;
+        }
     }
 
     private TextureRegion getFrameForCurrentState() {
@@ -188,6 +193,9 @@ public class Goblin extends Enemy {
                 animKey = "spinny";
                 break;
             case DEAD:
+                animKey = "die";
+                break;
+            case OUCH:
                 animKey = "ouch" + currentDirection;
                 Animation<TextureRegion> deathAnim = animations.get(animKey);
                 return deathAnim != null ? deathAnim.getKeyFrame(stateTime, false) :
@@ -212,14 +220,22 @@ public class Goblin extends Enemy {
     protected void die() {
         super.die();
         currentState = EnemyState.DEAD;
-        stateTime = 0; // Reset state time to start death animation from beginning
+        stateTime = 0;
+    }
+
+    public boolean isShouldRemove() {
+        return shouldRemove;
     }
 
     public void setState(EnemyState state) {
         if (currentState != state) {
-            stateTime = 0; // Reset animation timer when changing states
+            stateTime = 0;
             currentState = state;
         }
+    }
+
+    public float getDieAnimationTime() {
+        return animations.get("die").getAnimationDuration();
     }
 
     public EnemyState getCurrentState() {
@@ -236,10 +252,6 @@ public class Goblin extends Enemy {
 
     public void dispose() {
         spriteBatch.dispose();
-    }
-
-    public Vector2 getPosition() {
-        return position;
     }
 
     public void setDirection(String direction) {
@@ -261,7 +273,86 @@ public class Goblin extends Enemy {
         return stateTime;
     }
 
+    public Body getBody() {
+        return body;
+    }
+
     public String getCurrentDirection() {
         return currentDirection;
     }
+
+    public int getHealth() {
+        return health;
+    }
+
+    private EnemyState previousState = EnemyState.IDLE;
+    private int lastRegularAttackCycle = -1;
+    private int lastSpinAttackCycle = -1;
+
+    public void goblinDamage(PlayerMyron player) {
+        currentState = getCurrentState();
+
+        // Check if state has changed - reset tracking for the specific attack type
+        if (previousState != currentState) {
+            if (currentState == EnemyState.ATTACKING) {
+                lastRegularAttackCycle = -1;
+            } else if (currentState == EnemyState.ATTACKING_SPIN) {
+                lastSpinAttackCycle = -1;
+            }
+            previousState = currentState;
+        }
+
+        // Check if goblin is attacking
+        if (currentState == EnemyState.ATTACKING || currentState == EnemyState.ATTACKING_SPIN) {
+            Vector2 goblinPos = getPosition();
+            Vector2 playerPos = player.getPosition();
+            float distance = goblinPos.dst(playerPos);
+
+            // Check if player is in range
+            if (distance <= 40f) {
+                String animKey = currentState == EnemyState.ATTACKING ?
+                    "spearAtk" + getCurrentDirection() : "spinny";
+                Animation<TextureRegion> attackAnim = getAnimations().get(animKey);
+
+                if (attackAnim != null) {
+                    float currentStateTime = getStateTime();
+                    float animDuration = attackAnim.getAnimationDuration();
+
+                    int currentCycle = (int)(currentStateTime / animDuration);
+                    float progressInCycle = (currentStateTime % animDuration) / animDuration;
+
+                    if (progressInCycle >= 0.45f && progressInCycle <= 0.55f) {
+                        boolean shouldApplyDamage = false;
+
+                        if (currentState == EnemyState.ATTACKING) {
+                            if (currentCycle > lastRegularAttackCycle || lastRegularAttackCycle == -1) {
+                                shouldApplyDamage = true;
+                                lastRegularAttackCycle = currentCycle;
+                            }
+                        } else {
+                            if (currentCycle > lastSpinAttackCycle || lastSpinAttackCycle == -1) {
+                                shouldApplyDamage = true;
+                                lastSpinAttackCycle = currentCycle;
+                            }
+                        }
+
+                        if (shouldApplyDamage) {
+                            if (currentState == EnemyState.ATTACKING) {
+                                player.takeDamage(5);
+//                                System.out.println("Regular attack hit! -5 health, cycle: " + currentCycle);
+                            } else {
+                                player.takeDamage(10);
+//                                System.out.println("Spin attack hit! -10 health, cycle: " + currentCycle);
+                            }
+                        }
+                    }
+                }
+            }
+        } else {
+            // Reset attack tracking when not attacking
+            lastRegularAttackCycle = -1;
+            lastSpinAttackCycle = -1;
+        }
+    }
+
 }

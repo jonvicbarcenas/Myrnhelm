@@ -2,6 +2,7 @@ package com.dainsleif.hartebeest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -21,8 +22,15 @@ public class PlayerStatStage extends Stage {
     public PlayerStatStage() {
         super(new ScreenViewport());
 
-        // Create font and label style
-        font = new BitmapFont();
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Toriko.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 36; // Set font size
+        parameter.borderColor = com.badlogic.gdx.graphics.Color.BLACK;
+        parameter.borderWidth = 2;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+
+
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
 

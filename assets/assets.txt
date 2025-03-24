@@ -272,6 +272,7 @@ Screen/MenuScreen/frieren.png
 Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
 Screen/MenuScreen/frierenBG.gif
 char.png
+fonts/Toriko.ttf
 gameinfo.db
 playerXY.db
 sprite/Enemy/Goblin/RegularGobu.json

@@ -48,6 +48,13 @@ public class EnemyGoblinGdxAi {
     }
 
     public void update(float delta) {
+        if (goblin.getHealth() <= 0) {
+            goblin.setState(EnemyState.DEAD);
+            goblin.getBody().setLinearVelocity(0, 0); // Stop all movements
+            return;
+        }
+
+
         // Update state machine
         stateMachine.update();
 
