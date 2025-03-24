@@ -115,12 +115,13 @@ public class Gameworld1 implements Screen {
         Gdx.input.setInputProcessor(keyHandler);
         player = new PlayerMyron(world, collisionDetector);
 
-        //create enemy
-        goblin = new Goblin(new Vector2(505, 339), collisionDetector);
-        // Add AI to goblin
+        tileScan = new TileScan(world, map);
+
+
+        //create enemy and AI for enemy goblin
+        goblin = new Goblin(new Vector2(505, 339), collisionDetector, world, tileScan);
         goblinAi = new EnemyGoblinGdxAi(goblin, player);
 
-        tileScan = new TileScan(world, map);
 
         // Create stages
         fpsStage = new FpsStage();

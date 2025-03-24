@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.physics.box2d.*;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
+import com.dainsleif.hartebeest.helpers.TileScan;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.HashMap;
@@ -28,11 +30,44 @@ public class Goblin extends Enemy {
     private EnemyState currentState;
     private String currentDirection = "D"; // D, L, U, R
 
-    public Goblin(Vector2 position, CollisionDetector collisionDetector) {
+
+    private Body body;
+    private TileScan tileScan;
+    private int collisionLayerIndex = 3;
+
+    public Goblin(Vector2 position, CollisionDetector collisionDetector, World world, TileScan tileScan) {
         super("Goblin", 100, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;
+        this.tileScan = tileScan;
+
+        // Create Box2D body
+        BodyDef bodyDef = new BodyDef();
+        bodyDef.type = BodyDef.BodyType.DynamicBody;
+        bodyDef.position.set(position);
+        body = world.createBody(bodyDef);
+
+        // Create hitbox shape
+        PolygonShape shape = new PolygonShape();
+        shape.setAsBox(4, 4, new Vector2(0, -6), 0); // Collision box size and offset
+
+        // Create fixture with definition
+        FixtureDef fixtureDef = new FixtureDef();
+        fixtureDef.shape = shape;
+        fixtureDef.density = 1.0f;
+        fixtureDef.friction = 0.4f;
+        fixtureDef.restitution = 0.1f; // Slight bounce
+
+        // Add fixture to body
+        body.createFixture(fixtureDef);
+        body.setFixedRotation(true); // Prevent rotation
+
+        // User data for collision identification
+        body.setUserData(this);
+
+        // Dispose shape after creating fixture
+        shape.dispose();
 
         spriteBatch = new SpriteBatch();
         currentState = EnemyState.IDLE;
@@ -75,43 +110,43 @@ public class Goblin extends Enemy {
     public void update() {
         stateTime += Gdx.graphics.getDeltaTime();
 
-        // Store current position before trying to move
-        float oldX = position.x;
-        float oldY = position.y;
-        float newX = oldX;
-        float newY = oldY;
+        // Update position from Box2D body
+        position.x = body.getPosition().x;
+        position.y = body.getPosition().y;
 
-        // Calculate new position based on state
+        // Apply movement based on state
+        Vector2 velocity = new Vector2(0, 0);
+
         switch (currentState) {
             case WALK_LEFT:
-                newX -= speed * Gdx.graphics.getDeltaTime();
+                velocity.x = -speed;
                 currentDirection = "L";
                 break;
             case WALK_RIGHT:
-                newX += speed * Gdx.graphics.getDeltaTime();
+                velocity.x = speed;
                 currentDirection = "R";
                 break;
             case WALK_UP:
-                newY += speed * Gdx.graphics.getDeltaTime();
+                velocity.y = speed;
                 currentDirection = "U";
                 break;
             case WALK_DOWN:
-                newY -= speed * Gdx.graphics.getDeltaTime();
+                velocity.y = -speed;
                 currentDirection = "D";
                 break;
-            default:
-                // No movement for other states
+            case ATTACKING:
+            case ATTACKING_SPIN:
+            case IDLE:
+            case DEAD:
+                velocity.set(0, 0);
                 break;
         }
 
-        // Check if the new position is valid (no collision)
-        if (collisionDetector.canMoveTo(oldX, oldY, WIDTH, HEIGHT, newX, newY)) {
-            position.x = newX;
-            position.y = newY;
-        }
+        // Apply velocity to body
+        body.setLinearVelocity(velocity);
 
         // Update hitbox position
-        hitbox.setPosition(position);
+        hitbox.setPosition(position.x - WIDTH/2, position.y - HEIGHT/2);
     }
 
     public void draw(SpriteBatch batch, float delta) {
