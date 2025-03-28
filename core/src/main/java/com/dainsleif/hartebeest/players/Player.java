@@ -80,17 +80,6 @@ public class Player extends Actor {
         this.collisionDetector = collisionDetector;
     }
 
-//    public void attack() {
-//        if (!isAttacking) {
-//            isAttacking = true;
-//            attackTimer = 0;
-//            stateTime = 0; // Reset animation time for smooth attack animation
-//
-//            // Stop all movement when attacking begins
-//            body.setLinearVelocity(0, 0);
-//        }
-//    }
-
     public void playerAttack(Goblin goblin, Player player) {
         // Check if player is currently in attack animation
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
@@ -106,31 +95,60 @@ public class Player extends Actor {
             body.setLinearVelocity(0, 0);
         }
 
+        if(goblin == null){
+            return;
+        }
+
         // Get positions
         Vector2 playerPos = player.getPosition();
         Vector2 goblinPos = goblin.getPosition();
         float distance = playerPos.dst(goblinPos);
 
         // Only process during attack and when damage hasn't been applied yet
-        if (distance <= playerAttackRange && !playerDamageApplied) {
-            // Calculate attack direction vector (from player to enemy)
+        if (distance <= playerAttackRange && !playerDamageApplied && isGoblinInAttackDirection(playerPos, goblinPos)) {
             Vector2 knockbackDirection = new Vector2(goblinPos).sub(playerPos).nor();
-
-            // Apply damage to goblin
             goblin.takeDamage(playerAttackDamage);
             System.out.println("Player hit goblin! -" + playerAttackDamage + " damage");
 
-            // Apply knockback force
             Body goblinBody = goblin.getBody();
             goblinBody.applyLinearImpulse(
                 knockbackDirection.scl(knockbackForce),
                 goblinBody.getWorldCenter(),
                 true
             );
-
-            // Mark damage as applied for this attack
             playerDamageApplied = true;
         }
+    }
+
+    public String getDirection() {
+        switch (currentDirection) {
+            case "right": return "R";
+            case "left": return "L";
+            case "up": return "U";
+            case "down": return "D";
+            default: return "D"; // Default direction
+        }
+    }
+
+    private boolean isGoblinInAttackDirection(Vector2 playerPos, Vector2 goblinPos) {
+        // Calculate direction vector from player to goblin
+        Vector2 directionToGoblin = new Vector2(goblinPos).sub(playerPos).nor();
+
+        // Get player's facing direction as a normalized vector
+        Vector2 playerFacingDirection = new Vector2(0, 0);
+
+        // Set direction vector based on player's current facing direction
+        String direction = getDirection(); // Assuming you have a getDirection() method
+        if (direction.equals("R")) playerFacingDirection.set(1, 0);
+        else if (direction.equals("L")) playerFacingDirection.set(-1, 0);
+        else if (direction.equals("U")) playerFacingDirection.set(0, 1);
+        else if (direction.equals("D")) playerFacingDirection.set(0, -1);
+
+        // Calculate dot product (determines if goblin is in front of player)
+        float dotProduct = directionToGoblin.dot(playerFacingDirection);
+
+        // Goblin is in attack direction if dot product is positive (within ~90 degrees of facing direction)
+        return dotProduct > 0;
     }
 
     public void setPosition(float x, float y) {

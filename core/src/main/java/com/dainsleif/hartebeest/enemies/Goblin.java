@@ -35,7 +35,7 @@ public class Goblin extends Enemy {
     private boolean shouldRemove = false;
 
     public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
-        super("Goblin", 20, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
+        super("Goblin", 50, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;
@@ -341,7 +341,7 @@ public class Goblin extends Enemy {
                                 player.takeDamage(5);
 //                                System.out.println("Regular attack hit! -5 health, cycle: " + currentCycle);
                             } else {
-                                player.takeDamage(10);
+                                player.takeDamage(20);
 //                                System.out.println("Spin attack hit! -10 health, cycle: " + currentCycle);
                             }
                         }

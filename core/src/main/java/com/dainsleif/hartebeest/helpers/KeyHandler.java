@@ -4,10 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.math.MathUtils;
 
 public class KeyHandler extends InputAdapter {
     private boolean upPressed, downPressed, leftPressed, rightPressed, enterPressed;
     private OrthographicCamera camera;
+
+    private float targetZoom;
+    private float zoomSpeed = 4.0f;
+    private static final float MIN_ZOOM = 0.5f;
+    private static final float MAX_ZOOM = 2.0f;
+    private static final float ZOOM_STEP = 0.2f;
 
     public KeyHandler(){
         // Empty constructor
@@ -15,6 +22,7 @@ public class KeyHandler extends InputAdapter {
 
     public KeyHandler(OrthographicCamera camera){
         this.camera = camera;
+        this.targetZoom = camera.zoom;
     }
 
     @Override
@@ -65,8 +73,6 @@ public class KeyHandler extends InputAdapter {
         return Gdx.input.isKeyPressed(Input.Keys.ENTER);
     }
 
-
-
     public boolean isUpPressed() {
         return upPressed;
     }
@@ -83,20 +89,34 @@ public class KeyHandler extends InputAdapter {
         return rightPressed;
     }
 
-
     public void zoomIn() {
-        camera.zoom -= 0.01f;
-        if (camera.zoom < 0.5f) {
-            camera.zoom = 0.5f;
+        targetZoom -= ZOOM_STEP;
+        if (targetZoom < MIN_ZOOM) {
+            targetZoom = MIN_ZOOM;
         }
-        camera.update();
     }
 
     public void zoomOut() {
-        camera.zoom += 0.01f;
-        if (camera.zoom > 2.0f) {
-            camera.zoom = 2.0f;
+        targetZoom += ZOOM_STEP;
+        if (targetZoom > MAX_ZOOM) {
+            targetZoom = MAX_ZOOM;
         }
-        camera.update();
+    }
+
+    public void update(float deltaTime) {
+        if (Math.abs(camera.zoom - targetZoom) > 0.01f) {
+            camera.zoom = MathUtils.lerp(camera.zoom, targetZoom, deltaTime * zoomSpeed);
+            camera.update();
+        }
+    }
+
+    @Override
+    public boolean scrolled(float amountX, float amountY) {
+        if (amountY > 0) {
+            zoomOut();
+        } else if (amountY < 0) {
+            zoomIn();
+        }
+        return true;
     }
 }

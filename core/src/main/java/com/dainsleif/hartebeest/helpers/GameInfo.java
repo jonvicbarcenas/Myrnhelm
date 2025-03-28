@@ -6,7 +6,7 @@ import com.dainsleif.hartebeest.database.PlayerPosition;
 public class GameInfo {
     //------------OPTIONS MENU VARIABLE---------------//
     static float musicVolume = 0.5f;
-    public static boolean showBlockedTiles = true;
+    public static boolean showBlockedTiles = false;
 
 
 

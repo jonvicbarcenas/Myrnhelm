@@ -15,13 +15,13 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
-import com.dainsleif.hartebeest.enemies.EnemyGoblinGdxAi;
-import com.dainsleif.hartebeest.enemies.Goblin;
+import com.dainsleif.hartebeest.enemies.GoblinSpawner;
 import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.screens.FpsStage;
+import com.dainsleif.hartebeest.screens.GoblinHealthBarStage;
 import com.dainsleif.hartebeest.screens.PlayerStatStage;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -44,7 +44,6 @@ public class Gameworld1 implements Screen {
     KeyHandler keyHandler;
 
     // Enemy
-    Goblin goblin;
 
     private final float mapWidth;
     private final float mapHeight;
@@ -52,12 +51,12 @@ public class Gameworld1 implements Screen {
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private CollisionDetector collisionDetector;
-    private EnemyGoblinGdxAi goblinAi;
 
     ///-------------- sum variables for Class Usage ---------------///
-    boolean isFlag = false;
-    boolean isDamageApplied = false;
     boolean playerDamageApplied = false;
+
+    private GoblinSpawner goblinSpawner;
+    private GoblinHealthBarStage goblinHealthBarStage;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -110,17 +109,15 @@ public class Gameworld1 implements Screen {
         Gdx.input.setInputProcessor(keyHandler);
         player = new PlayerMyron(world, collisionDetector);
 
-
-        //create enemy and AI for enemy goblin
-        goblin = new Goblin(new Vector2(505, 339), collisionDetector, world);
-        goblinAi = new EnemyGoblinGdxAi(goblin, player);
-
+        // Create goblin
+        goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
+        goblinSpawner.spawnGoblins(new Vector2(505, 339), 2, 50f); // Spawn 3 goblins within 50 units
+        goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
 
         // Create stages
         fpsStage = new FpsStage();
         playerStatStage = new PlayerStatStage();
 
-        System.out.println("Goblin Die Animation Time: " + goblin.getDieAnimationTime());
     }
 
     @Override
@@ -131,15 +128,9 @@ public class Gameworld1 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.valueOf(","))) {
-            keyHandler.zoomIn();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.valueOf("."))) {
-            keyHandler.zoomOut();
-        }
-
         // Update player position
         player.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        keyHandler.update(Gdx.graphics.getDeltaTime());
         GameInfo.setPlayerX(player.getX());
         GameInfo.setPlayerY(player.getY());
 
@@ -166,41 +157,22 @@ public class Gameworld1 implements Screen {
         spriteBatch.begin();
         player.draw(spriteBatch, 1);
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            player.playerAttack(goblin, player);
+            goblinSpawner.checkPlayerAttack();
         } else {
             if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 playerDamageApplied = false;
             }
         }
 
-
-        // Render enemy and state
-        if (goblin != null) {
-            // Check if goblin should be removed
-            if (goblin.isShouldRemove()) {
-                // Remove from physics world
-                world.destroyBody(goblin.getBody());
-
-                // Dispose resources
-                goblin.dispose();
-
-                // Set to null to indicate it's been removed
-                goblin = null;
-                goblinAi = null;
-            } else {
-                // Only update and draw if the goblin shouldn't be removed
-                goblin.update();
-                goblin.draw(spriteBatch, Gdx.graphics.getDeltaTime());
-                goblin.goblinDamage(player);
-
-                // Update enemy AI
-                if (goblinAi != null) {
-                    goblinAi.update(Gdx.graphics.getDeltaTime());
-                }
-            }
-        }
+        goblinSpawner.update(Gdx.graphics.getDeltaTime());
+        goblinSpawner.draw(spriteBatch, Gdx.graphics.getDeltaTime());
+        goblinSpawner.checkDamageToPlayer();
 
         spriteBatch.end();
+
+        // Update the health bars
+        goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
+        goblinHealthBarStage.render(camera);
 
         tiledMapRenderer.render(new int[]{8, 10, 14});
 
@@ -244,6 +216,5 @@ public class Gameworld1 implements Screen {
         fpsStage.dispose();
         playerStatStage.dispose();
         backgroundMusic.dispose();
-        goblin.dispose();
     }
 }
