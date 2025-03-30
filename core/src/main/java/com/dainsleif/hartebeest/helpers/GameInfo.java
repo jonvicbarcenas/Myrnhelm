@@ -5,8 +5,8 @@ import com.dainsleif.hartebeest.database.PlayerPosition;
 
 public class GameInfo {
     //------------OPTIONS MENU VARIABLE---------------//
-    static float musicVolume = 0.1f;
-    public static boolean showBlockedTiles = true;
+    static float musicVolume = 0.15f;
+    public static boolean showDebug = true;
 
 
 
@@ -61,11 +61,11 @@ public class GameInfo {
     }
 
     //show blocked tiles with setter and getter
-    public static void setShowBlockedTiles(boolean show) {
-        showBlockedTiles = show;
+    public static void setShowDebugging(boolean show) {
+        showDebug = show;
     }
-    public static boolean getShowBlockedTiles() {
-        return showBlockedTiles;
+    public static boolean getShowDebugging() {
+        return showDebug;
     }
 
 }

@@ -15,14 +15,17 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.dainsleif.hartebeest.enemies.GoblinSpawner;
+import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
-import com.dainsleif.hartebeest.helpers.TileScan;
+import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.screens.FpsStage;
+import com.dainsleif.hartebeest.screens.GoblinHealthBarStage;
+import com.dainsleif.hartebeest.screens.PlayerStatStage;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
-import com.dainsleif.hartebeest.utils.Player;
 
-import java.util.List;
+import java.util.Arrays;
 
 public class Gameworld1 implements Screen {
     TiledMap map;
@@ -31,39 +34,45 @@ public class Gameworld1 implements Screen {
     FitViewport viewport;
     Music backgroundMusic;
     FpsStage fpsStage;
+    PlayerStatStage playerStatStage;
+    CursorStyle cursorStyle;
 
     // Camera
     OrthographicCamera camera;
 
-    Player player;
+    private PlayerMyron player;
     KeyHandler keyHandler;
 
+    // Enemy
+
+    private final float mapWidth;
+    private final float mapHeight;
     private AssetManager assetManager;
     private World world;
     private Box2DDebugRenderer debugRenderer;
-    private TileScan tileScan;
     private CollisionDetector collisionDetector;
 
     ///-------------- sum variables for Class Usage ---------------///
-    private boolean isFlag = false;
-    private float mapWidth, mapHeight;
+    boolean playerDamageApplied = false;
+
+    private GoblinSpawner goblinSpawner;
+    private GoblinHealthBarStage goblinHealthBarStage;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
-
 
         // Initialize AssetManager
         assetManager = new AssetManager();
 
         // Queue assets for loading
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
-        assetManager.load("MAPS/Village.tmx", TiledMap.class);
+        assetManager.load("MAPS/Forrest1.tmx", TiledMap.class);
         assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
 
         assetManager.finishLoading();
 
         // Load map
-        map = assetManager.get("MAPS/Village.tmx", TiledMap.class);
+        map = assetManager.get("MAPS/Forrest1.tmx", TiledMap.class);
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
@@ -72,6 +81,10 @@ public class Gameworld1 implements Screen {
         backgroundMusic.setLooping(true);
         backgroundMusic.setVolume(GameInfo.getMusicVolume());
         backgroundMusic.play();
+
+        // Set cursor style
+        cursorStyle = new CursorStyle();
+        cursorStyle.changeCursorToHand();
 
         // Camera setup
         mapWidth = map.getProperties().get("width", Integer.class) *
@@ -89,17 +102,21 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, List.of(6));
+        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 11));
 
         // Create player
-        keyHandler = new KeyHandler();
+        keyHandler = new KeyHandler(camera);
         Gdx.input.setInputProcessor(keyHandler);
-        player = new Player(world, "sprite/player/walk.png", "sprite/player/walk.json", collisionDetector);
+        player = new PlayerMyron(world, collisionDetector);
 
+        // Create goblin
+        goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
+        goblinSpawner.spawnGoblins(new Vector2(505, 339), 2, 50f); // Spawn 3 goblins within 50 units
+        goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
 
-        tileScan = new TileScan(world, map);
-
+        // Create stages
         fpsStage = new FpsStage();
+        playerStatStage = new PlayerStatStage();
 
     }
 
@@ -111,15 +128,9 @@ public class Gameworld1 implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
-        if (Gdx.input.isKeyPressed(Input.Keys.valueOf(","))) {
-            zoomIn();
-        }
-        if (Gdx.input.isKeyPressed(Input.Keys.valueOf("."))) {
-            zoomOut();
-        }
-
         // Update player position
         player.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        keyHandler.update(Gdx.graphics.getDeltaTime());
         GameInfo.setPlayerX(player.getX());
         GameInfo.setPlayerY(player.getY());
 
@@ -139,45 +150,53 @@ public class Gameworld1 implements Screen {
         camera.update();
 
         // Render map
-
         tiledMapRenderer.setView(camera);
-///        tiledMapRenderer.setView(camera.combined, camera.position.x - camera.viewportWidth, camera.position.y - camera.viewportHeight, camera.viewportWidth * 2, camera.viewportHeight * 2);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,10,11,12,13,14,15,16,17});
-
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,11,12,13});
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
         player.draw(spriteBatch, 1);
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            goblinSpawner.checkPlayerAttack();
+        }
+        else {
+            if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
+                playerDamageApplied = false;
+            }
+        }
+
+        goblinSpawner.update(Gdx.graphics.getDeltaTime());
+        goblinSpawner.draw(spriteBatch, Gdx.graphics.getDeltaTime());
+        goblinSpawner.checkDamageToPlayer();
+
         spriteBatch.end();
-        if(GameInfo.getShowBlockedTiles()){
+
+        // Update the health bars
+        goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
+        goblinHealthBarStage.render(camera);
+
+        tiledMapRenderer.render(new int[]{8, 10, 14});
+
+        if(GameInfo.getShowDebugging()){
             debugRenderer.render(world, camera.combined);
         }
-        world.step(1 / 60f, 6, 2);
-
-        tiledMapRenderer.render(new int[]{8});
-
 
         // Draw Stages
         fpsStage.update(v);
         fpsStage.draw();
+        playerStatStage.draw();
+        playerStatStage.update(v);
 
+        world.step(1 / 60f, 6, 2);
 
-        // SAMPLE ENTER KEY PRESS
-        if(keyHandler.isEnterPressed()){
-            if(!isFlag){
-                isFlag = true;
-                System.out.println("Enter Pressed");
-            }
-        }else {
-            isFlag = false;
-        }
     }
+
+
 
 
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
-//        fpsStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -196,21 +215,7 @@ public class Gameworld1 implements Screen {
         debugRenderer.dispose();
         assetManager.dispose();
         fpsStage.dispose();
-    }
-
-    public void zoomIn() {
-        camera.zoom -= 0.01f; // Decrease zoom level
-        if (camera.zoom < 0.5f) {
-            camera.zoom = 0.5f; // Minimum zoom level
-        }
-        camera.update();
-    }
-
-    public void zoomOut() {
-        camera.zoom += 0.01f; // Increase zoom level
-        if (camera.zoom > 2.0f) {
-            camera.zoom = 2.0f; // Maximum zoom level
-        }
-        camera.update();
+        playerStatStage.dispose();
+        backgroundMusic.dispose();
     }
 }

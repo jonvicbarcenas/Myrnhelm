@@ -181,7 +181,7 @@ public class OptionsScreen implements Screen {
             }
             if (isBackClicked){
                 isBackClicked = false;
-                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new ScreenExample1());
+                ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new MenuScreen());
             }
             isTouched = false;
         }

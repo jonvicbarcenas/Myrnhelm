@@ -1,5 +1,6 @@
 .gitkeep
 16tile.png
+Cursor/cursor.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.gif
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Atlas/Buildings.png
@@ -86,9 +87,10 @@ MAPS/Tiled/Atlas_Buildings.tsx
 MAPS/Tiled/CityWall_Gate_1.png
 MAPS/Tiled/CityWall_Gate_1.tsx
 MAPS/Tiled/Dungeon.tmx
-MAPS/Tiled/Forest.aseprite
+MAPS/Tiled/Forest.png
 MAPS/Tiled/Forest.tsx
 MAPS/Tiled/Props.tsx
+MAPS/Tiled/Swirling tree1.tsx
 MAPS/Tiled/TX Plant.tsx
 MAPS/Tiled/TX Props.tsx
 MAPS/Tiled/TX Shadow Plant.tsx
@@ -110,6 +112,92 @@ MAPS/Tiled/UnderBridge.aseprite
 MAPS/Tiled/UnderBridge.png
 MAPS/Tiled/UnderBridge.tsx
 MAPS/Tiled/UnderBridge2.tsx
+MAPS/Tiled/craftpix-forest/COUPON.pdf
+MAPS/Tiled/craftpix-forest/COUPON.png
+MAPS/Tiled/craftpix-forest/License.txt
+MAPS/Tiled/craftpix-forest/Objects.psd
+MAPS/Tiled/craftpix-forest/PNG/Assets/Beige_green_mushroom1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Beige_green_mushroom2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Beige_green_mushroom3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Blue-green_balls_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Blue-green_balls_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Blue-green_balls_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Chanterelles1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Chanterelles2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Chanterelles3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Curved_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Curved_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Curved_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Ent_man.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Ent_woman.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Light_balls_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Light_balls_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Light_balls_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Living gazebo1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Living gazebo2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Luminous_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Luminous_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Luminous_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Luminous_tree4.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Mega_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Mega_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Swirling tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Swirling tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Swirling tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Tree_idol_deer.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Tree_idol_dragon.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Tree_idol_human.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Tree_idol_wolf.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/White-red_mushroom1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/White-red_mushroom2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/White-red_mushroom3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/White_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/White_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Willow1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Willow2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets/Willow3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Beige_green_mushroom1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Beige_green_mushroom2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Beige_green_mushroom3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Blue-green_balls_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Blue-green_balls_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Blue-green_balls_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Chanterelles1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Chanterelles2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Chanterelles3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Curved_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Curved_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Curved_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Ent_man.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Ent_woman.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Light_balls_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Light_balls_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Light_balls_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Living gazebo1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Living gazebo2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Luminous_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Luminous_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Luminous_tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Luminous_tree4.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Mega_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Mega_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Swirling tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Swirling tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Swirling tree3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Tree_idol_deer.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Tree_idol_dragon.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Tree_idol_human.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Tree_idol_wolf.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/White-red_mushroom1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/White-red_mushroom2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/White-red_mushroom3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/White_tree1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/White_tree2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Willow1.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Willow2.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_no_shadow/Willow3.png
+MAPS/Tiled/craftpix-forest/PNG/Assets_source.png
+MAPS/Tiled/craftpix-forest/readme.txt
 MAPS/Tiled/forest trees.tsx
 MAPS/Tiled/forest_demo_objects.tsx
 MAPS/Tiled/forest_demo_terrain.tsx
@@ -177,13 +265,18 @@ Pixel Lands Forest Demo/Pixel Lands Forest Demo/forest_demo_terrain.png
 PlayerInfo/Player.json
 Screen/MenuScreen/StartMenu.gif
 Screen/MenuScreen/bg.gif
+Screen/MenuScreen/frerem.json
+Screen/MenuScreen/frerem.png
 Screen/MenuScreen/frieren.json
 Screen/MenuScreen/frieren.png
 Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
 Screen/MenuScreen/frierenBG.gif
 char.png
+fonts/Toriko.ttf
 gameinfo.db
 playerXY.db
+sprite/Enemy/Goblin/RegularGobu.json
+sprite/Enemy/Goblin/RegularGobu.png
 sprite/MenuSprite/Exit_btn.png
 sprite/MenuSprite/Exit_btn_clicked.png
 sprite/MenuSprite/Music.png
@@ -200,5 +293,7 @@ sprite/MenuSprite/plusClicked.png
 sprite/bunny/Idle.png
 sprite/bunny/Running.json
 sprite/bunny/Running.png
+sprite/player/Walk4D.json
+sprite/player/Walk4D.png
 sprite/player/walk.json
 sprite/player/walk.png
