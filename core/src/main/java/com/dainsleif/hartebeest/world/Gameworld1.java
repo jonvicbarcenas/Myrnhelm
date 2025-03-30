@@ -158,7 +158,8 @@ public class Gameworld1 implements Screen {
         player.draw(spriteBatch, 1);
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             goblinSpawner.checkPlayerAttack();
-        } else {
+        }
+        else {
             if (!Gdx.input.isButtonPressed(Input.Buttons.LEFT)) {
                 playerDamageApplied = false;
             }
@@ -176,7 +177,7 @@ public class Gameworld1 implements Screen {
 
         tiledMapRenderer.render(new int[]{8, 10, 14});
 
-        if(GameInfo.getShowBlockedTiles()){
+        if(GameInfo.getShowDebugging()){
             debugRenderer.render(world, camera.combined);
         }
 

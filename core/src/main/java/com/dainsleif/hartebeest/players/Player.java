@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -11,6 +12,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.dainsleif.hartebeest.enemies.Enemy;
 import com.dainsleif.hartebeest.enemies.Goblin;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
@@ -45,7 +47,6 @@ public class Player extends Actor {
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
 
-        // Load animations for all directions
         animations = new HashMap<>();
         animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
         animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
@@ -56,11 +57,9 @@ public class Player extends Actor {
         animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
         animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
 
-        // Set initial frame
         currentFrame = animations.get("down").getKeyFrame(0);
         stateTime = 0f;
 
-        // Create Box2D body
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(GameInfo.getPlayerX(), GameInfo.getPlayerY());
@@ -81,17 +80,15 @@ public class Player extends Actor {
     }
 
     public void playerAttack(Goblin goblin, Player player) {
-        // Check if player is currently in attack animation
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            playerDamageApplied = false; // Reset damage flag on new attack
+            playerDamageApplied = false;
         }
 
         if (!isAttacking) {
             isAttacking = true;
             attackTimer = 0;
-            stateTime = 0; // Reset animation time for smooth attack animation
+            stateTime = 0;
 
-            // Stop all movement when attacking begins
             body.setLinearVelocity(0, 0);
         }
 
@@ -126,7 +123,7 @@ public class Player extends Actor {
             case "left": return "L";
             case "up": return "U";
             case "down": return "D";
-            default: return "D"; // Default direction
+            default: return "D";
         }
     }
 

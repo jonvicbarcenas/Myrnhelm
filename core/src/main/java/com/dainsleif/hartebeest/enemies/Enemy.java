@@ -24,6 +24,12 @@ public abstract class Enemy {
         this.hitbox = new Rectangle(position.x, position.y, hitbox.width, hitbox.height);
     }
 
+    public void update() {
+    }
+    public void render() {
+        // Render enemy here
+    }
+
 
     public void takeDamage(int amount) {
         health -= amount;
@@ -32,14 +38,6 @@ public abstract class Enemy {
 
     protected void die() {
         System.out.println("Enemy :" + mobName + " has died");
-    }
-
-    public void update() {
-        // Move enemy
-    }
-
-    public void draw() {
-        // Draw enemy
     }
 
     public Vector2 getPosition() {
@@ -57,4 +55,5 @@ public abstract class Enemy {
     public float getMaxHealth() {
         return maxHealth;
     }
+
 }
