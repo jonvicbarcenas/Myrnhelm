@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.BodyDef;
@@ -12,7 +11,6 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
-import com.dainsleif.hartebeest.enemies.Enemy;
 import com.dainsleif.hartebeest.enemies.Goblin;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
@@ -36,13 +34,12 @@ public class Player extends Actor {
 
     private boolean isAttacking = false;
     private float attackTimer = 0;
-    private static final float ATTACK_DURATION = 0.8f;
+    private static final float ATTACK_DURATION = 0.75f;
 
     // Track player attack state
     private boolean playerDamageApplied = false;
     private float playerAttackRange = 40f;
     private int playerAttackDamage = 10;
-    private float knockbackForce = 5f;
 
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
@@ -67,8 +64,8 @@ public class Player extends Actor {
 
         PolygonShape shape = new PolygonShape();
 
-        shape.setAsBox(4, 4, new Vector2(0, -6), 0); // Collision box size (32x32 pixels)
-        body.createFixture(shape, 0); // Density is 0, so it's a static body 1.0f physics enabled
+        shape.setAsBox(4, 4, new Vector2(0, -6), 0);
+        body.createFixture(shape, 0);
         shape.dispose();
 
         movements = new BasicMovements();
@@ -77,6 +74,28 @@ public class Player extends Actor {
         setHeight(HEIGHT);
 
         this.collisionDetector = collisionDetector;
+    }
+    public void playerAttack() {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            playerDamageApplied = false;
+        }
+
+        if (!isAttacking) {
+            isAttacking = true;
+            attackTimer = 0;
+            stateTime = 0;
+
+            body.setLinearVelocity(0, 0);
+        }
+
+        // Always trigger the attack animation
+        if (isAttacking) {
+            attackTimer += Gdx.graphics.getDeltaTime();
+            if (attackTimer >= ATTACK_DURATION) {
+                isAttacking = false;
+                attackTimer = 0;
+            }
+        }
     }
 
     public void playerAttack(Goblin goblin, Player player) {
@@ -97,18 +116,10 @@ public class Player extends Actor {
         Vector2 goblinPos = goblin.getPosition();
         float distance = playerPos.dst(goblinPos);
 
-        // Only process during attack and when damage hasn't been applied yet
         if (distance <= playerAttackRange && !playerDamageApplied && isGoblinInAttackDirection(playerPos, goblinPos)) {
-            Vector2 knockbackDirection = new Vector2(goblinPos).sub(playerPos).nor();
             goblin.takeDamage(playerAttackDamage);
             System.out.println("Player hit goblin! -" + playerAttackDamage + " damage");
 
-            Body goblinBody = goblin.getBody();
-            goblinBody.applyLinearImpulse(
-                knockbackDirection.scl(knockbackForce),
-                goblinBody.getWorldCenter(),
-                true
-            );
             playerDamageApplied = true;
         }
     }
@@ -131,7 +142,7 @@ public class Player extends Actor {
         Vector2 playerFacingDirection = new Vector2(0, 0);
 
         // Set direction vector based on player's current facing direction
-        String direction = getDirection(); // Assuming you have a getDirection() method
+        String direction = getDirection();
         if (direction.equals("R")) playerFacingDirection.set(1, 0);
         else if (direction.equals("L")) playerFacingDirection.set(-1, 0);
         else if (direction.equals("U")) playerFacingDirection.set(0, 1);

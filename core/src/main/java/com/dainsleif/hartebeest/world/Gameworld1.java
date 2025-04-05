@@ -191,9 +191,6 @@ public class Gameworld1 implements Screen {
 
     }
 
-
-
-
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);

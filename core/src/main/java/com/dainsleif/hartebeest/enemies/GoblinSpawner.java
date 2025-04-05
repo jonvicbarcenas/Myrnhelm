@@ -51,17 +51,26 @@ public class GoblinSpawner {
             Goblin goblin = goblinIterator.next();
             EnemyGoblinGdxAi ai = aiIterator.next();
 
+            // If goblin is already dead and animation finished
             if (goblin.isShouldRemove()) {
                 world.destroyBody(goblin.getBody());
-
                 goblin.dispose();
-
                 goblinIterator.remove();
                 aiIterator.remove();
-            } else {
-                goblin.update();
-                ai.update(delta);
+                continue;
             }
+
+            // If goblin health reaches 0, start death animation
+            if (goblin.getHealth() <= 0 && goblin.getCurrentState() != EnemyState.DEAD) {
+                goblin.setState(EnemyState.DEAD);
+                goblin.update(); // Start the death animation
+                ai.update(delta);
+                continue;
+            }
+
+            // Otherwise update normally
+            goblin.update();
+            ai.update(delta);
         }
     }
 
@@ -82,6 +91,7 @@ public class GoblinSpawner {
     }
 
     public void checkPlayerAttack() {
+        player.playerAttack();
         for (Goblin goblin : goblins) {
             player.playerAttack(goblin, player);
         }
