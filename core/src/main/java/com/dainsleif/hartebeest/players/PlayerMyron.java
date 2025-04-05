@@ -5,8 +5,8 @@ import com.badlogic.gdx.physics.box2d.World;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 public class PlayerMyron extends Player {
-    private static final String TEXTURE_PATH = "sprite/player/Walk4D.png";
-    private static final String JSON_PATH = "sprite/player/Walk4D.json";
+    private static final String TEXTURE_PATH = "sprite/player/Myron.png";
+    private static final String JSON_PATH = "sprite/player/Myron.json";
 
     private static int health;
     private int maxHealth;

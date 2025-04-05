@@ -34,18 +34,16 @@ public class Player extends Actor {
 
     private boolean isAttacking = false;
     private float attackTimer = 0;
-    private static final float ATTACK_DURATION = 0.8f;
+    private static final float ATTACK_DURATION = 0.75f;
 
     // Track player attack state
     private boolean playerDamageApplied = false;
     private float playerAttackRange = 40f;
     private int playerAttackDamage = 10;
-    private float knockbackForce = 5f;
 
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
 
-        // Load animations for all directions
         animations = new HashMap<>();
         animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
         animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
@@ -56,11 +54,9 @@ public class Player extends Actor {
         animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
         animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
 
-        // Set initial frame
         currentFrame = animations.get("down").getKeyFrame(0);
         stateTime = 0f;
 
-        // Create Box2D body
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
         bodyDef.position.set(GameInfo.getPlayerX(), GameInfo.getPlayerY());
@@ -68,8 +64,8 @@ public class Player extends Actor {
 
         PolygonShape shape = new PolygonShape();
 
-        shape.setAsBox(4, 4, new Vector2(0, -6), 0); // Collision box size (32x32 pixels)
-        body.createFixture(shape, 0); // Density is 0, so it's a static body 1.0f physics enabled
+        shape.setAsBox(4, 4, new Vector2(0, -6), 0);
+        body.createFixture(shape, 0);
         shape.dispose();
 
         movements = new BasicMovements();
@@ -79,30 +75,39 @@ public class Player extends Actor {
 
         this.collisionDetector = collisionDetector;
     }
-
-//    public void attack() {
-//        if (!isAttacking) {
-//            isAttacking = true;
-//            attackTimer = 0;
-//            stateTime = 0; // Reset animation time for smooth attack animation
-//
-//            // Stop all movement when attacking begins
-//            body.setLinearVelocity(0, 0);
-//        }
-//    }
-
-    public void playerAttack(Goblin goblin, Player player) {
-        // Check if player is currently in attack animation
+    public void playerAttack() {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
-            playerDamageApplied = false; // Reset damage flag on new attack
+            playerDamageApplied = false;
         }
 
         if (!isAttacking) {
             isAttacking = true;
             attackTimer = 0;
-            stateTime = 0; // Reset animation time for smooth attack animation
+            stateTime = 0;
 
-            // Stop all movement when attacking begins
+            body.setLinearVelocity(0, 0);
+        }
+
+        // Always trigger the attack animation
+        if (isAttacking) {
+            attackTimer += Gdx.graphics.getDeltaTime();
+            if (attackTimer >= ATTACK_DURATION) {
+                isAttacking = false;
+                attackTimer = 0;
+            }
+        }
+    }
+
+    public void playerAttack(Goblin goblin, Player player) {
+        if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
+            playerDamageApplied = false;
+        }
+
+        if (!isAttacking) {
+            isAttacking = true;
+            attackTimer = 0;
+            stateTime = 0;
+
             body.setLinearVelocity(0, 0);
         }
 
@@ -111,26 +116,43 @@ public class Player extends Actor {
         Vector2 goblinPos = goblin.getPosition();
         float distance = playerPos.dst(goblinPos);
 
-        // Only process during attack and when damage hasn't been applied yet
-        if (distance <= playerAttackRange && !playerDamageApplied) {
-            // Calculate attack direction vector (from player to enemy)
-            Vector2 knockbackDirection = new Vector2(goblinPos).sub(playerPos).nor();
-
-            // Apply damage to goblin
+        if (distance <= playerAttackRange && !playerDamageApplied && isGoblinInAttackDirection(playerPos, goblinPos)) {
             goblin.takeDamage(playerAttackDamage);
             System.out.println("Player hit goblin! -" + playerAttackDamage + " damage");
 
-            // Apply knockback force
-            Body goblinBody = goblin.getBody();
-            goblinBody.applyLinearImpulse(
-                knockbackDirection.scl(knockbackForce),
-                goblinBody.getWorldCenter(),
-                true
-            );
-
-            // Mark damage as applied for this attack
             playerDamageApplied = true;
         }
+    }
+
+    public String getDirection() {
+        switch (currentDirection) {
+            case "right": return "R";
+            case "left": return "L";
+            case "up": return "U";
+            case "down": return "D";
+            default: return "D";
+        }
+    }
+
+    private boolean isGoblinInAttackDirection(Vector2 playerPos, Vector2 goblinPos) {
+        // Calculate direction vector from player to goblin
+        Vector2 directionToGoblin = new Vector2(goblinPos).sub(playerPos).nor();
+
+        // Get player's facing direction as a normalized vector
+        Vector2 playerFacingDirection = new Vector2(0, 0);
+
+        // Set direction vector based on player's current facing direction
+        String direction = getDirection();
+        if (direction.equals("R")) playerFacingDirection.set(1, 0);
+        else if (direction.equals("L")) playerFacingDirection.set(-1, 0);
+        else if (direction.equals("U")) playerFacingDirection.set(0, 1);
+        else if (direction.equals("D")) playerFacingDirection.set(0, -1);
+
+        // Calculate dot product (determines if goblin is in front of player)
+        float dotProduct = directionToGoblin.dot(playerFacingDirection);
+
+        // Goblin is in attack direction if dot product is positive (within ~90 degrees of facing direction)
+        return dotProduct > 0;
     }
 
     public void setPosition(float x, float y) {

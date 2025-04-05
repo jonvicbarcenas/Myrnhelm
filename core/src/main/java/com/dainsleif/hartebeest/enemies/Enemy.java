@@ -5,6 +5,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public abstract class Enemy {
     private final String mobName;
+    protected int maxHealth;
     protected int health;
     protected int damage;
     protected float speed;
@@ -15,11 +16,18 @@ public abstract class Enemy {
 
     public Enemy(String mobName,int health, int damage, float speed, Vector2 position, Rectangle hitbox) {
         this.mobName = mobName;
+        this.maxHealth = health;
         this.health = health;
         this.damage = damage;
         this.speed = speed;
         this.position = position;
         this.hitbox = new Rectangle(position.x, position.y, hitbox.width, hitbox.height);
+    }
+
+    public void update() {
+    }
+    public void render() {
+        // Render enemy here
     }
 
 
@@ -30,14 +38,6 @@ public abstract class Enemy {
 
     protected void die() {
         System.out.println("Enemy :" + mobName + " has died");
-    }
-
-    public void update() {
-        // Move enemy
-    }
-
-    public void draw() {
-        // Draw enemy
     }
 
     public Vector2 getPosition() {
@@ -51,4 +51,9 @@ public abstract class Enemy {
     public String getMobName(){
         return mobName;
     }
+
+    public float getMaxHealth() {
+        return maxHealth;
+    }
+
 }
