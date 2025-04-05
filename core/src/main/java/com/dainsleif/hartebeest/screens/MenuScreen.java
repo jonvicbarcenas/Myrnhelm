@@ -157,6 +157,7 @@ public class MenuScreen implements Screen {
                 if (startButtonBounds.contains(touchPos)) {
                     // Handle Start button click
                     isStartButtonClicked = true;
+                    ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new StoryScreen());
                 } else if (optionsButtonBounds.contains(touchPos)) {
                     // Handle Options button click
                     isOptionsButtonClicked = true;
