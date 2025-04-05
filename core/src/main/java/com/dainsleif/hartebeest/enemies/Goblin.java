@@ -38,7 +38,7 @@ public class Goblin extends Enemy {
     private float knockbackTimer = 0;
 
     public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
-        super("Goblin", 50, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
+        super("Goblin", 50, 10, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;
@@ -108,10 +108,6 @@ public class Goblin extends Enemy {
         currentFrame = animations.get("idleD").getKeyFrame(0);
     }
 
-    public void applyKnockback(float duration) {
-        knockedBack = true;
-        knockbackTimer = duration;
-    }
 
     @Override
     public void update() {
@@ -307,7 +303,7 @@ public class Goblin extends Enemy {
         }
 
         // Check if goblin is attacking
-        if (currentState == EnemyState.ATTACKING || currentState == EnemyState.ATTACKING_SPIN) {
+        if (currentState == EnemyState.ATTACKING || currentState == EnemyState.ATTACKING_SPIN ) {
             Vector2 goblinPos = getPosition();
             Vector2 playerPos = player.getPosition();
             float distance = goblinPos.dst(playerPos);
@@ -342,7 +338,7 @@ public class Goblin extends Enemy {
 
                         if (shouldApplyDamage) {
                             if (currentState == EnemyState.ATTACKING) {
-                                player.takeDamage(5);
+                                player.takeDamage(getDamage());
 //                                System.out.println("Regular attack hit! -5 health, cycle: " + currentCycle);
                             } else {
                                 player.takeDamage(20);

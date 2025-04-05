@@ -15,6 +15,7 @@ public class PlayerMyron extends Player {
     private int damage;
     private int level;
     private int experience;
+    private boolean isDead;
 
     public PlayerMyron(World world, CollisionDetector collisionDetector) {
         super(world, TEXTURE_PATH, JSON_PATH, collisionDetector);
@@ -95,4 +96,10 @@ public class PlayerMyron extends Player {
     public int getDamage() { return damage; }
     public int getLevel() { return level; }
     public int getExperience() { return experience; }
+    public boolean isDead() { return isDead; }
+    public void setDead(boolean dead) { isDead = dead; }
+
+    public void setHealth(int i) {
+        health = i;
+    }
 }

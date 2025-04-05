@@ -68,6 +68,13 @@ public class GoblinSpawner {
                 continue;
             }
 
+            // If player is dead, set goblin to idle state
+            if (player.isDead() && goblin.getCurrentState() != EnemyState.DEAD) {
+                goblin.setState(EnemyState.IDLE);
+                goblin.update();
+                continue;
+            }
+
             // Otherwise update normally
             goblin.update();
             ai.update(delta);

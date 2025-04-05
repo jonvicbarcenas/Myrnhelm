@@ -312,3 +312,5 @@ sprite/player/Myron.json
 sprite/player/Myron.png
 sprite/player/Walk4D.json
 sprite/player/Walk4D.png
+sprite/summon/summon.json
+sprite/summon/summon.png

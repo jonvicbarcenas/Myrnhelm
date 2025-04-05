@@ -41,6 +41,8 @@ public class Player extends Actor {
     private float playerAttackRange = 40f;
     private int playerAttackDamage = 10;
 
+    private boolean isDead = false;
+
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
 
@@ -98,7 +100,21 @@ public class Player extends Actor {
         }
     }
 
+    // Add this method to the Player class
+    public boolean isDead() {
+        return isDead;
+    }
+
+    // Add a setter method for completeness
+    public void setDead(boolean dead) {
+        this.isDead = dead;
+    }
+
     public void playerAttack(Goblin goblin, Player player) {
+        if (isDead()) {
+            return;
+        }
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             playerDamageApplied = false;
         }
@@ -124,6 +140,7 @@ public class Player extends Actor {
         }
     }
 
+
     public String getDirection() {
         switch (currentDirection) {
             case "right": return "R";
@@ -135,23 +152,18 @@ public class Player extends Actor {
     }
 
     private boolean isGoblinInAttackDirection(Vector2 playerPos, Vector2 goblinPos) {
-        // Calculate direction vector from player to goblin
         Vector2 directionToGoblin = new Vector2(goblinPos).sub(playerPos).nor();
 
-        // Get player's facing direction as a normalized vector
         Vector2 playerFacingDirection = new Vector2(0, 0);
 
-        // Set direction vector based on player's current facing direction
         String direction = getDirection();
         if (direction.equals("R")) playerFacingDirection.set(1, 0);
         else if (direction.equals("L")) playerFacingDirection.set(-1, 0);
         else if (direction.equals("U")) playerFacingDirection.set(0, 1);
         else if (direction.equals("D")) playerFacingDirection.set(0, -1);
 
-        // Calculate dot product (determines if goblin is in front of player)
         float dotProduct = directionToGoblin.dot(playerFacingDirection);
 
-        // Goblin is in attack direction if dot product is positive (within ~90 degrees of facing direction)
         return dotProduct > 0;
     }
 

@@ -20,15 +20,12 @@ import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
-import com.dainsleif.hartebeest.screens.DeathStage;
-import com.dainsleif.hartebeest.screens.FpsStage;
-import com.dainsleif.hartebeest.screens.GoblinHealthBarStage;
-import com.dainsleif.hartebeest.screens.PlayerStatStage;
+import com.dainsleif.hartebeest.screens.*;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.Arrays;
 
-public class Gameworld1 implements Screen {
+public class StartAreaMap implements Screen {
     TiledMap map;
     OrthogonalTiledMapRenderer tiledMapRenderer;
     SpriteBatch spriteBatch;
@@ -45,7 +42,6 @@ public class Gameworld1 implements Screen {
     KeyHandler keyHandler;
 
     // Enemy
-
     private final float mapWidth;
     private final float mapHeight;
     private AssetManager assetManager;
@@ -60,7 +56,7 @@ public class Gameworld1 implements Screen {
     private GoblinHealthBarStage goblinHealthBarStage;
     DeathStage deathStage;
 
-    public Gameworld1() {
+    public StartAreaMap() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
 
         // Initialize AssetManager
@@ -68,13 +64,13 @@ public class Gameworld1 implements Screen {
 
         // Queue assets for loading
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
-        assetManager.load("MAPS/Forrest1.tmx", TiledMap.class);
+        assetManager.load("MAPS/StartArea.tmx", TiledMap.class);
         assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
 
         assetManager.finishLoading();
 
         // Load map
-        map = assetManager.get("MAPS/Forrest1.tmx", TiledMap.class);
+        map = assetManager.get("MAPS/StartArea.tmx", TiledMap.class);
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
@@ -104,24 +100,22 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 10, 11));
+        collisionDetector = new CollisionDetector(world, map, Arrays.asList(0, 1, 2, 3, 4, 5, 6, 7, 8, 9), "blocked");
 
         // Create player
         keyHandler = new KeyHandler(camera);
         Gdx.input.setInputProcessor(keyHandler);
         player = new PlayerMyron(world, collisionDetector);
 
-        player.setPosition(118, 32);
         // Create goblin
         goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
-        goblinSpawner.spawnGoblins(new Vector2(505, 339), 3, 50f); // Spawn 3 goblins within 50 units
+        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); // Spawn 3 goblins within 50 units
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
 
         // Create stages
         fpsStage = new FpsStage();
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
-
 
     }
 
@@ -156,7 +150,8 @@ public class Gameworld1 implements Screen {
 
         // Render map
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,8,9,11,12,13});
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3,5, 4,6,7,9});
+
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
@@ -185,25 +180,29 @@ public class Gameworld1 implements Screen {
 
         }
 
+        tiledMapRenderer.render(new int[]{8,10});
+
         if (player.isDead()) {
             deathStage.update(v);
             deathStage.draw();
             //press enter to respawn and remove the player
 
+
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 player.setDead(false);
                 backgroundMusic.play();
                 player.setHealth(1500);
-                player.setPosition(118, 32);
+                player.setPosition(320, 315);
             }
             return;
         }
+
 
         // Update the health bars
         goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
         goblinHealthBarStage.render(camera);
 
-        tiledMapRenderer.render(new int[]{10, 14});
+
 
         if(GameInfo.getShowDebugging()){
             debugRenderer.render(world, camera.combined);

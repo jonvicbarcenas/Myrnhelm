@@ -48,6 +48,10 @@ public abstract class Enemy {
         return speed;
     }
 
+    public int getDamage() {
+        return damage;
+    }
+
     public String getMobName(){
         return mobName;
     }
