@@ -86,9 +86,18 @@ MAPS/Tiled/64.tsx
 MAPS/Tiled/Atlas_Buildings.tsx
 MAPS/Tiled/CityWall_Gate_1.png
 MAPS/Tiled/CityWall_Gate_1.tsx
+MAPS/Tiled/DUNGEON.tsx
 MAPS/Tiled/Dungeon.tmx
+MAPS/Tiled/Fire.aseprite
+MAPS/Tiled/Fire.png
+MAPS/Tiled/Fire.tsx
 MAPS/Tiled/Forest.png
 MAPS/Tiled/Forest.tsx
+MAPS/Tiled/House1.png
+MAPS/Tiled/House1.tsx
+MAPS/Tiled/House2.png
+MAPS/Tiled/House2.tsx
+MAPS/Tiled/Props.png
 MAPS/Tiled/Props.tsx
 MAPS/Tiled/Swirling tree1.tsx
 MAPS/Tiled/TX Plant.tsx
@@ -112,6 +121,7 @@ MAPS/Tiled/UnderBridge.aseprite
 MAPS/Tiled/UnderBridge.png
 MAPS/Tiled/UnderBridge.tsx
 MAPS/Tiled/UnderBridge2.tsx
+MAPS/Tiled/ahahhaahah.tsx
 MAPS/Tiled/craftpix-forest/COUPON.pdf
 MAPS/Tiled/craftpix-forest/COUPON.png
 MAPS/Tiled/craftpix-forest/License.txt
@@ -211,6 +221,7 @@ MAPS/Tiled/objects121.tsx
 MAPS/Tiled/objects64.tsx
 MAPS/Tiled/test.tiled-project
 MAPS/Tiled/test.tiled-session
+MAPS/Tiled/tiles.png
 MAPS/Tiled/tiles.tsx
 MAPS/Tiled/trees forest 64.tsx
 MAPS/Tiled/valerio-colonna-tilesets-topdown-removebg-preview.png
