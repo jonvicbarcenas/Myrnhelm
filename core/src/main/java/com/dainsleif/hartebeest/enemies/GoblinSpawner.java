@@ -4,7 +4,6 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
-import com.dainsleif.hartebeest.players.Player;
 import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -28,7 +27,6 @@ public class GoblinSpawner {
 
     public void spawnGoblins(Vector2 center, int count, float radius) {
         for (int i = 0; i < count; i++) {
-            // Generate random position within the circle
             float angle = MathUtils.random(0, MathUtils.PI2);
             float distance = MathUtils.random(0, radius);
 
@@ -37,7 +35,6 @@ public class GoblinSpawner {
 
             Vector2 position = new Vector2(x, y);
 
-            // Create goblin and its AI
             Goblin goblin = new Goblin(position, collisionDetector, world);
             EnemyGoblinGdxAi goblinAI = new EnemyGoblinGdxAi(goblin, player);
 
@@ -55,17 +52,13 @@ public class GoblinSpawner {
             EnemyGoblinGdxAi ai = aiIterator.next();
 
             if (goblin.isShouldRemove()) {
-                // Remove from physics world
                 world.destroyBody(goblin.getBody());
 
-                // Dispose resources
                 goblin.dispose();
 
-                // Remove from lists
                 goblinIterator.remove();
                 aiIterator.remove();
             } else {
-                // Update goblin and its AI
                 goblin.update();
                 ai.update(delta);
             }

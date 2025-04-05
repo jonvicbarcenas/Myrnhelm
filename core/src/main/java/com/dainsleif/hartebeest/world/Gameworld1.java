@@ -102,7 +102,7 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 11));
+        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 10, 11));
 
         // Create player
         keyHandler = new KeyHandler(camera);
@@ -111,7 +111,7 @@ public class Gameworld1 implements Screen {
 
         // Create goblin
         goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
-        goblinSpawner.spawnGoblins(new Vector2(505, 339), 2, 50f); // Spawn 3 goblins within 50 units
+        goblinSpawner.spawnGoblins(new Vector2(505, 339), 3, 50f); // Spawn 3 goblins within 50 units
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
 
         // Create stages
@@ -151,7 +151,7 @@ public class Gameworld1 implements Screen {
 
         // Render map
         tiledMapRenderer.setView(camera);
-        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,9,11,12,13});
+        tiledMapRenderer.render(new int[]{0, 1, 2, 3, 4,5,6,7,8,9,11,12,13});
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
@@ -175,7 +175,7 @@ public class Gameworld1 implements Screen {
         goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
         goblinHealthBarStage.render(camera);
 
-        tiledMapRenderer.render(new int[]{8, 10, 14});
+        tiledMapRenderer.render(new int[]{10, 14});
 
         if(GameInfo.getShowDebugging()){
             debugRenderer.render(world, camera.combined);

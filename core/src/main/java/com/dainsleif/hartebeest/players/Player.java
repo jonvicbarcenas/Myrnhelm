@@ -92,10 +92,6 @@ public class Player extends Actor {
             body.setLinearVelocity(0, 0);
         }
 
-        if(goblin == null){
-            return;
-        }
-
         // Get positions
         Vector2 playerPos = player.getPosition();
         Vector2 goblinPos = goblin.getPosition();
