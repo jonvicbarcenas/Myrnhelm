@@ -21,7 +21,7 @@ import com.dainsleif.hartebeest.utils.CollisionDetector;
 import java.util.HashMap;
 import java.util.Map;
 
-public class Player extends Actor {
+public abstract class Player extends Actor {
     private Map<String, Animation<TextureRegion>> animations;
     private TextureRegion currentFrame;
     private float stateTime;
@@ -44,20 +44,9 @@ public class Player extends Actor {
     private boolean isDead = false;
 
     public Player(World world, String texturePath, String jsonPath, CollisionDetector collisionDetector) {
-        SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(texturePath, jsonPath);
-
+        // Initialize basic properties but move animation setup to a separate method
         animations = new HashMap<>();
-        animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
-        animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
-        animations.put("left", new Animation<>(0.1f, loader.getFrames("walkLeft")));
-        animations.put("right", new Animation<>(0.1f, loader.getFrames("walkRight")));
-        animations.put("atk_up", new Animation<>(0.1f, loader.getFrames("atkTop")));
-        animations.put("atk_down", new Animation<>(0.1f, loader.getFrames("atkDown")));
-        animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
-        animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
-
-        currentFrame = animations.get("down").getKeyFrame(0);
-        stateTime = 0f;
+        initializeAnimations();
 
         BodyDef bodyDef = new BodyDef();
         bodyDef.type = BodyDef.BodyType.DynamicBody;
@@ -65,7 +54,6 @@ public class Player extends Actor {
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-
         shape.setAsBox(4, 4, new Vector2(0, -6), 0);
         body.createFixture(shape, 0);
         shape.dispose();
@@ -74,9 +62,21 @@ public class Player extends Actor {
 
         setWidth(WIDTH);
         setHeight(HEIGHT);
-
         this.collisionDetector = collisionDetector;
     }
+
+    public void disableBody() {
+        if (body != null) {
+            body.setActive(false);
+        }
+    }
+
+    public void enableBody() {
+        if (body != null) {
+            body.setActive(true);
+        }
+    }
+
     public void playerAttack() {
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             playerDamageApplied = false;
@@ -100,7 +100,24 @@ public class Player extends Actor {
         }
     }
 
-    // Add this method to the Player class
+    protected void setAnimations(Map<String, Animation<TextureRegion>> animations) {
+        this.animations = animations;
+    }
+
+    protected void setCurrentFrame(TextureRegion frame) {
+        this.currentFrame = frame;
+    }
+
+    protected void setStateTime(float time) {
+        this.stateTime = time;
+    }
+
+    protected void initializeAnimations() {}
+
+    public abstract void useSkill1();
+    public abstract void useSkill2();
+    public abstract void useUltimate();
+
     public boolean isDead() {
         return isDead;
     }

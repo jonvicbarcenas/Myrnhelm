@@ -38,7 +38,7 @@ public class Goblin extends Enemy {
     private float knockbackTimer = 0;
 
     public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
-        super("Goblin", 50, 10, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
+        super("Goblin", 50, 100, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;

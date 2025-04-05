@@ -274,13 +274,14 @@ Mystic Woods/sprites/tilesets/water_lillies.png
 Pixel Lands Forest Demo/Pixel Lands Forest Demo/forest_demo_objects.png
 Pixel Lands Forest Demo/Pixel Lands Forest Demo/forest_demo_terrain.png
 PlayerInfo/Player.json
+Screen/MenuScreen/MenuBG.json
+Screen/MenuScreen/MenuBG.png
 Screen/MenuScreen/StartMenu.gif
 Screen/MenuScreen/bg.gif
 Screen/MenuScreen/frerem.json
 Screen/MenuScreen/frerem.png
 Screen/MenuScreen/frieren.json
 Screen/MenuScreen/frieren.png
-Screen/MenuScreen/frierenBG-ezgif.com-animated-gif-maker.gif
 Screen/MenuScreen/frierenBG.gif
 char.png
 fonts/Toriko.ttf
@@ -308,9 +309,12 @@ sprite/MenuSprite/plusClicked.png
 sprite/bunny/Idle.png
 sprite/bunny/Running.json
 sprite/bunny/Running.png
+sprite/npc/jawee.json
+sprite/npc/jawee.png
+sprite/player/Meley.json
+sprite/player/Meley.png
 sprite/player/Myron.json
 sprite/player/Myron.png
-sprite/player/Walk4D.json
-sprite/player/Walk4D.png
+sprite/player/mage fly.aseprite
 sprite/summon/summon.json
 sprite/summon/summon.png

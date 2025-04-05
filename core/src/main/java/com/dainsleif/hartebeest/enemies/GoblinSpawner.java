@@ -4,7 +4,9 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.MathUtils;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.dainsleif.hartebeest.players.Player;
 import com.dainsleif.hartebeest.players.PlayerMyron;
+import com.dainsleif.hartebeest.players.PlayerSwitcher;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.ArrayList;
@@ -14,15 +16,15 @@ import java.util.List;
 public class GoblinSpawner {
     private final World world;
     private final CollisionDetector collisionDetector;
-    private final PlayerMyron player;
+    private final PlayerSwitcher playerSwitcher;
 
     private List<Goblin> goblins = new ArrayList<>();
     private List<EnemyGoblinGdxAi> goblinAIs = new ArrayList<>();
 
-    public GoblinSpawner(World world, CollisionDetector collisionDetector, PlayerMyron player) {
+    public GoblinSpawner(World world, CollisionDetector collisionDetector, PlayerSwitcher playerSwitcher) {
         this.world = world;
         this.collisionDetector = collisionDetector;
-        this.player = player;
+        this.playerSwitcher = playerSwitcher;
     }
 
     public void spawnGoblins(Vector2 center, int count, float radius) {
@@ -36,7 +38,7 @@ public class GoblinSpawner {
             Vector2 position = new Vector2(x, y);
 
             Goblin goblin = new Goblin(position, collisionDetector, world);
-            EnemyGoblinGdxAi goblinAI = new EnemyGoblinGdxAi(goblin, player);
+            EnemyGoblinGdxAi goblinAI = new EnemyGoblinGdxAi(goblin, playerSwitcher.getCurrentPlayer());
 
             goblins.add(goblin);
             goblinAIs.add(goblinAI);
@@ -69,7 +71,7 @@ public class GoblinSpawner {
             }
 
             // If player is dead, set goblin to idle state
-            if (player.isDead() && goblin.getCurrentState() != EnemyState.DEAD) {
+            if (playerSwitcher.isDead() && goblin.getCurrentState() != EnemyState.DEAD) {
                 goblin.setState(EnemyState.IDLE);
                 goblin.update();
                 continue;
@@ -88,8 +90,19 @@ public class GoblinSpawner {
     }
 
     public void checkDamageToPlayer() {
-        for (Goblin goblin : goblins) {
-            goblin.goblinDamage(player);
+        Player currentPlayer = playerSwitcher.getCurrentPlayer();
+        if (currentPlayer instanceof PlayerMyron) {
+            // For backward compatibility
+            PlayerMyron myronPlayer = (PlayerMyron) currentPlayer;
+            for (Goblin goblin : goblins) {
+                goblin.goblinDamage(myronPlayer);
+            }
+        } else {
+            // Generic damage logic for other player types
+            for (Goblin goblin : goblins) {
+                // This will require modifying the Goblin class to have a more generic damage method
+                // goblin.damagePlayer(currentPlayer);
+            }
         }
     }
 
@@ -98,9 +111,15 @@ public class GoblinSpawner {
     }
 
     public void checkPlayerAttack() {
-        player.playerAttack();
-        for (Goblin goblin : goblins) {
-            player.playerAttack(goblin, player);
+        Player currentPlayer = playerSwitcher.getCurrentPlayer();
+        if (currentPlayer instanceof PlayerMyron) {
+            PlayerMyron myronPlayer = (PlayerMyron) currentPlayer;
+            myronPlayer.playerAttack();
+            for (Goblin goblin : goblins) {
+                myronPlayer.playerAttack(goblin, myronPlayer);
+            }
+        } else {
+            // Handle attack logic for other player types
         }
     }
 

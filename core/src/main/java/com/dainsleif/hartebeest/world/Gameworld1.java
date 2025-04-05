@@ -1,5 +1,6 @@
 package com.dainsleif.hartebeest.world;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
@@ -8,9 +9,13 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.maps.MapLayer;
+import com.badlogic.gdx.maps.MapObject;
+import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -20,6 +25,7 @@ import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
+import com.dainsleif.hartebeest.players.PlayerSwitcher;
 import com.dainsleif.hartebeest.screens.DeathStage;
 import com.dainsleif.hartebeest.screens.FpsStage;
 import com.dainsleif.hartebeest.screens.GoblinHealthBarStage;
@@ -33,7 +39,6 @@ public class Gameworld1 implements Screen {
     OrthogonalTiledMapRenderer tiledMapRenderer;
     SpriteBatch spriteBatch;
     FitViewport viewport;
-    Music backgroundMusic;
     FpsStage fpsStage;
     PlayerStatStage playerStatStage;
     CursorStyle cursorStyle;
@@ -41,11 +46,10 @@ public class Gameworld1 implements Screen {
     // Camera
     OrthographicCamera camera;
 
-    private PlayerMyron player;
+    PlayerSwitcher playerSwitcher;
     KeyHandler keyHandler;
 
     // Enemy
-
     private final float mapWidth;
     private final float mapHeight;
     private AssetManager assetManager;
@@ -55,8 +59,10 @@ public class Gameworld1 implements Screen {
 
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
-
+    private boolean transitioning = false;
+    private Screen nextScreen = null;
     private GoblinSpawner goblinSpawner;
+    private TransitionMapHandler transitionHandler;
     private GoblinHealthBarStage goblinHealthBarStage;
     DeathStage deathStage;
 
@@ -69,7 +75,6 @@ public class Gameworld1 implements Screen {
         // Queue assets for loading
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         assetManager.load("MAPS/Forrest1.tmx", TiledMap.class);
-        assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
 
         assetManager.finishLoading();
 
@@ -78,11 +83,6 @@ public class Gameworld1 implements Screen {
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
 
-        // Load and play background music
-        backgroundMusic = assetManager.get("Music/16bitRpgBGMUSIC.mp3", Music.class);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(GameInfo.getMusicVolume());
-        backgroundMusic.play();
 
         // Set cursor style
         cursorStyle = new CursorStyle();
@@ -104,23 +104,26 @@ public class Gameworld1 implements Screen {
         world = new World(new Vector2(0, 0), true);
         debugRenderer = new Box2DDebugRenderer();
 
-        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 10, 11));
+        collisionDetector = new CollisionDetector(world, map, Arrays.asList(3, 4, 5, 6, 10, 11) , "blocked");
 
         // Create player
         keyHandler = new KeyHandler(camera);
         Gdx.input.setInputProcessor(keyHandler);
-        player = new PlayerMyron(world, collisionDetector);
+        playerSwitcher = new PlayerSwitcher(world, collisionDetector);
+        playerSwitcher.setPosition(118, 32);
 
-        player.setPosition(118, 32);
+        transitionHandler = new TransitionMapHandler(map, "transitions", 15, "StartAreaMap");
+
         // Create goblin
-        goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
-        goblinSpawner.spawnGoblins(new Vector2(505, 339), 3, 50f); // Spawn 3 goblins within 50 units
+        goblinSpawner = new GoblinSpawner(world, collisionDetector, playerSwitcher);
+        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); //
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
 
         // Create stages
         fpsStage = new FpsStage();
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
+        MusicGameSingleton.getInstance().play();
 
 
     }
@@ -132,15 +135,27 @@ public class Gameworld1 implements Screen {
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        if (transitioning) {
+            return;
+        }
 
         // Update player position
-        player.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        playerSwitcher.update(Gdx.graphics.getDeltaTime(), keyHandler);
         keyHandler.update(Gdx.graphics.getDeltaTime());
-        GameInfo.setPlayerX(player.getX());
-        GameInfo.setPlayerY(player.getY());
+        GameInfo.setPlayerX(playerSwitcher.getX());
+        GameInfo.setPlayerY(playerSwitcher.getY());
+
+        // Check for transitions
+        checkTransitions();
+
+        // If transition was triggered, execute it and return
+        if (transitioning) {
+            executeTransition();
+            return;
+        }
 
         // Update camera
-        camera.position.set(player.getX(), player.getY(), 0);
+        camera.position.set(playerSwitcher.getX(), playerSwitcher.getY(), 0);
 
         // Constrain camera to map boundaries
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
@@ -160,8 +175,8 @@ public class Gameworld1 implements Screen {
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        if (!player.isDead()) {
-            player.draw(spriteBatch, 1);
+        if (!playerSwitcher.isDead()) {
+            playerSwitcher.draw(spriteBatch, 1);
         }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             goblinSpawner.checkPlayerAttack();
@@ -173,28 +188,29 @@ public class Gameworld1 implements Screen {
 
         goblinSpawner.update(Gdx.graphics.getDeltaTime());
         goblinSpawner.draw(spriteBatch, Gdx.graphics.getDeltaTime());
-        if(!player.isDead()){
+        if(!playerSwitcher.isDead()){
             goblinSpawner.checkDamageToPlayer();
         }
 
 
         spriteBatch.end();
 
-        if (PlayerMyron.getHealth() <= 0 && !player.isDead()) {
-            player.setDead(true);
+        if (PlayerMyron.getHealth() <= 0 && !playerSwitcher.isDead()) {
+            playerSwitcher.setDead(true);
 
         }
 
-        if (player.isDead()) {
+        tiledMapRenderer.render(new int[]{10});
+
+        if (playerSwitcher.isDead()) {
             deathStage.update(v);
             deathStage.draw();
             //press enter to respawn and remove the player
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                player.setDead(false);
-                backgroundMusic.play();
-                player.setHealth(1500);
-                player.setPosition(118, 32);
+                playerSwitcher.setDead(false);
+                playerSwitcher.setHealth(1500);
+                playerSwitcher.setPosition(118, 32);
             }
             return;
         }
@@ -203,7 +219,6 @@ public class Gameworld1 implements Screen {
         goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
         goblinHealthBarStage.render(camera);
 
-        tiledMapRenderer.render(new int[]{10, 14});
 
         if(GameInfo.getShowDebugging()){
             debugRenderer.render(world, camera.combined);
@@ -218,6 +233,24 @@ public class Gameworld1 implements Screen {
         world.step(1 / 60f, 6, 2);
 
     }
+
+    // Replace checkTransitions() method with:
+    private void checkTransitions() {
+        float playerX = playerSwitcher.getX();
+        float playerY = playerSwitcher.getY();
+
+        Screen targetScreen = transitionHandler.checkTransitions(playerX, playerY);
+        if (targetScreen != null) {
+            nextScreen = targetScreen;
+            transitioning = true;
+        }
+    }
+
+    // Replace executeTransition() method with:
+    private void executeTransition() {
+        transitionHandler.executeTransition(this, nextScreen, MusicGameSingleton.getInstance().getBackgroundMusic());
+    }
+
 
     @Override
     public void resize(int width, int height) {
@@ -241,6 +274,10 @@ public class Gameworld1 implements Screen {
         assetManager.dispose();
         fpsStage.dispose();
         playerStatStage.dispose();
-        backgroundMusic.dispose();
+        goblinSpawner.dispose();
+        goblinHealthBarStage.dispose();
+        deathStage.dispose();
+        tiledMapRenderer.dispose();
+        map.dispose();
     }
 }

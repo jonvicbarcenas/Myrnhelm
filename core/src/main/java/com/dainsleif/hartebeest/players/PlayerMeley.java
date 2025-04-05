@@ -10,9 +10,9 @@ import com.dainsleif.hartebeest.utils.CollisionDetector;
 import java.util.HashMap;
 import java.util.Map;
 
-public class PlayerMyron extends Player {
-    private static final String TEXTURE_PATH = "sprite/player/Myron.png";
-    private static final String JSON_PATH = "sprite/player/Myron.json";
+public class PlayerMeley extends Player {
+    private static final String TEXTURE_PATH = "sprite/player/Meley.png";
+    private static final String JSON_PATH = "sprite/player/Meley.json";
 
     private static int health;
     private int maxHealth;
@@ -23,7 +23,7 @@ public class PlayerMyron extends Player {
     private int experience;
     private boolean isDead;
 
-    public PlayerMyron(World world, CollisionDetector collisionDetector) {
+    public PlayerMeley(World world, CollisionDetector collisionDetector) {
         super(world, TEXTURE_PATH, JSON_PATH, collisionDetector);
         initializeStats();
         initializeAnimations();
@@ -34,14 +34,11 @@ public class PlayerMyron extends Player {
         SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(TEXTURE_PATH, JSON_PATH);
 
         Map<String, Animation<TextureRegion>> animations = new HashMap<>();
-        animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
-        animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
-        animations.put("left", new Animation<>(0.1f, loader.getFrames("walkLeft")));
-        animations.put("right", new Animation<>(0.1f, loader.getFrames("walkRight")));
-        animations.put("atk_up", new Animation<>(0.1f, loader.getFrames("atkTop")));
-        animations.put("atk_down", new Animation<>(0.1f, loader.getFrames("atkDown")));
-        animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
-        animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
+        animations.put("up", new Animation<>(0.1f, loader.getFrames("flyTop")));
+        animations.put("down", new Animation<>(0.1f, loader.getFrames("flyDown")));
+        animations.put("left", new Animation<>(0.1f, loader.getFrames("flyLeft")));
+        animations.put("right", new Animation<>(0.1f, loader.getFrames("flyRight")));
+        animations.put("cast", new Animation<>(0.1f, loader.getFrames("atkTop")));
 
         setAnimations(animations);
         setCurrentFrame(animations.get("down").getKeyFrame(0));
@@ -60,7 +57,7 @@ public class PlayerMyron extends Player {
 
     public void takeDamage(int amount) {
         health -= amount;
-        System.out.println("Myron took " + amount + " damage!");
+        System.out.println("Meley took " + amount + " damage!");
         if (health <= 0) {
             health = 0;
             die();
@@ -118,11 +115,11 @@ public class PlayerMyron extends Player {
         mana = maxMana;
         damage += 2;
         experience = 0;
-        System.out.println("Myron leveled up to level " + level + "!");
+        System.out.println("Meley leveled up to level " + level + "!");
     }
 
     private void die() {
-        System.out.println("Myron has been defeated!");
+        System.out.println("Meley has been defeated!");
         // Handle player death (game over, respawn, etc.)
     }
 

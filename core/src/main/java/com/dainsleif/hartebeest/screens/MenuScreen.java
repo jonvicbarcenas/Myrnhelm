@@ -64,16 +64,23 @@ public class MenuScreen implements Screen {
         cursorStyle.changeCursorToHand();
 
 
-        // Load sprite sheet and animation frames
-        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frerem.png", "Screen/MenuScreen/frerem.json");
-        TextureRegion[] frames = spriteSheetLoader.getFrames();
-        System.out.println("Frames loaded: " + frames.length);
+        try {
+            // Load sprite sheet and animation frames
+            SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/MenuBG.png", "Screen/MenuScreen/MenuBG.json");
+            TextureRegion[] frames = spriteSheetLoader.getFrames();
+            System.out.println("Frames loaded: " + frames.length);
 
-        AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
-        animation = animationLoader.getAnimation();
-        batch = new SpriteBatch();
-        stateTime = 0.2f;
+            if (frames.length == 0) {
+                System.err.println("No frames were loaded from the sprite sheet");
+            }
 
+            AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
+            animation = animationLoader.getAnimation();
+            stateTime = 0f; // Start from the beginning of the animation
+        } catch (Exception e) {
+            System.err.println("Error loading background animation: " + e.getMessage());
+            e.printStackTrace();
+        }
 
 
         // Load button textures

@@ -20,6 +20,7 @@ import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
+import com.dainsleif.hartebeest.players.PlayerSwitcher;
 import com.dainsleif.hartebeest.screens.*;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -30,7 +31,6 @@ public class StartAreaMap implements Screen {
     OrthogonalTiledMapRenderer tiledMapRenderer;
     SpriteBatch spriteBatch;
     FitViewport viewport;
-    Music backgroundMusic;
     FpsStage fpsStage;
     PlayerStatStage playerStatStage;
     CursorStyle cursorStyle;
@@ -38,7 +38,7 @@ public class StartAreaMap implements Screen {
     // Camera
     OrthographicCamera camera;
 
-    private PlayerMyron player;
+    PlayerSwitcher playerSwitcher;
     KeyHandler keyHandler;
 
     // Enemy
@@ -51,7 +51,9 @@ public class StartAreaMap implements Screen {
 
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
-
+    private boolean transitioning = false;
+    private Screen nextScreen = null;
+    private TransitionMapHandler transitionHandler;
     private GoblinSpawner goblinSpawner;
     private GoblinHealthBarStage goblinHealthBarStage;
     DeathStage deathStage;
@@ -65,7 +67,6 @@ public class StartAreaMap implements Screen {
         // Queue assets for loading
         assetManager.setLoader(TiledMap.class, new TmxMapLoader());
         assetManager.load("MAPS/StartArea.tmx", TiledMap.class);
-        assetManager.load("Music/16bitRpgBGMUSIC.mp3", Music.class);
 
         assetManager.finishLoading();
 
@@ -73,12 +74,6 @@ public class StartAreaMap implements Screen {
         map = assetManager.get("MAPS/StartArea.tmx", TiledMap.class);
         spriteBatch = new SpriteBatch();
         tiledMapRenderer = new OrthogonalTiledMapRenderer(map);
-
-        // Load and play background music
-        backgroundMusic = assetManager.get("Music/16bitRpgBGMUSIC.mp3", Music.class);
-        backgroundMusic.setLooping(true);
-        backgroundMusic.setVolume(GameInfo.getMusicVolume());
-        backgroundMusic.play();
 
         // Set cursor style
         cursorStyle = new CursorStyle();
@@ -105,17 +100,25 @@ public class StartAreaMap implements Screen {
         // Create player
         keyHandler = new KeyHandler(camera);
         Gdx.input.setInputProcessor(keyHandler);
-        player = new PlayerMyron(world, collisionDetector);
+        playerSwitcher = new PlayerSwitcher(world, collisionDetector);
+        playerSwitcher.setPosition(320, 315);
+
+        // Create transition handler
+        transitionHandler = new TransitionMapHandler(map, "transitions", 11, "Gameworld1");
+
 
         // Create goblin
-        goblinSpawner = new GoblinSpawner(world, collisionDetector, player);
-        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); // Spawn 3 goblins within 50 units
+        goblinSpawner = new GoblinSpawner(world, collisionDetector, playerSwitcher);
+        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); //
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
+
 
         // Create stages
         fpsStage = new FpsStage();
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
+        MusicGameSingleton.getInstance().play();
+
 
     }
 
@@ -127,14 +130,27 @@ public class StartAreaMap implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
 
+        if (transitioning) {
+            return;
+        }
+
         // Update player position
-        player.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        playerSwitcher.update(Gdx.graphics.getDeltaTime(), keyHandler);
         keyHandler.update(Gdx.graphics.getDeltaTime());
-        GameInfo.setPlayerX(player.getX());
-        GameInfo.setPlayerY(player.getY());
+        GameInfo.setPlayerX(playerSwitcher.getX());
+        GameInfo.setPlayerY(playerSwitcher.getY());
+
+        // Check for transitions
+        checkTransitions();
+
+        // If transition was triggered, execute it and return
+        if (transitioning) {
+            executeTransition();
+            return;
+        }
 
         // Update camera
-        camera.position.set(player.getX(), player.getY(), 0);
+        camera.position.set(playerSwitcher.getX(), playerSwitcher.getY(), 0);
 
         // Constrain camera to map boundaries
         float effectiveViewportWidth = camera.viewportWidth * camera.zoom;
@@ -155,8 +171,8 @@ public class StartAreaMap implements Screen {
         // Render player with camera
         spriteBatch.setProjectionMatrix(camera.combined);
         spriteBatch.begin();
-        if (!player.isDead()) {
-            player.draw(spriteBatch, 1);
+        if (!playerSwitcher.isDead()) {
+            playerSwitcher.draw(spriteBatch, 1);
         }
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             goblinSpawner.checkPlayerAttack();
@@ -168,31 +184,30 @@ public class StartAreaMap implements Screen {
 
         goblinSpawner.update(Gdx.graphics.getDeltaTime());
         goblinSpawner.draw(spriteBatch, Gdx.graphics.getDeltaTime());
-        if(!player.isDead()){
+        if(!playerSwitcher.isDead()){
             goblinSpawner.checkDamageToPlayer();
         }
 
 
         spriteBatch.end();
 
-        if (PlayerMyron.getHealth() <= 0 && !player.isDead()) {
-            player.setDead(true);
+        if (PlayerMyron.getHealth() <= 0 && !playerSwitcher.isDead()) {
+            playerSwitcher.setDead(true);
 
         }
 
         tiledMapRenderer.render(new int[]{8,10});
 
-        if (player.isDead()) {
+        if (playerSwitcher.isDead()) {
             deathStage.update(v);
             deathStage.draw();
             //press enter to respawn and remove the player
 
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
-                player.setDead(false);
-                backgroundMusic.play();
-                player.setHealth(1500);
-                player.setPosition(320, 315);
+                playerSwitcher.setDead(false);
+                playerSwitcher.setHealth(1500);
+                playerSwitcher.setPosition(320, 315);
             }
             return;
         }
@@ -218,6 +233,23 @@ public class StartAreaMap implements Screen {
 
     }
 
+    // Replace checkTransitions() method with:
+    private void checkTransitions() {
+        float playerX = playerSwitcher.getX();
+        float playerY = playerSwitcher.getY();
+
+        Screen targetScreen = transitionHandler.checkTransitions(playerX, playerY);
+        if (targetScreen != null) {
+            nextScreen = targetScreen;
+            transitioning = true;
+        }
+    }
+
+    // Replace executeTransition() method with:
+    private void executeTransition() {
+        transitionHandler.executeTransition(this, nextScreen, MusicGameSingleton.getInstance().getBackgroundMusic());
+    }
+
     @Override
     public void resize(int width, int height) {
         viewport.update(width, height, true);
@@ -240,6 +272,11 @@ public class StartAreaMap implements Screen {
         assetManager.dispose();
         fpsStage.dispose();
         playerStatStage.dispose();
-        backgroundMusic.dispose();
+        goblinSpawner.dispose();
+        goblinHealthBarStage.dispose();
+        deathStage.dispose();
+        tiledMapRenderer.dispose();
+        map.dispose();
     }
+
 }
