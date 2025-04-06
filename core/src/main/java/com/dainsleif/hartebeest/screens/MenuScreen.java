@@ -8,14 +8,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.*;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
-import com.dainsleif.hartebeest.helpers.AnimationLoader;
-import com.dainsleif.hartebeest.helpers.CursorStyle;
-import com.dainsleif.hartebeest.helpers.GameInfo;
-import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
+import com.dainsleif.hartebeest.helpers.*;
+import com.dainsleif.hartebeest.world.StartAreaMap;
 
 public class MenuScreen implements Screen {
     private SpriteBatch batch;
     private Animation<TextureRegion> animation;
+    private VariableTimeAnimation<TextureRegion> logoAnimation; // Change the type here
     private float stateTime;
     private CursorStyle cursorStyle;
 
@@ -64,16 +63,31 @@ public class MenuScreen implements Screen {
         cursorStyle.changeCursorToHand();
 
 
-        // Load sprite sheet and animation frames
-        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frerem.png", "Screen/MenuScreen/frerem.json");
-        TextureRegion[] frames = spriteSheetLoader.getFrames();
-        System.out.println("Frames loaded: " + frames.length);
+        try {
+            // Load sprite sheet and animation frames
+            SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/MenuBG.png", "Screen/MenuScreen/MenuBG.json");
+            TextureRegion[] frames = spriteSheetLoader.getFrames();
+            System.out.println("Frames loaded: " + frames.length);
 
-        AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
-        animation = animationLoader.getAnimation();
-        batch = new SpriteBatch();
-        stateTime = 0.2f;
+            //logo sprite
+            SpriteSheetLoaderJson logoSpriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/Logo_Myrnhelm.png", "Screen/MenuScreen/Logo_Myrnhelm.json");
+            TextureRegion[] logoFrames = logoSpriteSheetLoader.getFrames();
 
+
+
+            AnimationLoader animationLoader = new AnimationLoader(frames, .1f);
+            animation = animationLoader.getAnimation();
+
+            // For logo animation with variable durations
+            SpriteSheetLoaderJson.FrameData logoFrameData = logoSpriteSheetLoader.getFramesWithDurations(true);
+            logoAnimation = new VariableTimeAnimation<>(logoFrameData.regions, logoFrameData.durations);
+
+
+            stateTime = 0f; // Start from the beginning of the animation
+        } catch (Exception e) {
+            System.err.println("Error loading background animation: " + e.getMessage());
+            e.printStackTrace();
+        }
 
 
         // Load button textures
@@ -139,6 +153,11 @@ public class MenuScreen implements Screen {
 
         batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth()+ 50, Gdx.graphics.getHeight());
 
+        TextureRegion logoFrame = logoAnimation.getKeyFrame(stateTime, true);
+        float logoX = (Gdx.graphics.getWidth() - logoFrame.getRegionWidth()) / 2;
+        float logoY = Gdx.graphics.getHeight() - logoFrame.getRegionHeight() - 50;
+        batch.draw(logoFrame, logoX, logoY);
+
         TextureRegion startTexture = isStartButtonClicked ? startButtonClicked : startButton;
         TextureRegion optionsTexture = isOptionsButtonClicked ? optionsButtonClicked : optionsButton;
         TextureRegion exitTexture = isExitButtonClicked ? exitButtonClicked : exitButton;
@@ -157,7 +176,8 @@ public class MenuScreen implements Screen {
                 if (startButtonBounds.contains(touchPos)) {
                     // Handle Start button click
                     isStartButtonClicked = true;
-                    ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new StoryScreen());
+                    ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new StartAreaMap());
+                    backgroundMusic.stop();
                 } else if (optionsButtonBounds.contains(touchPos)) {
                     // Handle Options button click
                     isOptionsButtonClicked = true;
@@ -200,6 +220,7 @@ public class MenuScreen implements Screen {
     @Override
     public void hide() {
     }
+
 
     @Override
     public void dispose() {

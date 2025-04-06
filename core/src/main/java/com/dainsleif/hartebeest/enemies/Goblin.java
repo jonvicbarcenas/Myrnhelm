@@ -34,8 +34,11 @@ public class Goblin extends Enemy {
 
     private boolean shouldRemove = false;
 
+    private boolean knockedBack = false;
+    private float knockbackTimer = 0;
+
     public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
-        super("Goblin", 50, 1, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
+        super("Goblin", 50, 100, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));
 
         this.spawnPosition = new Vector2(position);
         this.collisionDetector = collisionDetector;
@@ -55,7 +58,7 @@ public class Goblin extends Enemy {
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;
         fixtureDef.friction = 0.4f;
-        fixtureDef.restitution = 0.1f; // Slight bounce
+        fixtureDef.restitution = 0.1f;
 
         // Add fixture to body
         body.createFixture(fixtureDef);
@@ -104,6 +107,7 @@ public class Goblin extends Enemy {
         // Set initial frame
         currentFrame = animations.get("idleD").getKeyFrame(0);
     }
+
 
     @Override
     public void update() {
@@ -234,10 +238,6 @@ public class Goblin extends Enemy {
         }
     }
 
-    public float getDieAnimationTime() {
-        return animations.get("die").getAnimationDuration();
-    }
-
     public EnemyState getCurrentState() {
         return currentState;
     }
@@ -303,7 +303,7 @@ public class Goblin extends Enemy {
         }
 
         // Check if goblin is attacking
-        if (currentState == EnemyState.ATTACKING || currentState == EnemyState.ATTACKING_SPIN) {
+        if (currentState == EnemyState.ATTACKING || currentState == EnemyState.ATTACKING_SPIN ) {
             Vector2 goblinPos = getPosition();
             Vector2 playerPos = player.getPosition();
             float distance = goblinPos.dst(playerPos);
@@ -338,7 +338,7 @@ public class Goblin extends Enemy {
 
                         if (shouldApplyDamage) {
                             if (currentState == EnemyState.ATTACKING) {
-                                player.takeDamage(5);
+                                player.takeDamage(getDamage());
 //                                System.out.println("Regular attack hit! -5 health, cycle: " + currentCycle);
                             } else {
                                 player.takeDamage(20);
@@ -355,4 +355,15 @@ public class Goblin extends Enemy {
         }
     }
 
+
+    @Override
+    public void takeDamage(int amount) {
+        // Ignore damage if already dead
+        if (currentState == EnemyState.DEAD) {
+            return;
+        }
+
+        health -= amount;
+        if (health <= 0) die();
+    }
 }

@@ -1,12 +1,18 @@
 package com.dainsleif.hartebeest.players;
 
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class PlayerMyron extends Player {
-    private static final String TEXTURE_PATH = "sprite/player/Walk4D.png";
-    private static final String JSON_PATH = "sprite/player/Walk4D.json";
+    private static final String TEXTURE_PATH = "sprite/player/Myron.png";
+    private static final String JSON_PATH = "sprite/player/Myron.json";
 
     private static int health;
     private int maxHealth;
@@ -15,10 +21,31 @@ public class PlayerMyron extends Player {
     private int damage;
     private int level;
     private int experience;
+    private boolean isDead;
 
     public PlayerMyron(World world, CollisionDetector collisionDetector) {
         super(world, TEXTURE_PATH, JSON_PATH, collisionDetector);
         initializeStats();
+        initializeAnimations();
+    }
+
+    @Override
+    protected void initializeAnimations() {
+        SpriteSheetLoaderJson loader = new SpriteSheetLoaderJson(TEXTURE_PATH, JSON_PATH);
+
+        Map<String, Animation<TextureRegion>> animations = new HashMap<>();
+        animations.put("up", new Animation<>(0.1f, loader.getFrames("walkTop")));
+        animations.put("down", new Animation<>(0.1f, loader.getFrames("walkDown")));
+        animations.put("left", new Animation<>(0.1f, loader.getFrames("walkLeft")));
+        animations.put("right", new Animation<>(0.1f, loader.getFrames("walkRight")));
+        animations.put("atk_up", new Animation<>(0.1f, loader.getFrames("atkTop")));
+        animations.put("atk_down", new Animation<>(0.1f, loader.getFrames("atkDown")));
+        animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
+        animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
+
+        setAnimations(animations);
+        setCurrentFrame(animations.get("down").getKeyFrame(0));
+        setStateTime(0f);
     }
 
     private void initializeStats() {
@@ -38,6 +65,18 @@ public class PlayerMyron extends Player {
             health = 0;
             die();
         }
+    }
+
+    public void useSkill1() {
+
+    }
+
+    public void useSkill2() {
+
+    }
+
+    public void useUltimate() {
+
     }
 
     public void heal(int amount) {
@@ -95,4 +134,10 @@ public class PlayerMyron extends Player {
     public int getDamage() { return damage; }
     public int getLevel() { return level; }
     public int getExperience() { return experience; }
+    public boolean isDead() { return isDead; }
+    public void setDead(boolean dead) { isDead = dead; }
+
+    public void setHealth(int i) {
+        health = i;
+    }
 }

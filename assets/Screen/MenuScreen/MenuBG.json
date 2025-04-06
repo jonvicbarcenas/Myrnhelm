@@ -1,0 +1,114 @@
+{ "frames": {
+   "bg-ezgif.com-animated-gif-maker 0.gif": {
+    "frame": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 1.gif": {
+    "frame": { "x": 1200, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 2.gif": {
+    "frame": { "x": 2400, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 3.gif": {
+    "frame": { "x": 3600, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 4.gif": {
+    "frame": { "x": 4800, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 5.gif": {
+    "frame": { "x": 6000, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 6.gif": {
+    "frame": { "x": 7200, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 7.gif": {
+    "frame": { "x": 8400, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 8.gif": {
+    "frame": { "x": 9600, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 9.gif": {
+    "frame": { "x": 10800, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 10.gif": {
+    "frame": { "x": 12000, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   },
+   "bg-ezgif.com-animated-gif-maker 11.gif": {
+    "frame": { "x": 13200, "y": 0, "w": 1200, "h": 800 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 1200, "h": 800 },
+    "sourceSize": { "w": 1200, "h": 800 },
+    "duration": 100
+   }
+ },
+ "meta": {
+  "app": "https://www.aseprite.org/",
+  "version": "1.3.13-dev",
+  "image": "MenuBG.png",
+  "format": "I8",
+  "size": { "w": 14400, "h": 800 },
+  "scale": "1",
+  "frameTags": [
+  ],
+  "layers": [
+   { "name": "Background", "opacity": 255, "blendMode": "normal" }
+  ],
+  "slices": [
+  ]
+ }
+}

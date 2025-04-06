@@ -80,4 +80,42 @@ public class SpriteSheetLoaderJson {
 
         return regions;
     }
+
+    public class FrameData {
+        public TextureRegion[] regions;
+        public float[] durations;
+    }
+
+    public FrameData getFramesWithDurations(boolean useJsonDurations) {
+        JsonValue frames = json.get("frames");
+        int frameCount = frames.size;
+
+        TextureRegion[] regions = new TextureRegion[frameCount];
+        float[] durations = new float[frameCount];
+
+        int index = 0;
+        for (JsonValue frame : frames) {
+            JsonValue frameData = frame.get("frame");
+            int x = frameData.getInt("x");
+            int y = frameData.getInt("y");
+            int width = frameData.getInt("w");
+            int height = frameData.getInt("h");
+
+            regions[index] = new TextureRegion(texture, x, y, width, height);
+
+            // If useJsonDurations is true, extract duration from JSON (convert from ms to seconds)
+            if (useJsonDurations) {
+                durations[index] = frame.getInt("duration") / 1000f;
+            } else {
+                durations[index] = 0.1f; // Default duration
+            }
+
+            index++;
+        }
+
+        FrameData result = new FrameData();
+        result.regions = regions;
+        result.durations = durations;
+        return result;
+    }
 }

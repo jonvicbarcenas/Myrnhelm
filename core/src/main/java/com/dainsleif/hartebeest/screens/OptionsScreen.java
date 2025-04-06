@@ -57,7 +57,7 @@ public class OptionsScreen implements Screen {
 
 
         // Load sprite sheet and animation frames
-        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/frieren.png", "Screen/MenuScreen/frieren.json");
+        SpriteSheetLoaderJson spriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/MenuBG.png", "Screen/MenuScreen/MenuBG.json");
         TextureRegion[] frames = spriteSheetLoader.getFrames();
         System.out.println("Frames loaded: " + frames.length);
 
@@ -137,7 +137,7 @@ public class OptionsScreen implements Screen {
 
         batch.begin();
 
-        batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        batch.draw(currentFrame, 0, 0, Gdx.graphics.getWidth() + 50, Gdx.graphics.getHeight());
 
         TextureRegion backBtnTexture = isBackClicked ? backClicked : back;
         TextureRegion minusTexture = isMinVolClicked ? minVolClicked : minVol;

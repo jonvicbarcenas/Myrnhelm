@@ -13,6 +13,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.world.Gameworld1;
+import com.dainsleif.hartebeest.world.StartAreaMap;
 
 
 public class StoryScreen implements Screen {
@@ -36,9 +37,14 @@ public class StoryScreen implements Screen {
 
     private boolean isTouched = false;
 
+    Music backgroundMusic;
+
     @Override
     public void show() {
         batch = new SpriteBatch();
+
+        backgroundMusic = MusicSingleton.getInstance().getBackgroundMusic();
+        backgroundMusic.play();
 
         playTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/play.png"));
         playClickedTexture = new Texture(Gdx.files.internal("sprite/MenuSprite/playClicked.png"));
@@ -122,12 +128,16 @@ public class StoryScreen implements Screen {
                     Vector2 touchPos = new Vector2(Gdx.input.getX(), Gdx.graphics.getHeight() - Gdx.input.getY());
                     if (playBounds.contains(touchPos)) {
                         isPlayClicked = true;
+                        ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new StartAreaMap());
+                        //stop the music
+                        backgroundMusic.stop();
                         System.out.println("play clicked!.");
                     }
                 }
             } else {
                 if(isPlayClicked) {
                     isPlayClicked = false;
+                    ((com.badlogic.gdx.Game) Gdx.app.getApplicationListener()).setScreen(new StartAreaMap());
                     System.out.println("play clicked!.");
                 }
                 isTouched = false;

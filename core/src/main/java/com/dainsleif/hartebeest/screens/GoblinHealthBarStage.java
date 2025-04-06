@@ -21,8 +21,8 @@ public class GoblinHealthBarStage implements Disposable {
     private final Map<Goblin, Float> targetHealthPercentages = new HashMap<>();
     private final Map<Goblin, Float> displayedHealthPercentages = new HashMap<>();
 
-    private static final float BAR_WIDTH = 25f;
-    private static final float BAR_HEIGHT = 4f;
+    private static final float BAR_WIDTH = 13f;
+    private static final float BAR_HEIGHT = 2.5f;
     private static final float BAR_OFFSET_Y = 20f;
     private static final float HEALTH_BAR_ANIMATION_SPEED = 3.0f;
 
@@ -79,7 +79,7 @@ public class GoblinHealthBarStage implements Disposable {
 
             // Background (black)
             shapeRenderer.setColor(Color.BLACK);
-            shapeRenderer.rect(x - 1, y - 1, BAR_WIDTH + 2, BAR_HEIGHT + 2);
+            shapeRenderer.rect(x - 0.5f, y - 0.5f, BAR_WIDTH + 1f, BAR_HEIGHT + 1f);
 
             // Background (gray)
             shapeRenderer.setColor(Color.GRAY);
