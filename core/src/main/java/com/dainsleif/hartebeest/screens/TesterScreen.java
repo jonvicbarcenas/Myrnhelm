@@ -9,12 +9,12 @@ import com.badlogic.gdx.graphics.GL20;
 
 
 public class TesterScreen implements Screen {
-    DeathStage deathStage;
+    OptionsStage optionsStage;
 
     @Override
     public void show() {
 
-        deathStage = new DeathStage();
+        optionsStage = new OptionsStage();
 
     }
 
@@ -22,13 +22,13 @@ public class TesterScreen implements Screen {
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT); // Clear the screen
 
-        deathStage.update(v);
-        deathStage.draw(); // Draw the stage
+        optionsStage.update(v);
+        optionsStage.draw(); // Draw the stage
     }
 
     @Override
     public void resize(int width, int height) {
-        deathStage.getViewport().update(width, height, true);
+        optionsStage.getViewport().update(width, height, true);
     }
 
     @Override
@@ -48,6 +48,6 @@ public class TesterScreen implements Screen {
 
     @Override
     public void dispose() {
-        deathStage.dispose();
+        optionsStage.dispose();
     }
 }
