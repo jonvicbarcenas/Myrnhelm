@@ -19,8 +19,13 @@ import com.dainsleif.hartebeest.enemies.GoblinSpawner;
 import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
+import com.dainsleif.hartebeest.npc.AnkarosTheNPC;
+import com.dainsleif.hartebeest.npc.NPC;
+import com.dainsleif.hartebeest.npc.NpcHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.players.PlayerSwitcher;
+import com.dainsleif.hartebeest.quests.Quest;
+import com.dainsleif.hartebeest.quests.QuestHandler;
 import com.dainsleif.hartebeest.screens.*;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -31,15 +36,22 @@ public class StartAreaMap implements Screen {
     OrthogonalTiledMapRenderer tiledMapRenderer;
     SpriteBatch spriteBatch;
     FitViewport viewport;
+
+    // Stages
     FpsStage fpsStage;
+    DeathStage deathStage;
+    StoryStage storyStage;
     PlayerStatStage playerStatStage;
+    DialogueStage dialogueStage;
     CursorStyle cursorStyle;
 
     // Camera
     OrthographicCamera camera;
 
+    NpcHandler npcHandler;
     PlayerSwitcher playerSwitcher;
     KeyHandler keyHandler;
+    QuestHandler questHandler;
 
     // Enemy
     private final float mapWidth;
@@ -52,11 +64,15 @@ public class StartAreaMap implements Screen {
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
     private boolean transitioning = false;
+    private boolean isFirstLoad = true;
+    private boolean storyStageStarted = false;
+    private boolean isPaused = false;
+
     private Screen nextScreen = null;
-    private TransitionMapHandler transitionHandler;
-    private GoblinSpawner goblinSpawner;
-    private GoblinHealthBarStage goblinHealthBarStage;
-    DeathStage deathStage;
+    private final TransitionMapHandler transitionHandler;
+    private final GoblinSpawner goblinSpawner;
+    private final GoblinHealthBarStage goblinHealthBarStage;
+
 
     public StartAreaMap() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -107,41 +123,65 @@ public class StartAreaMap implements Screen {
         transitionHandler = new TransitionMapHandler(map, "transitions", 11, "Gameworld1");
 
 
+        // Create quest handler
+        questHandler = new QuestHandler();
+
+
         // Create goblin
         goblinSpawner = new GoblinSpawner(world, collisionDetector, playerSwitcher);
-        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); //
+        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f);
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
+        goblinSpawner.setQuestHandler(questHandler);
 
+        npcHandler = new NpcHandler(world, new Vector2(225, 440));
+        // Connect questHandler to NPCs
+        for (NPC npc : npcHandler.getNpcs()) {
+            if (npc instanceof AnkarosTheNPC) {
+                ((AnkarosTheNPC) npc).setQuestHandler(questHandler);
+            }
+        }
 
-        // Create stages
+        // Create stagesa
         fpsStage = new FpsStage();
+        storyStage = new StoryStage();
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
+        dialogueStage = new DialogueStage();
         MusicGameSingleton.getInstance().play();
 
 
     }
 
     @Override
-    public void show() {}
+    public void show() {
+        if (isFirstLoad) {
+            startStoryStage();
+            isFirstLoad = false;
+        }
+    }
 
     @Override
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
 
+        npcHandler.update(v, playerSwitcher.getCurrentPlayer());
 
         if (transitioning) {
             return;
         }
 
         // Update player position
-        playerSwitcher.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        if(!storyStageStarted){
+            playerSwitcher.update(Gdx.graphics.getDeltaTime(), keyHandler);
+        }
         keyHandler.update(Gdx.graphics.getDeltaTime());
         GameInfo.setPlayerX(playerSwitcher.getX());
         GameInfo.setPlayerY(playerSwitcher.getY());
 
         // Check for transitions
         checkTransitions();
+        dialogueStage.update(v);
+
 
         // If transition was triggered, execute it and return
         if (transitioning) {
@@ -174,6 +214,7 @@ public class StartAreaMap implements Screen {
         if (!playerSwitcher.isDead()) {
             playerSwitcher.draw(spriteBatch, 1);
         }
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             goblinSpawner.checkPlayerAttack();
         }else {
@@ -186,6 +227,12 @@ public class StartAreaMap implements Screen {
         goblinSpawner.draw(spriteBatch, Gdx.graphics.getDeltaTime());
         if(!playerSwitcher.isDead()){
             goblinSpawner.checkDamageToPlayer();
+        }
+
+        npcHandler.draw(spriteBatch);
+        handleInput();
+        if (dialogueStage.isDialogueVisible()) {
+            dialogueStage.render(spriteBatch, camera);
         }
 
 
@@ -228,9 +275,96 @@ public class StartAreaMap implements Screen {
         fpsStage.draw();
         playerStatStage.draw();
         playerStatStage.update(v);
+        if (storyStageStarted) {
+            storyStage.update(v);
+            storyStage.draw();
+
+            if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE) ||
+                Gdx.input.isKeyJustPressed(Input.Keys.ENTER) ||
+                Gdx.input.justTouched()) {
+
+                if (storyStage.getStoryIndex() > storyStage.getStoryLength()) {
+                    storyStageStarted = false;
+                }else {
+                    storyStage.next();
+                }
+            }
+        }
 
         world.step(1 / 60f, 6, 2);
+    }
 
+    public void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            // Get the current player position
+            Vector2 playerPos = playerSwitcher.getCurrentPlayer().getPosition();
+
+            // Check for NPC interaction
+            for (NPC npc : npcHandler.getNpcs()) {
+                if (npc.isPlayerInRange(playerPos)) {
+                    // Show dialogue when interacting with NPC
+                    npc.interact();
+
+                    String dialogueText = "";
+
+                    if (npc instanceof AnkarosTheNPC) {
+                        AnkarosTheNPC ankaros = (AnkarosTheNPC) npc;
+                        Quest goblinQuest = questHandler.getQuestById(AnkarosTheNPC.GOBLIN_QUEST_ID);
+
+                        if (goblinQuest != null) {
+                            if (goblinQuest.status.equals("not_started") || goblinQuest.status.equals("in_progress")) {
+                                dialogueText = goblinQuest.name + ": " + goblinQuest.description;
+
+                                // Add progress information for in-progress quests
+                                if (goblinQuest.status.equals("in_progress")) {
+                                    dialogueText += "\n" + questHandler.getQuestProgressText(AnkarosTheNPC.GOBLIN_QUEST_ID);
+                                }
+                            } else if (goblinQuest.status.equals("completed")) {
+                                dialogueText = "Thank you for completing the " + goblinQuest.name + "!";
+                                ankaros.stopFollowing();
+                            }
+                        } else {
+                            dialogueText = "Greetings, traveler.";
+                        }
+
+                        // Show the dialogue above the NPC
+                        dialogueStage.showDialogue(npc, dialogueText);
+
+                        // Handle following behavior based on quest status
+                        if (goblinQuest != null && !goblinQuest.status.equals("completed")) {
+                            // Toggle following behavior only if quest isn't completed
+                            if (npc.isFollowing()) {
+                                npc.stopFollowing();
+                            } else {
+                                npc.startFollowing();
+                            }
+                        } else {
+                            // Always stop following when quest is completed
+                            npc.stopFollowing();
+                        }
+                    } else {
+                        // Default behavior for non-Ankaros NPCs
+                        dialogueStage.showDialogue(npc, npc.getDialogueText());
+
+                        // Toggle following for other NPCs
+                        if (npc.isFollowing()) {
+                            npc.stopFollowing();
+                        } else {
+                            npc.startFollowing();
+                        }
+                    }
+
+                    break;
+                }
+            }
+        }
+
+        // Hide dialogue on space press
+        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
+            if (dialogueStage.isDialogueVisible()) {
+                // Rest of your code...
+            }
+        }
     }
 
     // Replace checkTransitions() method with:
@@ -263,6 +397,10 @@ public class StartAreaMap implements Screen {
 
     @Override
     public void hide() {}
+
+    public void startStoryStage() {
+        storyStageStarted = true;
+    }
 
     @Override
     public void dispose() {

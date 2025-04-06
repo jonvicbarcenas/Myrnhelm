@@ -11,10 +11,10 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.World;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
+import com.dainsleif.hartebeest.enemies.EnemyState;
 import com.dainsleif.hartebeest.enemies.Goblin;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
-import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 import com.dainsleif.hartebeest.movements.BasicMovements;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -127,10 +127,8 @@ public abstract class Player extends Actor {
         this.isDead = dead;
     }
 
-    public void playerAttack(Goblin goblin, Player player) {
-        if (isDead()) {
-            return;
-        }
+    public boolean playerAttack(Goblin goblin, Player player) {
+        boolean wasKilled = false;
 
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             playerDamageApplied = false;
@@ -155,6 +153,12 @@ public abstract class Player extends Actor {
 
             playerDamageApplied = true;
         }
+
+        if (goblin.getHealth() <= 0 && goblin.getCurrentState() != EnemyState.DEAD) {
+            wasKilled = true;
+        }
+
+        return wasKilled;
     }
 
 

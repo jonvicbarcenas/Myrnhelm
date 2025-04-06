@@ -1,0 +1,28 @@
+{
+  "quests": [
+    {
+      "id": 1,
+      "name": "Goblin Menace",
+      "description": "Defeat 3 goblins to help the village.",
+      "objectives": [
+        {
+          "type": "kill",
+          "target": "goblin",
+          "quantity": 3
+        }
+      ],
+      "rewards": {
+        "experience": 100,
+        "health": 50,
+        "items": [
+          {
+            "id": 101,
+            "name": "Health Potion",
+            "quantity": 2
+          }
+        ]
+      },
+      "status": "not_started"
+    }
+  ]
+}

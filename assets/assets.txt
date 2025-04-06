@@ -274,6 +274,8 @@ Mystic Woods/sprites/tilesets/water_lillies.png
 Pixel Lands Forest Demo/Pixel Lands Forest Demo/forest_demo_objects.png
 Pixel Lands Forest Demo/Pixel Lands Forest Demo/forest_demo_terrain.png
 PlayerInfo/Player.json
+Screen/MenuScreen/Logo_Myrnhelm.json
+Screen/MenuScreen/Logo_Myrnhelm.png
 Screen/MenuScreen/MenuBG.json
 Screen/MenuScreen/MenuBG.png
 Screen/MenuScreen/StartMenu.gif
@@ -285,8 +287,10 @@ Screen/MenuScreen/frieren.png
 Screen/MenuScreen/frierenBG.gif
 char.png
 fonts/Toriko.ttf
+fonts/monogram.ttf
 gameinfo.db
 playerXY.db
+quests/Quest.json
 sprite/Enemy/Goblin/RegularGobu.json
 sprite/Enemy/Goblin/RegularGobu.png
 sprite/MenuSprite/Exit_btn.png
@@ -311,6 +315,8 @@ sprite/bunny/Running.json
 sprite/bunny/Running.png
 sprite/npc/jawee.json
 sprite/npc/jawee.png
+sprite/npc/npc.json
+sprite/npc/npc.png
 sprite/player/Meley.json
 sprite/player/Meley.png
 sprite/player/Myron.json

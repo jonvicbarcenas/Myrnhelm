@@ -39,8 +39,6 @@ public class StoryStage extends Stage {
 
     public StoryStage() {
         super(new ScreenViewport());
-        // Create font and label style
-//        font = new BitmapFont();
 
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("fonts/Toriko.ttf"));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -50,7 +48,6 @@ public class StoryStage extends Stage {
         font = generator.generateFont(parameter);
         generator.dispose();
 
-//        font.getData().setScale(1.0f); // Adjust the scale factor as needed
 
         Label.LabelStyle labelStyle = new Label.LabelStyle();
         labelStyle.font = font;
@@ -79,6 +76,9 @@ public class StoryStage extends Stage {
     public void next() {
         if (storyIndex < story.length) {
             label.setText(story[storyIndex]);
+            storyIndex++;
+        }else if (storyIndex == story.length && storyIndex < story.length+1){
+            label.setText(story[storyIndex-1]);
             storyIndex++;
         }
     }
