@@ -23,6 +23,24 @@
         ]
       },
       "status": "not_started"
+    },
+    {
+      "id": 2,
+      "name": "Goblin Flood!!!",
+      "description": "Defeat 15 goblins to help the village.",
+      "objectives": [
+        {
+          "type": "kill",
+          "target": "goblin",
+          "quantity": 15
+        }
+      ],
+      "rewards": {
+        "experience": 100,
+        "health": 50,
+        "items": []
+      },
+      "status": "not_started"
     }
   ]
 }

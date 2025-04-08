@@ -1,10 +1,8 @@
 package com.dainsleif.hartebeest.quests;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
-import com.dainsleif.hartebeest.npc.AnkarosTheNPC;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -92,10 +90,14 @@ public class QuestHandler {
         killCounts.put(enemyType, currentKills + 1);
         System.out.println("### QUEST SYSTEM: Killed " + enemyType + ": " + killCounts.get(enemyType) + " ###");
 
-        // Add quest status check
-        Quest goblinQuest = getQuestById(AnkarosTheNPC.GOBLIN_QUEST_ID);
-        if (goblinQuest != null) {
-            System.out.println("Quest current status: " + goblinQuest.status);
+        // Log status of any active quests related to this enemy type
+        for (Quest activeQuest : getAllActiveQuests()) {
+            for (QuestObjective objective : activeQuest.objectives) {
+                if (objective.type.equals("kill") && objective.target.equals(enemyType)) {
+                    System.out.println("Quest current status: " + activeQuest.status);
+                    break;
+                }
+            }
         }
 
         // Update all quests with this enemy type
@@ -120,6 +122,29 @@ public class QuestHandler {
                 }
             }
         }
+    }
+    public Quest getQuestByName(String questName) {
+        for (Quest quest : quests) {
+            if (quest.name.equals(questName)) {
+                return quest;
+            }
+        }
+        return null;
+    }
+
+    public int getQuestIdByName(String questName) {
+        Quest quest = getQuestByName(questName);
+        return quest != null ? quest.id : -1;
+    }
+
+    public List<Quest> getAllActiveQuests() {
+        List<Quest> activeQuests = new ArrayList<>();
+        for (Quest quest : quests) {
+            if (quest.status.equals("in_progress")) {
+                activeQuests.add(quest);
+            }
+        }
+        return activeQuests;
     }
 
     public void completeQuest(Quest quest) {
@@ -153,7 +178,6 @@ public class QuestHandler {
         return sb.toString();
     }
 
-    // Save quest progress to JSON (implement if needed)
     public void saveQuestProgress() {
         // Code to save quest progress would go here
 

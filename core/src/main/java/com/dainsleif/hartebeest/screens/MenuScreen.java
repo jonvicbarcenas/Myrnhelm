@@ -71,8 +71,6 @@ public class MenuScreen implements Screen {
 
             //logo sprite
             SpriteSheetLoaderJson logoSpriteSheetLoader = new SpriteSheetLoaderJson("Screen/MenuScreen/Logo_Myrnhelm.png", "Screen/MenuScreen/Logo_Myrnhelm.json");
-            TextureRegion[] logoFrames = logoSpriteSheetLoader.getFrames();
-
 
 
             AnimationLoader animationLoader = new AnimationLoader(frames, .1f);

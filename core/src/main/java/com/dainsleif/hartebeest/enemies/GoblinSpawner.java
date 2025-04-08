@@ -58,7 +58,6 @@ public class GoblinSpawner {
             Goblin goblin = goblinIterator.next();
             EnemyGoblinGdxAi ai = aiIterator.next();
 
-            // If goblin is already dead and animation finished
             if (goblin.isShouldRemove()) {
                 world.destroyBody(goblin.getBody());
                 goblin.dispose();
@@ -67,7 +66,6 @@ public class GoblinSpawner {
                 continue;
             }
 
-            // If goblin health reaches 0, start death animation
             if (goblin.getHealth() <= 0 && goblin.getCurrentState() != EnemyState.DEAD) {
                 goblin.setState(EnemyState.DEAD);
                 goblin.update(); // Start the death animation
@@ -82,7 +80,6 @@ public class GoblinSpawner {
                 continue;
             }
 
-            // Otherwise update normally
             goblin.update();
             ai.update(delta);
         }
@@ -97,16 +94,9 @@ public class GoblinSpawner {
     public void checkDamageToPlayer() {
         Player currentPlayer = playerSwitcher.getCurrentPlayer();
         if (currentPlayer instanceof PlayerMyron) {
-            // For backward compatibility
             PlayerMyron myronPlayer = (PlayerMyron) currentPlayer;
             for (Goblin goblin : goblins) {
                 goblin.goblinDamage(myronPlayer);
-            }
-        } else {
-            // Generic damage logic for other player types
-            for (Goblin goblin : goblins) {
-                // This will require modifying the Goblin class to have a more generic damage method
-                // goblin.damagePlayer(currentPlayer);
             }
         }
     }
@@ -115,8 +105,6 @@ public class GoblinSpawner {
         return goblins;
     }
 
-    // In GoblinSpawner.java, modify the checkPlayerAttack method:
-// In GoblinSpawner.java, modify the checkPlayerAttack method:
     public void checkPlayerAttack() {
         Player currentPlayer = playerSwitcher.getCurrentPlayer();
         if (currentPlayer instanceof PlayerMyron) {
@@ -126,29 +114,28 @@ public class GoblinSpawner {
             for (Iterator<Goblin> iterator = goblins.iterator(); iterator.hasNext();) {
                 Goblin goblin = iterator.next();
 
-                // Track health before attack
                 int healthBefore = goblin.getHealth();
 
-                // Process attack
                 boolean wasKilled = myronPlayer.playerAttack(goblin, myronPlayer);
 
-                // Log attack details
+                // Log attack detailz
                 System.out.println("Goblin health before: " + healthBefore +
                     ", after: " + goblin.getHealth() +
                     ", wasKilled: " + wasKilled);
 
-                // Alternative detection - check if goblin died from this hit
+// In checkPlayerAttack method in GoblinSpawner.java
                 if (healthBefore > 0 && goblin.getHealth() <= 0 && questHandler != null) {
                     System.out.println("### GOBLIN KILLED! ###");
                     questHandler.recordEnemyKill("goblin");
 
-                    // Debug quest status
-                    Quest goblinQuest = questHandler.getQuestById(AnkarosTheNPC.GOBLIN_QUEST_ID);
-                    if (goblinQuest != null) {
-                        System.out.println("Quest status: " + goblinQuest.status +
-                            ", Progress: " + questHandler.getQuestProgressText(AnkarosTheNPC.GOBLIN_QUEST_ID));
-                    } else {
-                        System.out.println("Error: Quest is null");
+                    // Get the quest dynamically from any NPC that might have assigned it
+                    // This assumes NPCs are accessible through a method like npcHandler.getNpcByName("Ankaros")
+                    // You'll need to adapt this to your actual object structure
+                    for (Quest quest : questHandler.getAllActiveQuests()) {
+                        if (quest.name.contains("Goblin")) {
+                            System.out.println("Quest status: " + quest.status +
+                                ", Progress: " + questHandler.getQuestProgressText(quest.id));
+                        }
                     }
                 }
             }
@@ -167,13 +154,4 @@ public class GoblinSpawner {
         this.questHandler = questHandler;
     }
 
-    // In your method that handles goblin death:
-    private void onGoblinDeath() {
-        // Existing goblin death code...
-
-        // Notify quest system
-        if (questHandler != null) {
-            questHandler.recordEnemyKill("goblin");
-        }
-    }
 }

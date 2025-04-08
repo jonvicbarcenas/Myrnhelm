@@ -34,8 +34,6 @@ public class Goblin extends Enemy {
 
     private boolean shouldRemove = false;
 
-    private boolean knockedBack = false;
-    private float knockbackTimer = 0;
 
     public Goblin(Vector2 position, CollisionDetector collisionDetector, World world) {
         super("Goblin", 50, 100, 10f, position, new Rectangle(0, 0, WIDTH, HEIGHT));

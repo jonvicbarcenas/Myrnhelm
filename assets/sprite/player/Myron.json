@@ -446,6 +446,46 @@
     "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
     "sourceSize": { "w": 64, "h": 64 },
     "duration": 100
+   },
+   "overall 56.aseprite": {
+    "frame": { "x": 3584, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   "overall 57.aseprite": {
+    "frame": { "x": 3648, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   "overall 58.aseprite": {
+    "frame": { "x": 3712, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   "overall 59.aseprite": {
+    "frame": { "x": 3776, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
+   },
+   "overall 60.aseprite": {
+    "frame": { "x": 3840, "y": 0, "w": 64, "h": 64 },
+    "rotated": false,
+    "trimmed": false,
+    "spriteSourceSize": { "x": 0, "y": 0, "w": 64, "h": 64 },
+    "sourceSize": { "w": 64, "h": 64 },
+    "duration": 200
    }
  },
  "meta": {
@@ -453,7 +493,7 @@
   "version": "1.3.13-dev",
   "image": "Myron.png",
   "format": "RGBA8888",
-  "size": { "w": 3584, "h": 64 },
+  "size": { "w": 3904, "h": 64 },
   "scale": "1",
   "frameTags": [
    { "name": "walkDown", "from": 0, "to": 5, "direction": "forward", "color": "#000000ff" },
@@ -463,7 +503,8 @@
    { "name": "atkRight", "from": 24, "to": 31, "direction": "forward", "color": "#000000ff" },
    { "name": "atkDown", "from": 32, "to": 39, "direction": "forward", "color": "#000000ff" },
    { "name": "atkLeft", "from": 40, "to": 47, "direction": "forward", "color": "#000000ff" },
-   { "name": "atkTop", "from": 48, "to": 55, "direction": "forward", "color": "#000000ff" }
+   { "name": "atkTop", "from": 48, "to": 55, "direction": "forward", "color": "#000000ff" },
+   { "name": "Strahl", "from": 56, "to": 60, "direction": "forward", "color": "#000000ff" }
   ],
   "layers": [
    { "name": "Sprite Sheet", "opacity": 255, "blendMode": "normal" },

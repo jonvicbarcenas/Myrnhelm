@@ -1,9 +1,15 @@
 package com.dainsleif.hartebeest.players;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.World;
+import com.dainsleif.hartebeest.enemies.Goblin;
+import com.dainsleif.hartebeest.enemies.GoblinSpawner;
+import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
@@ -22,6 +28,13 @@ public class PlayerMyron extends Player {
     private int level;
     private int experience;
     private boolean isDead;
+
+    private Animation<TextureRegion> strahlAnimation;
+    private boolean isUsingStrahl = false;
+    private float strahlStateTime = 0f;
+    private static final float STRAHL_DURATION = 1.0f;
+
+    GoblinSpawner goblinSpawner;
 
     public PlayerMyron(World world, CollisionDetector collisionDetector) {
         super(world, TEXTURE_PATH, JSON_PATH, collisionDetector);
@@ -42,6 +55,10 @@ public class PlayerMyron extends Player {
         animations.put("atk_down", new Animation<>(0.1f, loader.getFrames("atkDown")));
         animations.put("atk_left", new Animation<>(0.1f, loader.getFrames("atkLeft")));
         animations.put("atk_right", new Animation<>(0.1f, loader.getFrames("atkRight")));
+        animations.put("Strahl", new Animation<>(0.1f, loader.getFrames("Strahl")));
+
+        SpriteSheetLoaderJson strahlLoader = new SpriteSheetLoaderJson("sprite/player/Strahl_Effects.png", "sprite/player/Strahl_Effects.json");
+        animations.put("Strahl_Effetcs", new Animation<>(0.1f, strahlLoader.getFrames()));
 
         setAnimations(animations);
         setCurrentFrame(animations.get("down").getKeyFrame(0));
@@ -58,6 +75,10 @@ public class PlayerMyron extends Player {
         this.experience = 0;
     }
 
+    public void setGoblinSpawner(GoblinSpawner goblinSpawner) {
+        this.goblinSpawner = goblinSpawner;
+    }
+
     public void takeDamage(int amount) {
         health -= amount;
         System.out.println("Myron took " + amount + " damage!");
@@ -68,15 +89,93 @@ public class PlayerMyron extends Player {
     }
 
     public void useSkill1() {
+        if (!isUsingStrahl) {
+            isUsingStrahl = true;
+            strahlStateTime = 0f;
+            setCurrentFrame(getAnimations().get("Strahl").getKeyFrame(0));
+            System.out.println("Using Strahl skill!");
 
+            // Apply the Strahl effect
+            applyStrahlEffect();
+        }
     }
 
-    public void useSkill2() {
+    private void applyStrahlEffect() {
+        float knockbackDistance = 100f;
+        int strahlDamage = 10;
+        Vector2 playerPos = getPosition();
 
+        for (Goblin goblin : goblinSpawner.getGoblins()) {
+            Vector2 goblinPos = goblin.getPosition();
+            float distance = playerPos.dst(goblinPos);
+
+            if (distance <= knockbackDistance) {
+                Vector2 knockbackDirection = new Vector2(goblinPos).sub(playerPos).nor();
+                Vector2 knockbackVector = knockbackDirection.scl(knockbackDistance);
+
+                // Apply the impulse to the center of the goblin's body
+                goblin.getBody().applyLinearImpulse(knockbackVector, goblin.getBody().getWorldCenter(), true);
+
+                goblin.takeDamage(strahlDamage);
+            }
+        }
+    }
+    private void showStrahlEffect(Batch batch) {
+        if (strahlAnimation == null) {
+            strahlAnimation = getAnimations().get("Strahl_Effetcs");
+        }
+        float delta = Gdx.graphics.getDeltaTime();
+        strahlStateTime += delta;
+        TextureRegion currentFrame = strahlAnimation.getKeyFrame(strahlStateTime, false);
+
+        float effectX = (getX() - (this.getWidth()/2 ))  + (getWidth() - currentFrame.getRegionWidth()) / 2;
+        float effectY = (getY()- (this.getHeight()/2 )) + (getHeight() - currentFrame.getRegionHeight()) / 2;
+        batch.draw(currentFrame, effectX, effectY);
     }
 
-    public void useUltimate() {
 
+    public void updateSkills(float delta) {
+        if (isUsingStrahl) {
+            strahlStateTime += delta;
+            Animation<TextureRegion> strahlAnim = getAnimations().get("Strahl");
+            setCurrentFrame(strahlAnim.getKeyFrame(strahlStateTime, false));
+
+            if (strahlStateTime >= STRAHL_DURATION) {
+                isUsingStrahl = false;
+                strahlStateTime = 0f;
+                String currentDirection = getDirection().toLowerCase();
+                if (currentDirection.equals("r")) currentDirection = "right";
+                else if (currentDirection.equals("l")) currentDirection = "left";
+                else if (currentDirection.equals("u")) currentDirection = "up";
+                else if (currentDirection.equals("d")) currentDirection = "down";
+                setCurrentFrame(getAnimations().get(currentDirection).getKeyFrame(0));
+            }
+        }
+    }
+
+
+    public void useSkill2() {}
+
+    public void useUltimate() {}
+
+    public void update(float deltaTime, KeyHandler keyHandler) {
+        if (!isUsingStrahl) {
+            super.update(deltaTime, keyHandler);
+        } else {
+            updateSkills(deltaTime);
+        }
+
+        if (Gdx.input.isKeyJustPressed(Input.Keys.Q)) {
+            useSkill1();
+        }
+    }
+
+    @Override
+    public void draw(Batch batch, float parentAlpha) {
+        super.draw(batch, parentAlpha);
+        if (isUsingStrahl) {
+            showStrahlEffect(batch);
+        }
     }
 
     public void heal(int amount) {
@@ -103,7 +202,6 @@ public class PlayerMyron extends Player {
 
     public void gainExperience(int amount) {
         experience += amount;
-        // Simple level up system
         int experienceNeeded = level * 100;
         if (experience >= experienceNeeded) {
             levelUp();
@@ -123,10 +221,8 @@ public class PlayerMyron extends Player {
 
     private void die() {
         System.out.println("Myron has been defeated!");
-        // Handle player death (game over, respawn, etc.)
     }
 
-    // Getters and setters
     public static int getHealth() { return health; }
     public int getMaxHealth() { return maxHealth; }
     public int getMana() { return mana; }

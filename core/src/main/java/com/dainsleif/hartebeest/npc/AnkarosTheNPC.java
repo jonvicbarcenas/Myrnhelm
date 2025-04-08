@@ -13,8 +13,7 @@ public class AnkarosTheNPC extends NPC {
     private static final String JSON_PATH = "sprite/npc/npc.json";
     private boolean hasQuest = true;
     private boolean questCompleted = false;
-
-    public static final int GOBLIN_QUEST_ID = 1;
+    private String assignedQuestName = "Goblin Menace";
     private QuestHandler questHandler;
 
     public AnkarosTheNPC(World world, float x, float y) {
@@ -43,6 +42,15 @@ public class AnkarosTheNPC extends NPC {
         currentFrame = frontFrames[0];
     }
 
+    // Add getter method
+    public String getAssignedQuestName() {
+        return assignedQuestName;
+    }
+
+    // Allow changing the assigned quest
+    public void setAssignedQuestName(String questName) {
+        this.assignedQuestName = questName;
+    }
 
     @Override
     public void interact() {
@@ -50,7 +58,8 @@ public class AnkarosTheNPC extends NPC {
             return;
         }
 
-        Quest quest = questHandler.getQuestById(GOBLIN_QUEST_ID);
+        int questId = questHandler.getQuestIdByName(assignedQuestName);
+        Quest quest = questHandler.getQuestById(questId);
 
         if (quest == null) {
             System.out.println(getName() + ": Greetings, traveler.");
@@ -58,10 +67,10 @@ public class AnkarosTheNPC extends NPC {
         }
 
         if (quest.status.equals("not_started")) {
-            questHandler.startQuest(GOBLIN_QUEST_ID);
+            questHandler.startQuest(questId);
             System.out.println(getName() + ": Hello traveler! I need your help with something important.");
         } else if (quest.status.equals("in_progress")) {
-            String progress = questHandler.getQuestProgressText(GOBLIN_QUEST_ID);
+            String progress = questHandler.getQuestProgressText(questId);
             System.out.println(getName() + ": How is the hunt going? " + progress);
         } else if (quest.status.equals("completed")) {
             System.out.println(getName() + ": Thank you for your help, brave adventurer!");
