@@ -231,6 +231,7 @@ MAPS/Village.tmx
 Map.tmx
 Music/16bitRpgBGMUSIC.mp3
 Music/dawn_winery_MenuBGM.mp3
+Music/evil_laugh_02.ogg
 Mystic Woods/Get the Premium Version!.url
 Mystic Woods/Rate This Pack!.url
 Mystic Woods/read_me.txt

@@ -234,14 +234,17 @@ public class StartAreaMap implements Screen {
 
 
         handleInput();
+
+
+
+
+
+        tiledMapRenderer.render(new int[]{8,10});
         if (dialogueStage.isDialogueVisible()) {
             dialogueStage.render(spriteBatch, camera);
         }
 
-
         spriteBatch.end();
-
-        tiledMapRenderer.render(new int[]{8,10});
 
         if (PlayerMyron.getHealth() <= 0 && !playerSwitcher.isDead()) {
             playerSwitcher.setDead(true);
@@ -317,6 +320,7 @@ public class StartAreaMap implements Screen {
                         if (quest != null) {
                             if (quest.status.equals("not_started") || quest.status.equals("in_progress")) {
                                 dialogueText = quest.name + ": " + quest.description;
+                                ankaros.startFollowing();
 
                                 if (quest.status.equals("in_progress")) {
                                     dialogueText += "\n" + questHandler.getQuestProgressText(questId);

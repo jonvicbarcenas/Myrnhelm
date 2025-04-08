@@ -27,7 +27,6 @@ public abstract class Enemy {
     public void update() {
     }
     public void render() {
-        // Render enemy here
     }
 
 

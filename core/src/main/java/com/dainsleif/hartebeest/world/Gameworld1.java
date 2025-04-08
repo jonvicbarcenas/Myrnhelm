@@ -42,6 +42,8 @@ public class Gameworld1 implements Screen {
     PlayerStatStage playerStatStage;
     DialogueStage dialogueStage;
     CursorStyle cursorStyle;
+    CreditStage creditStage;
+
 
     // Camera
     OrthographicCamera camera;
@@ -62,6 +64,8 @@ public class Gameworld1 implements Screen {
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
     private boolean transitioning = false;
+    private boolean showCredit = false;
+    private boolean creditSoundPlayed = false;
 
     private Screen nextScreen = null;
     private final TransitionMapHandler transitionHandler;
@@ -141,6 +145,7 @@ public class Gameworld1 implements Screen {
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
         dialogueStage = new DialogueStage();
+        creditStage = new CreditStage();
         MusicGameSingleton.getInstance().play();
 
 
@@ -220,12 +225,7 @@ public class Gameworld1 implements Screen {
 
 
         handleInput();
-        if (dialogueStage.isDialogueVisible()) {
-            dialogueStage.render(spriteBatch, camera);
-        }
 
-
-        spriteBatch.end();
 
         if (PlayerMyron.getHealth() <= 0 && !playerSwitcher.isDead()) {
             playerSwitcher.setDead(true);
@@ -233,6 +233,12 @@ public class Gameworld1 implements Screen {
         }
 
         tiledMapRenderer.render(new int[]{8,10});
+        if (dialogueStage.isDialogueVisible()) {
+            dialogueStage.render(spriteBatch, camera);
+        }
+
+
+        spriteBatch.end();
 
         if (playerSwitcher.isDead()) {
             deathStage.update(v);
@@ -264,6 +270,16 @@ public class Gameworld1 implements Screen {
         playerStatStage.draw();
         playerStatStage.update(v);
 
+        if(showCredit){
+            creditStage.update(v);
+            creditStage.draw();
+
+            if (!creditSoundPlayed) {
+                creditStage.playEvilLaugh();
+                creditSoundPlayed = true;
+            }
+        }
+
         world.step(1 / 60f, 6, 2);
     }
 
@@ -280,6 +296,7 @@ public class Gameworld1 implements Screen {
 
                     if (npc instanceof AnkarosTheNPC) {
                         AnkarosTheNPC ankaros = (AnkarosTheNPC) npc;
+                        ((AnkarosTheNPC) npc).setAssignedQuestName("Goblin Flood!!!");
                         String questName = ankaros.getAssignedQuestName();
                         int questId = questHandler.getQuestIdByName(questName);
                         Quest quest = questHandler.getQuestById(questId);
@@ -287,13 +304,15 @@ public class Gameworld1 implements Screen {
                         if (quest != null) {
                             if (quest.status.equals("not_started") || quest.status.equals("in_progress")) {
                                 dialogueText = quest.name + ": " + quest.description;
+                                ankaros.startFollowing();
 
                                 if (quest.status.equals("in_progress")) {
                                     dialogueText += "\n" + questHandler.getQuestProgressText(questId);
                                 }
                             } else if (quest.status.equals("completed")) {
-                                dialogueText = "Thank you for completing the " + quest.name + "!";
+                                dialogueText = "Thank you for completing the " + quest.name + "! AH HA HA HA HA (EVIL LAUGH)!!!";
                                 ankaros.stopFollowing();
+                                showCredit = true;
                             }
                         } else {
                             dialogueText = "Greetings, traveler.";
