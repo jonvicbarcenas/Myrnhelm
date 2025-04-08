@@ -1,5 +1,6 @@
 .gitkeep
 16tile.png
+Cursor/488014147_4007713039485255_8216615517470427155_n.jpg
 Cursor/cursor.png
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.gif
 Fan-Tasy/The Fan-tasy Tileset (Free)/Art/Buildings/Animations/Door_1.png

@@ -16,5 +16,4 @@ This project was generated with a template including simple application launcher
 
 - `core`: Main module with the application logic shared by all platforms.
 - `lwjgl3`: Primary desktop platform using LWJGL3; was called 'desktop' in older docs.
-
-## Under Development...
+![488014147_4007713039485255_8216615517470427155_n.jpg](assets/Cursor/488014147_4007713039485255_8216615517470427155_n.jpg)

@@ -158,6 +158,7 @@ public class PlayerMyron extends Player {
 
     public void useUltimate() {}
 
+    @Override
     public void update(float deltaTime, KeyHandler keyHandler) {
         if (!isUsingStrahl) {
             super.update(deltaTime, keyHandler);
