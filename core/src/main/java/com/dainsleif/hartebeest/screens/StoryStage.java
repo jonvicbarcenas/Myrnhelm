@@ -2,11 +2,14 @@ package com.dainsleif.hartebeest.screens;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Pixmap;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class StoryStage extends Stage {
@@ -59,6 +62,7 @@ public class StoryStage extends Stage {
 
         Table table = new Table();
         table.setFillParent(true);
+        table.setBackground(new TextureRegionDrawable(createColorTexture(Color.BLACK, 0.7f)));
         table.add(label).width(450).expand().fill().center();
         storyIndex = 1;
 
@@ -81,6 +85,14 @@ public class StoryStage extends Stage {
             label.setText(story[storyIndex-1]);
             storyIndex++;
         }
+    }
+    private Texture createColorTexture(Color color, float alpha) {
+        Pixmap pixmap = new Pixmap(1, 1, Pixmap.Format.RGBA8888);
+        pixmap.setColor(color.r, color.g, color.b, alpha);
+        pixmap.fill();
+        Texture texture = new Texture(pixmap);
+        pixmap.dispose();
+        return texture;
     }
 
     public void storyEnd() {

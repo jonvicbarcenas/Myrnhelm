@@ -13,6 +13,7 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.dainsleif.hartebeest.enemies.EnemyState;
 import com.dainsleif.hartebeest.enemies.Goblin;
+import com.dainsleif.hartebeest.enemies.GoblinSpawner;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
 import com.dainsleif.hartebeest.movements.BasicMovements;
@@ -265,8 +266,14 @@ public abstract class Player extends Actor {
             batch.draw(currentFrame, getX() - WIDTH/2, getY() - HEIGHT/2, WIDTH, HEIGHT);
         }
     }
-
+    protected Map<String, Animation<TextureRegion>> getAnimations() {
+        return animations;
+    }
     public Vector2 getPosition() {
        return body.getPosition();
+    }
+
+    public void setGoblinSpawner(GoblinSpawner goblinSpawner) {
+        // This method is not used in the Player class, but can be overridden in subclasses if needed
     }
 }

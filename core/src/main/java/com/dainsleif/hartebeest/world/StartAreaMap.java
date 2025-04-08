@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -132,6 +131,7 @@ public class StartAreaMap implements Screen {
         goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f);
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
         goblinSpawner.setQuestHandler(questHandler);
+        playerSwitcher.getCurrentPlayer().setGoblinSpawner(goblinSpawner);
 
         npcHandler = new NpcHandler(world, new Vector2(225, 440));
         // Connect questHandler to NPCs
@@ -230,6 +230,9 @@ public class StartAreaMap implements Screen {
         }
 
         npcHandler.draw(spriteBatch);
+
+
+
         handleInput();
         if (dialogueStage.isDialogueVisible()) {
             dialogueStage.render(spriteBatch, camera);
@@ -238,17 +241,18 @@ public class StartAreaMap implements Screen {
 
         spriteBatch.end();
 
+        tiledMapRenderer.render(new int[]{8,10});
+
         if (PlayerMyron.getHealth() <= 0 && !playerSwitcher.isDead()) {
             playerSwitcher.setDead(true);
 
         }
 
-        tiledMapRenderer.render(new int[]{8,10});
+
 
         if (playerSwitcher.isDead()) {
             deathStage.update(v);
             deathStage.draw();
-            //press enter to respawn and remove the player
 
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
@@ -296,78 +300,44 @@ public class StartAreaMap implements Screen {
 
     public void handleInput() {
         if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
-            // Get the current player position
             Vector2 playerPos = playerSwitcher.getCurrentPlayer().getPosition();
 
-            // Check for NPC interaction
             for (NPC npc : npcHandler.getNpcs()) {
                 if (npc.isPlayerInRange(playerPos)) {
-                    // Show dialogue when interacting with NPC
                     npc.interact();
 
                     String dialogueText = "";
 
                     if (npc instanceof AnkarosTheNPC) {
                         AnkarosTheNPC ankaros = (AnkarosTheNPC) npc;
-                        Quest goblinQuest = questHandler.getQuestById(AnkarosTheNPC.GOBLIN_QUEST_ID);
+                        String questName = ankaros.getAssignedQuestName();
+                        int questId = questHandler.getQuestIdByName(questName);
+                        Quest quest = questHandler.getQuestById(questId);
 
-                        if (goblinQuest != null) {
-                            if (goblinQuest.status.equals("not_started") || goblinQuest.status.equals("in_progress")) {
-                                dialogueText = goblinQuest.name + ": " + goblinQuest.description;
+                        if (quest != null) {
+                            if (quest.status.equals("not_started") || quest.status.equals("in_progress")) {
+                                dialogueText = quest.name + ": " + quest.description;
 
-                                // Add progress information for in-progress quests
-                                if (goblinQuest.status.equals("in_progress")) {
-                                    dialogueText += "\n" + questHandler.getQuestProgressText(AnkarosTheNPC.GOBLIN_QUEST_ID);
+                                if (quest.status.equals("in_progress")) {
+                                    dialogueText += "\n" + questHandler.getQuestProgressText(questId);
                                 }
-                            } else if (goblinQuest.status.equals("completed")) {
-                                dialogueText = "Thank you for completing the " + goblinQuest.name + "!";
+                            } else if (quest.status.equals("completed")) {
+                                dialogueText = "Thank you for completing the " + quest.name + "!";
                                 ankaros.stopFollowing();
                             }
                         } else {
                             dialogueText = "Greetings, traveler.";
                         }
 
-                        // Show the dialogue above the NPC
                         dialogueStage.showDialogue(npc, dialogueText);
-
-                        // Handle following behavior based on quest status
-                        if (goblinQuest != null && !goblinQuest.status.equals("completed")) {
-                            // Toggle following behavior only if quest isn't completed
-                            if (npc.isFollowing()) {
-                                npc.stopFollowing();
-                            } else {
-                                npc.startFollowing();
-                            }
-                        } else {
-                            // Always stop following when quest is completed
-                            npc.stopFollowing();
-                        }
-                    } else {
-                        // Default behavior for non-Ankaros NPCs
-                        dialogueStage.showDialogue(npc, npc.getDialogueText());
-
-                        // Toggle following for other NPCs
-                        if (npc.isFollowing()) {
-                            npc.stopFollowing();
-                        } else {
-                            npc.startFollowing();
-                        }
                     }
 
                     break;
                 }
             }
         }
-
-        // Hide dialogue on space press
-        if (Gdx.input.isKeyJustPressed(Input.Keys.SPACE)) {
-            if (dialogueStage.isDialogueVisible()) {
-                // Rest of your code...
-            }
-        }
     }
 
-    // Replace checkTransitions() method with:
     private void checkTransitions() {
         float playerX = playerSwitcher.getX();
         float playerY = playerSwitcher.getY();

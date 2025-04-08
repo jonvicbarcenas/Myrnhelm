@@ -1,21 +1,15 @@
 package com.dainsleif.hartebeest.world;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
-import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.maps.MapLayer;
-import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.objects.RectangleMapObject;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
-import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Box2DDebugRenderer;
 import com.badlogic.gdx.physics.box2d.World;
@@ -24,12 +18,14 @@ import com.dainsleif.hartebeest.enemies.GoblinSpawner;
 import com.dainsleif.hartebeest.helpers.CursorStyle;
 import com.dainsleif.hartebeest.helpers.GameInfo;
 import com.dainsleif.hartebeest.helpers.KeyHandler;
+import com.dainsleif.hartebeest.npc.AnkarosTheNPC;
+import com.dainsleif.hartebeest.npc.NPC;
+import com.dainsleif.hartebeest.npc.NpcHandler;
 import com.dainsleif.hartebeest.players.PlayerMyron;
 import com.dainsleif.hartebeest.players.PlayerSwitcher;
-import com.dainsleif.hartebeest.screens.DeathStage;
-import com.dainsleif.hartebeest.screens.FpsStage;
-import com.dainsleif.hartebeest.screens.GoblinHealthBarStage;
-import com.dainsleif.hartebeest.screens.PlayerStatStage;
+import com.dainsleif.hartebeest.quests.Quest;
+import com.dainsleif.hartebeest.quests.QuestHandler;
+import com.dainsleif.hartebeest.screens.*;
 import com.dainsleif.hartebeest.utils.CollisionDetector;
 
 import java.util.Arrays;
@@ -39,15 +35,21 @@ public class Gameworld1 implements Screen {
     OrthogonalTiledMapRenderer tiledMapRenderer;
     SpriteBatch spriteBatch;
     FitViewport viewport;
+
+    // Stages
     FpsStage fpsStage;
+    DeathStage deathStage;
     PlayerStatStage playerStatStage;
+    DialogueStage dialogueStage;
     CursorStyle cursorStyle;
 
     // Camera
     OrthographicCamera camera;
 
+    NpcHandler npcHandler;
     PlayerSwitcher playerSwitcher;
     KeyHandler keyHandler;
+    QuestHandler questHandler;
 
     // Enemy
     private final float mapWidth;
@@ -60,11 +62,11 @@ public class Gameworld1 implements Screen {
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
     private boolean transitioning = false;
+
     private Screen nextScreen = null;
-    private GoblinSpawner goblinSpawner;
-    private TransitionMapHandler transitionHandler;
-    private GoblinHealthBarStage goblinHealthBarStage;
-    DeathStage deathStage;
+    private final TransitionMapHandler transitionHandler;
+    private final GoblinSpawner goblinSpawner;
+    private final GoblinHealthBarStage goblinHealthBarStage;
 
     public Gameworld1() {
         System.out.println("Width: " + GameInfo.WIDTH + " Height: " + GameInfo.HEIGHT);
@@ -114,15 +116,31 @@ public class Gameworld1 implements Screen {
 
         transitionHandler = new TransitionMapHandler(map, "transitions", 15, "StartAreaMap");
 
+
+        // Create quest handler
+        questHandler = new QuestHandler();
+
         // Create goblin
         goblinSpawner = new GoblinSpawner(world, collisionDetector, playerSwitcher);
-        goblinSpawner.spawnGoblins(new Vector2(348, 533), 3, 20f); //
+        goblinSpawner.spawnGoblins(new Vector2(356, 381), 15, 30f);
         goblinHealthBarStage = new GoblinHealthBarStage(goblinSpawner);
+        goblinSpawner.setQuestHandler(questHandler);
+        playerSwitcher.getCurrentPlayer().setGoblinSpawner(goblinSpawner);
 
-        // Create stages
+        npcHandler = new NpcHandler(world, new Vector2(122, 105));
+
+        // Connect questHandler to NPCs
+        for (NPC npc : npcHandler.getNpcs()) {
+            if (npc instanceof AnkarosTheNPC) {
+                ((AnkarosTheNPC) npc).setQuestHandler(questHandler);
+            }
+        }
+
+        // Create stagesa
         fpsStage = new FpsStage();
         playerStatStage = new PlayerStatStage();
         deathStage = new DeathStage();
+        dialogueStage = new DialogueStage();
         MusicGameSingleton.getInstance().play();
 
 
@@ -134,6 +152,8 @@ public class Gameworld1 implements Screen {
     @Override
     public void render(float v) {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT | GL20.GL_DEPTH_BUFFER_BIT);
+
+        npcHandler.update(v, playerSwitcher.getCurrentPlayer());
 
         if (transitioning) {
             return;
@@ -147,6 +167,8 @@ public class Gameworld1 implements Screen {
 
         // Check for transitions
         checkTransitions();
+        dialogueStage.update(v);
+
 
         // If transition was triggered, execute it and return
         if (transitioning) {
@@ -178,6 +200,7 @@ public class Gameworld1 implements Screen {
         if (!playerSwitcher.isDead()) {
             playerSwitcher.draw(spriteBatch, 1);
         }
+
         if (Gdx.input.isButtonJustPressed(Input.Buttons.LEFT)) {
             goblinSpawner.checkPlayerAttack();
         }else {
@@ -192,6 +215,15 @@ public class Gameworld1 implements Screen {
             goblinSpawner.checkDamageToPlayer();
         }
 
+        npcHandler.draw(spriteBatch);
+
+
+
+        handleInput();
+        if (dialogueStage.isDialogueVisible()) {
+            dialogueStage.render(spriteBatch, camera);
+        }
+
 
         spriteBatch.end();
 
@@ -200,12 +232,12 @@ public class Gameworld1 implements Screen {
 
         }
 
-        tiledMapRenderer.render(new int[]{10});
+        tiledMapRenderer.render(new int[]{8,10});
 
         if (playerSwitcher.isDead()) {
             deathStage.update(v);
             deathStage.draw();
-            //press enter to respawn and remove the player
+
 
             if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
                 playerSwitcher.setDead(false);
@@ -215,9 +247,11 @@ public class Gameworld1 implements Screen {
             return;
         }
 
+
         // Update the health bars
         goblinHealthBarStage.update(Gdx.graphics.getDeltaTime());
         goblinHealthBarStage.render(camera);
+
 
 
         if(GameInfo.getShowDebugging()){
@@ -231,7 +265,47 @@ public class Gameworld1 implements Screen {
         playerStatStage.update(v);
 
         world.step(1 / 60f, 6, 2);
+    }
 
+    public void handleInput() {
+        if (Gdx.input.isKeyJustPressed(Input.Keys.E)) {
+            Vector2 playerPos = playerSwitcher.getCurrentPlayer().getPosition();
+
+            for (NPC npc : npcHandler.getNpcs()) {
+                if (npc.isPlayerInRange(playerPos)) {
+                    npc.interact();
+
+                    String dialogueText = "";
+
+
+                    if (npc instanceof AnkarosTheNPC) {
+                        AnkarosTheNPC ankaros = (AnkarosTheNPC) npc;
+                        String questName = ankaros.getAssignedQuestName();
+                        int questId = questHandler.getQuestIdByName(questName);
+                        Quest quest = questHandler.getQuestById(questId);
+
+                        if (quest != null) {
+                            if (quest.status.equals("not_started") || quest.status.equals("in_progress")) {
+                                dialogueText = quest.name + ": " + quest.description;
+
+                                if (quest.status.equals("in_progress")) {
+                                    dialogueText += "\n" + questHandler.getQuestProgressText(questId);
+                                }
+                            } else if (quest.status.equals("completed")) {
+                                dialogueText = "Thank you for completing the " + quest.name + "!";
+                                ankaros.stopFollowing();
+                            }
+                        } else {
+                            dialogueText = "Greetings, traveler.";
+                        }
+
+                        dialogueStage.showDialogue(npc, dialogueText);
+                    }
+
+                    break;
+                }
+            }
+        }
     }
 
     // Replace checkTransitions() method with:
@@ -280,4 +354,5 @@ public class Gameworld1 implements Screen {
         tiledMapRenderer.dispose();
         map.dispose();
     }
+
 }

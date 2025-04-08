@@ -30,19 +30,15 @@ public class PlayerSwitcher {
             switchToMeley();
         }
 
-        // Update the current player
         currentPlayer.update(deltaTime, keyHandler);
     }
 
     private void switchToMyron() {
         if (currentPlayer != myronPlayer && !currentPlayer.isDead()) {
-            // Transfer position
             Vector2 position = currentPlayer.getPosition();
 
-            // Disable the current player's physics body
             disableCurrentPlayerBody();
 
-            // Enable Myron's body and update position
             myronPlayer.setPosition(position.x, position.y);
             myronPlayer.enableBody();
 
@@ -52,13 +48,10 @@ public class PlayerSwitcher {
 
     private void switchToMeley() {
         if (currentPlayer != meleyPlayer && !currentPlayer.isDead()) {
-            // Transfer position
             Vector2 position = currentPlayer.getPosition();
 
-            // Disable the current player's physics body
             disableCurrentPlayerBody();
 
-            // Enable Meley's body and update position
             meleyPlayer.setPosition(position.x, position.y);
             meleyPlayer.enableBody();
 
@@ -67,7 +60,6 @@ public class PlayerSwitcher {
     }
 
     private void disableCurrentPlayerBody() {
-        // Set the current player's body to inactive
         if (currentPlayer != null) {
             currentPlayer.disableBody();
         }

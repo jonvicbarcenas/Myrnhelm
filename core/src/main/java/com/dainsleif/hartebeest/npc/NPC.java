@@ -6,8 +6,6 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
 import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.dainsleif.hartebeest.helpers.AnimationLoader;
-import com.dainsleif.hartebeest.helpers.SpriteSheetLoaderJson;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -21,7 +19,6 @@ public abstract class NPC extends Actor {
     protected final float WIDTH = 32;
     protected final float HEIGHT = 32;
     protected String name;
-    protected boolean interactable = true;
     protected float interactionRadius = 50f;
 
     // New fields for following behavior
@@ -41,7 +38,7 @@ public abstract class NPC extends Actor {
         body = world.createBody(bodyDef);
 
         PolygonShape shape = new PolygonShape();
-        shape.setAsBox(WIDTH/4, HEIGHT/6, new Vector2(0, -HEIGHT/6), 0);
+        shape.setAsBox(WIDTH/5, HEIGHT/5, new Vector2(0, -HEIGHT/6), 0);
         FixtureDef fixtureDef = new FixtureDef();
         fixtureDef.shape = shape;
         fixtureDef.density = 1.0f;

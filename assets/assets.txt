@@ -321,6 +321,9 @@ sprite/player/Meley.json
 sprite/player/Meley.png
 sprite/player/Myron.json
 sprite/player/Myron.png
+sprite/player/Strahl_Effects.json
+sprite/player/Strahl_Effects.png
 sprite/player/mage fly.aseprite
+sprite/player/overall.aseprite
 sprite/summon/summon.json
 sprite/summon/summon.png
