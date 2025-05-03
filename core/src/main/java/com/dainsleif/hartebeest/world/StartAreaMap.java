@@ -4,9 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.assets.AssetManager;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.maps.tiled.renderers.OrthogonalTiledMapRenderer;
@@ -59,6 +61,8 @@ public class StartAreaMap implements Screen {
     private World world;
     private Box2DDebugRenderer debugRenderer;
     private CollisionDetector collisionDetector;
+
+    private ShapeRenderer shapeRenderer;
 
     ///-------------- sum variables for Class Usage ---------------///
     boolean playerDamageApplied = false;
@@ -149,6 +153,7 @@ public class StartAreaMap implements Screen {
         dialogueStage = new DialogueStage();
         MusicGameSingleton.getInstance().play();
 
+        shapeRenderer = new ShapeRenderer();
 
     }
 
@@ -236,7 +241,27 @@ public class StartAreaMap implements Screen {
         handleInput();
 
 
+        for (NPC npc : npcHandler.getNpcs()) {
+            if (npc instanceof AnkarosTheNPC) {
+                AnkarosTheNPC ankaros = (AnkarosTheNPC) npc;
+                String questName = ankaros.getAssignedQuestName();
+                int questId = questHandler.getQuestIdByName(questName);
+                Quest quest = questHandler.getQuestById(questId);
 
+                if (quest != null && quest.status.equals("not_started")) {
+                    // Draw a line from the player to the NPC
+                    shapeRenderer.setProjectionMatrix(camera.combined);
+                    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+                    shapeRenderer.setColor(Color.RED);
+
+                    Vector2 playerPos = playerSwitcher.getCurrentPlayer().getPosition();
+                    Vector2 npcPos = ankaros.getPosition();
+
+                    shapeRenderer.line(playerPos.x, playerPos.y, npcPos.x, npcPos.y);
+                    shapeRenderer.end();
+                }
+            }
+        }
 
 
         tiledMapRenderer.render(new int[]{8,10});
@@ -353,7 +378,6 @@ public class StartAreaMap implements Screen {
         }
     }
 
-    // Replace executeTransition() method with:
     private void executeTransition() {
         transitionHandler.executeTransition(this, nextScreen, MusicGameSingleton.getInstance().getBackgroundMusic());
     }
@@ -390,5 +414,4 @@ public class StartAreaMap implements Screen {
         tiledMapRenderer.dispose();
         map.dispose();
     }
-
 }

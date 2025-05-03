@@ -290,7 +290,6 @@ Screen/MenuScreen/frierenBG.gif
 char.png
 fonts/Toriko.ttf
 fonts/monogram.ttf
-gameinfo.db
 playerXY.db
 quests/Quest.json
 sprite/Enemy/Goblin/RegularGobu.json
